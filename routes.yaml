@@ -1,10 +1,12 @@
 ---
 path: /path1
-response:
+answer:
+  status: 200
   body: resp1
 type: get
 ---
 path: /path1
-response:
+answer:
+  status: 202
   body: resp2
 type: post
