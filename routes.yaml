@@ -1,0 +1,10 @@
+---
+path: /path1
+response:
+  body: resp1
+type: get
+---
+path: /path1
+response:
+  body: resp2
+type: post

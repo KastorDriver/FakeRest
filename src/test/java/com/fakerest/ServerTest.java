@@ -1,6 +1,6 @@
 package com.fakerest;
 
-import com.fakerest.bean.Response;
+import com.fakerest.bean.Answer;
 import com.fakerest.bean.Route;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
@@ -27,9 +27,9 @@ public class ServerTest {
         route.setPath(GET_PATH);
         route.setType(GET);
 
-        Response response = new Response();
-        response.setBody(RESPONSE_BODY);
-        route.setResponse(response);
+        Answer answer = new Answer();
+        answer.setBody(RESPONSE_BODY);
+        route.setAnswer(answer);
 
         return route;
     }

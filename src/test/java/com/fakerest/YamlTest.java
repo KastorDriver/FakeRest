@@ -12,7 +12,7 @@ public class YamlTest {
         Route route = new Route();
         route.setPath("/path1");
         route.setType(HttpMethod.get.name());
-        route.getResponse().setBody("resp1");
+        route.getAnswer().setBody("resp1");
 
         System.out.println(Yaml.dump(route));
     }

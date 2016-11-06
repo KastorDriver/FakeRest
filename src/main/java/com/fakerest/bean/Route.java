@@ -1,11 +1,12 @@
 package com.fakerest.bean;
 
+import com.fakerest.logic.AnswerLogic;
 import spark.Request;
 
 public class Route implements spark.Route{
     private String type;
     private String path;
-    private Response response = new Response();
+    private Answer answer = new Answer();
 
     public String getType() {
         return type;
@@ -23,16 +24,16 @@ public class Route implements spark.Route{
         this.path = path;
     }
 
-    public Response getResponse() {
-        return response;
+    public Answer getAnswer() {
+        return answer;
     }
 
-    public void setResponse(Response response) {
-        this.response = response;
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     @Override
     public Object handle(Request request, spark.Response response) throws Exception {
-        return this.response.getBody();
+        return AnswerLogic.handle(this, request, response);
     }
 }

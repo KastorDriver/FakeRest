@@ -1,6 +1,6 @@
 package com.fakerest.bean;
 
-public class Response {
+public class Answer {
     private String body;
 
     public String getBody() {
