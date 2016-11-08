@@ -10,11 +10,16 @@ public class AnswerLogic {
     public static Object handle(Route route, Request request, Response response) throws Exception {
         Answer answer = route.getAnswer();
 
-        Integer status = answer.getStatus();
+        processStatus(response, answer.getStatus());
+
+
+
+        return answer.getBody();
+    }
+
+    private static void processStatus(Response response, Integer status) {
         if (status != null) {
             response.status(status);
         }
-
-        return answer.getBody();
     }
 }

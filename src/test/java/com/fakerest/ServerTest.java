@@ -2,12 +2,12 @@ package com.fakerest;
 
 import com.fakerest.bean.Answer;
 import com.fakerest.bean.Route;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServerTest {
 
@@ -25,7 +25,7 @@ public class ServerTest {
     private Route prepareGetRoute() {
         Route route = new Route();
         route.setPath(GET_PATH);
-        route.setType(GET);
+        route.setMethod(GET);
 
         Answer answer = new Answer();
         answer.setBody(RESPONSE_BODY);

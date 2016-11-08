@@ -18,12 +18,12 @@ public class Server {
     }
 
     static void initRoute(Route route) {
-        if (HttpMethod.unsupported.equals(HttpMethod.get(route.getType()))) {
+        if (HttpMethod.unsupported.equals(HttpMethod.get(route.getMethod()))) {
             throw new RuntimeException("Unsupported http method");
         }
 
         try {
-            Method method = Spark.class.getMethod(route.getType(), String.class, spark.Route.class);
+            Method method = Spark.class.getMethod(route.getMethod(), String.class, spark.Route.class);
             method.invoke(null, route.getPath(), route);
         } catch (Exception ex) {
             throw new RuntimeException("init route error", ex);

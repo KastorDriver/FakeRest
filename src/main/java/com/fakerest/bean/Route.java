@@ -4,16 +4,16 @@ import com.fakerest.logic.AnswerLogic;
 import spark.Request;
 
 public class Route implements spark.Route{
-    private String type;
+    private String method;
     private String path;
     private Answer answer = new Answer();
 
-    public String getType() {
-        return type;
+    public String getMethod() {
+        return method;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getPath() {
