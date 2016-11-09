@@ -1,5 +1,5 @@
 ---
-path: /path1
+url: /path1
 method: get
 answer:
   status: 200

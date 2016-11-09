@@ -12,7 +12,7 @@ public class YamlTest {
     @Test
     public void testYaml() {
         Route route = new Route();
-        route.setPath("/path1");
+        route.setUrl("/path1");
         route.setMethod(HttpMethod.get.name());
         route.getAnswer().setBody("resp1");
         route.getAnswer().setHeaders(new HashMap<String, String>() {{

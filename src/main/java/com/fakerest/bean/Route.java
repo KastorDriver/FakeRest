@@ -5,7 +5,7 @@ import spark.Request;
 
 public class Route implements spark.Route{
     private String method;
-    private String path;
+    private String url;
     private Answer answer = new Answer();
 
     public String getMethod() {
@@ -16,12 +16,12 @@ public class Route implements spark.Route{
         this.method = method;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Answer getAnswer() {

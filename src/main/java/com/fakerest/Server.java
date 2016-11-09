@@ -24,7 +24,7 @@ public class Server {
 
         try {
             Method method = Spark.class.getMethod(route.getMethod(), String.class, spark.Route.class);
-            method.invoke(null, route.getPath(), route);
+            method.invoke(null, route.getUrl(), route);
         } catch (Exception ex) {
             throw new RuntimeException("init route error", ex);
         }
