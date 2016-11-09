@@ -1,36 +1,25 @@
 package com.fakerest;
 
-import com.fakerest.bean.Answer;
-import com.fakerest.bean.Route;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class ServerTest {
 
-    private static final String GET_PATH = "/getpath";
+    private static final String GET_PATH = "/path1";
     private static final String GET = "get";
     private static final String RESPONSE_BODY = "response text";
 
     @Test
     public void testGetRequest() throws FileNotFoundException {
-        Server.initRoute(prepareGetRoute());
-        String response = new RestTemplate().getForObject("http://localhost:4567" + GET_PATH, String.class);
-        assertEquals(RESPONSE_BODY, response);
-    }
-
-    private Route prepareGetRoute() {
-        Route route = new Route();
-        route.setPath(GET_PATH);
-        route.setMethod(GET);
-
-        Answer answer = new Answer();
-        answer.setBody(RESPONSE_BODY);
-        route.setAnswer(answer);
-
-        return route;
+        Server.main(null);
+        ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:4567" + GET_PATH, String.class);
+        assertEquals(RESPONSE_BODY, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("text/xml", response.getHeaders().getFirst("Content-Type"));
     }
 }

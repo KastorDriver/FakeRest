@@ -3,4 +3,6 @@ path: /path1
 method: get
 answer:
   status: 200
-  body: resp1
+  body: response text
+  headers:
+    Content-Type: text/xml
