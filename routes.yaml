@@ -6,3 +6,13 @@ answer:
   body: response text
   headers:
     Content-Type: text/xml
+  cookies:
+    - name: c1
+      value: v1
+      path: ""
+      httpOnly: true
+    - name: c2
+      value: v2
+      path: ""
+      secure: true
+

@@ -18,8 +18,11 @@ public class ServerTest {
     public void testGetRequest() throws FileNotFoundException {
         Server.main(null);
         ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:4567" + GET_PATH, String.class);
+
         assertEquals(RESPONSE_BODY, response.getBody());
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("text/xml", response.getHeaders().getFirst("Content-Type"));
     }
+
+
 }

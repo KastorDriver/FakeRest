@@ -1,10 +1,12 @@
 package com.fakerest.logic;
 
 import com.fakerest.bean.Answer;
+import com.fakerest.bean.Cookie;
 import com.fakerest.bean.Route;
 import spark.Request;
 import spark.Response;
 
+import java.util.List;
 import java.util.Map;
 
 public class AnswerLogic {
@@ -14,6 +16,7 @@ public class AnswerLogic {
 
         processStatus(response, answer.getStatus());
         processHeaders(response, answer.getHeaders());
+        processCookies(response, answer.getCookies());
 
         return answer.getBody();
     }
@@ -28,5 +31,12 @@ public class AnswerLogic {
         if (headers != null && !headers.isEmpty()) {
             headers.forEach((key, value) -> response.header(key, value));
         }
+    }
+
+    private static void processCookies(Response response, List<Cookie> cookies) {
+        cookies.forEach(cookie -> {
+            response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(), cookie.getMaxAge(),
+                    cookie.isSecure(), cookie.isHttpOnly());
+        });
     }
 }

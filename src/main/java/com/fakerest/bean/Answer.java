@@ -1,12 +1,15 @@
 package com.fakerest.bean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Answer {
     private String body;
     private Integer status;
     private Map<String, String> headers = new HashMap<>();
+    private List<Cookie> cookies = new ArrayList<>();
 
     public String getBody() {
         return body;
@@ -30,5 +33,13 @@ public class Answer {
 
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
+    }
+
+    public List<Cookie> getCookies() {
+        return cookies;
+    }
+
+    public void setCookies(List<Cookie> cookies) {
+        this.cookies = cookies;
     }
 }
