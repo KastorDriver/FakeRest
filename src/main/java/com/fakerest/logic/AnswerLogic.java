@@ -35,8 +35,8 @@ public class AnswerLogic {
 
     private static void processCookies(Response response, List<Cookie> cookies) {
         cookies.forEach(cookie -> {
-            response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(), cookie.getMaxAge(),
-                    cookie.isSecure(), cookie.isHttpOnly());
+            response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
+                    cookie.getMaxAge(), cookie.isSecure());
         });
     }
 }

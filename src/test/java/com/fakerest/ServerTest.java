@@ -1,10 +1,14 @@
 package com.fakerest;
 
+import com.fakerest.bean.Route;
+import org.ho.yaml.Yaml;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +25,17 @@ public class ServerTest {
 
         assertEquals(RESPONSE_BODY, response.getBody());
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals("text/xml", response.getHeaders().getFirst("Content-Type"));
+        assertEquals("text/html", response.getHeaders().getFirst("Content-Type"));
+        List<String> cookies = response.getHeaders().get("Set-Cookie");
+        assertEquals("cookie1=value1;Path=path1", cookies.get(0));
+        assertEquals("cookie2=value2;Secure", cookies.get(1));
+    }
+
+    @Test
+    public void marazm() throws FileNotFoundException {
+        Yaml.loadStreamOfType(new File("routes.yaml"), Route.class).forEach(route -> {
+            System.out.println(route.getAnswer().getCookies().get(0));
+        });
     }
 
 

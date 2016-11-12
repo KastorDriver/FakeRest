@@ -1,13 +1,19 @@
 package com.fakerest.bean;
 
 public class Cookie {
+    private String path;
     private String name;
     private String value;
-    private String domain;
     private int maxAge = -1;
-    private String path;
     private boolean secure;
-    private boolean isHttpOnly;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getName() {
         return name;
@@ -25,14 +31,6 @@ public class Cookie {
         this.value = value;
     }
 
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
     public int getMaxAge() {
         return maxAge;
     }
@@ -41,27 +39,11 @@ public class Cookie {
         this.maxAge = maxAge;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public boolean isSecure() {
         return secure;
     }
 
     public void setSecure(boolean secure) {
         this.secure = secure;
-    }
-
-    public boolean isHttpOnly() {
-        return isHttpOnly;
-    }
-
-    public void setHttpOnly(boolean isHttpOnly) {
-        this.isHttpOnly = isHttpOnly;
     }
 }

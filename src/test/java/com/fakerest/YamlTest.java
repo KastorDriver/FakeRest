@@ -22,23 +22,22 @@ public class YamlTest {
             put("header22", "value22");
         }});
         route.getAnswer().setCookies(new ArrayList<Cookie>(){{
-            add(prepareCookie("c1", "v1", null, -1, "", false, true));
-            add(prepareCookie("c2", "v2", null, -1, "", true, false));
+            add(prepareCookie("path1", "c1", "v1", -1, false));
+            add(prepareCookie("", "c2", "v2", -1, true));
         }});
 
-        System.out.println(Yaml.dump(route));
+        String dump = Yaml.dump(route, true);
+        System.out.println(dump);
+        Route route2 = Yaml.loadType(dump, Route.class);
     }
 
-    private Cookie prepareCookie(String name, String value, String domain, int maxAge, String path,
-                                 boolean secure, boolean isHttpOnly) {
+    private Cookie prepareCookie(String path, String name, String value, int maxAge, boolean secure) {
         Cookie cookie = new Cookie();
+        cookie.setPath(path);
         cookie.setName(name);
         cookie.setValue(value);
-        cookie.setDomain(domain);
         cookie.setMaxAge(maxAge);
-        cookie.setPath(path);
         cookie.setSecure(secure);
-        cookie.setHttpOnly(isHttpOnly);
         return cookie;
     }
 }
