@@ -17,6 +17,7 @@ public class AnswerLogic {
         processStatus(response, answer.getStatus());
         processHeaders(response, answer.getHeaders());
         processCookies(response, answer.getCookies());
+        processRemoveCookies(response, answer.getRemoveCookies());
 
         return answer.getBody();
     }
@@ -38,5 +39,9 @@ public class AnswerLogic {
             response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
                     cookie.getMaxAge(), cookie.isSecure());
         });
+    }
+
+    private static void processRemoveCookies(Response response, List<String> cookiesForRemove) {
+        cookiesForRemove.forEach(cookieForRemove -> response.removeCookie(cookieForRemove));
     }
 }

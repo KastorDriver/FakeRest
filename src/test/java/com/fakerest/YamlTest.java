@@ -25,6 +25,10 @@ public class YamlTest {
             add(prepareCookie("path1", "c1", "v1", -1, false));
             add(prepareCookie("", "c2", "v2", -1, true));
         }});
+        route.getAnswer().setRemoveCookies(new ArrayList<String>(){{
+            add("cookie1");
+            add("cookie2");
+        }});
 
         String dump = Yaml.dump(route, true);
         System.out.println(dump);

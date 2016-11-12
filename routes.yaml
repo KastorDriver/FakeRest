@@ -1,23 +1,16 @@
-#---
-#url: /path1
-#method: get
-#answer:
-#  status: 200
-#  body: response text
-#  headers:
-#    Content-Type: text/html
-#  cookies:
-#    - name: c1
-#      value: v1
-#    - name: c2
-#      value: v2
-
 --- !com.fakerest.bean.Route
 method: get
 url: /path1
 answer: !com.fakerest.bean.Answer
   status: 200
   body: response text
+  headers:
+    header22: value22
+    Content-Type: text/html
+  removeCookies:
+    # [cookieForRemove1, cookieForRemove2]
+    - cookieForRemove1
+    - cookieForRemove2
   cookies:
     - !com.fakerest.bean.Cookie
       path: path1
@@ -29,6 +22,3 @@ answer: !com.fakerest.bean.Answer
       name: cookie2
       value: value2
       secure: true
-  headers:
-    header22: value22
-    Content-Type: text/html

@@ -17,7 +17,7 @@ public class Server {
                 .forEach(route -> initRoute(route));
     }
 
-    static void initRoute(Route route) {
+    private static void initRoute(Route route) {
         if (HttpMethod.unsupported.equals(HttpMethod.get(route.getMethod()))) {
             throw new RuntimeException("Unsupported http method");
         }

@@ -10,6 +10,7 @@ public class Answer {
     private Integer status;
     private Map<String, String> headers = new HashMap<>();
     private List<Cookie> cookies = new ArrayList<>();
+    private List<String> removeCookies = new ArrayList<>();
 
     public String getBody() {
         return body;
@@ -41,5 +42,13 @@ public class Answer {
 
     public void setCookies(List<Cookie> cookies) {
         this.cookies = cookies;
+    }
+
+    public List<String> getRemoveCookies() {
+        return removeCookies;
+    }
+
+    public void setRemoveCookies(ArrayList<String> removeCookies) {
+        this.removeCookies = removeCookies;
     }
 }

@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ServerTest {
 
@@ -29,6 +30,10 @@ public class ServerTest {
         List<String> cookies = response.getHeaders().get("Set-Cookie");
         assertEquals("cookie1=value1;Path=path1", cookies.get(0));
         assertEquals("cookie2=value2;Secure", cookies.get(1));
+        assertTrue(cookies.get(2).contains("cookieForRemove1=\"\"")
+                && cookies.get(2).contains("Max-Age=0"));
+        assertTrue(cookies.get(3).contains("cookieForRemove2=\"\"")
+                && cookies.get(3).contains("Max-Age=0"));
     }
 
     @Test
