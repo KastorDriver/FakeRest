@@ -1,7 +1,7 @@
 --- !com.fakerest.bean.Route
 method: get
 url: /path1
-answer: !com.fakerest.bean.Answer
+defaultAnswer: !com.fakerest.bean.Answer
   status: 200
   body: response text
   headers:
@@ -22,3 +22,6 @@ answer: !com.fakerest.bean.Answer
       name: cookie2
       value: value2
       secure: true
+conditions:
+  condition: {$and: [{ip: '127.0.0.1'}, {cookie: {'cook1": $exists}}]}
+  condition: equal(ip, "127.0.0.1") and exists(cookie("cook1"))

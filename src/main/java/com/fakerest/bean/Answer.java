@@ -1,16 +1,15 @@
 package com.fakerest.bean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Answer {
     private String body;
     private Integer status;
-    private Map<String, String> headers = new HashMap<>();
-    private List<Cookie> cookies = new ArrayList<>();
-    private List<String> removeCookies = new ArrayList<>();
+    private Map<String, String> headers;
+    private List<Cookie> cookies;
+    private List<String> removeCookies;
 
     public String getBody() {
         return body;

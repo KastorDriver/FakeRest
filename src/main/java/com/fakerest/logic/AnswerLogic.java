@@ -2,7 +2,6 @@ package com.fakerest.logic;
 
 import com.fakerest.bean.Answer;
 import com.fakerest.bean.Cookie;
-import com.fakerest.bean.Route;
 import spark.Request;
 import spark.Response;
 
@@ -11,9 +10,7 @@ import java.util.Map;
 
 public class AnswerLogic {
 
-    public static Object handle(Route route, Request request, Response response) throws Exception {
-        Answer answer = route.getAnswer();
-
+    public static Object handle(Answer answer, Request request, Response response) throws Exception {
         processStatus(response, answer.getStatus());
         processHeaders(response, answer.getHeaders());
         processCookies(response, answer.getCookies());
@@ -29,16 +26,18 @@ public class AnswerLogic {
     }
 
     private static void processHeaders(Response response, Map<String, String> headers) {
-        if (headers != null && !headers.isEmpty()) {
+        if (headers != null) {
             headers.forEach((key, value) -> response.header(key, value));
         }
     }
 
     private static void processCookies(Response response, List<Cookie> cookies) {
-        cookies.forEach(cookie -> {
-            response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
-                    cookie.getMaxAge(), cookie.isSecure());
-        });
+        if (cookies != null) {
+            cookies.forEach(cookie -> {
+                response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
+                        cookie.getMaxAge(), cookie.isSecure());
+            });
+        }
     }
 
     private static void processRemoveCookies(Response response, List<String> cookiesForRemove) {

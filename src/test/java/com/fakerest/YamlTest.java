@@ -16,16 +16,16 @@ public class YamlTest {
         Route route = new Route();
         route.setUrl("/path1");
         route.setMethod(HttpMethod.get.name());
-        route.getAnswer().setBody("resp1");
-        route.getAnswer().setHeaders(new HashMap<String, String>() {{
+        route.getDefaultAnswer().setBody("resp1");
+        route.getDefaultAnswer().setHeaders(new HashMap<String, String>() {{
             put("Content-Type", "text/xml");
             put("header22", "value22");
         }});
-        route.getAnswer().setCookies(new ArrayList<Cookie>(){{
+        route.getDefaultAnswer().setCookies(new ArrayList<Cookie>(){{
             add(prepareCookie("path1", "c1", "v1", -1, false));
             add(prepareCookie("", "c2", "v2", -1, true));
         }});
-        route.getAnswer().setRemoveCookies(new ArrayList<String>(){{
+        route.getDefaultAnswer().setRemoveCookies(new ArrayList<String>(){{
             add("cookie1");
             add("cookie2");
         }});
