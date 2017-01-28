@@ -41,6 +41,8 @@ public class AnswerLogic {
     }
 
     private static void processRemoveCookies(Response response, List<String> cookiesForRemove) {
-        cookiesForRemove.forEach(cookieForRemove -> response.removeCookie(cookieForRemove));
+        if (cookiesForRemove != null) {
+            cookiesForRemove.forEach(cookieForRemove -> response.removeCookie(cookieForRemove));
+        }
     }
 }
