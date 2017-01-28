@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Answer {
-    private String body;
+    private String body = "";
     private Integer status;
     private Map<String, String> headers;
     private List<Cookie> cookies;
