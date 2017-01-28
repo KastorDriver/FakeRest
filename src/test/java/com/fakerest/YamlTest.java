@@ -3,7 +3,7 @@ package com.fakerest;
 import com.fakerest.bean.Cookie;
 import com.fakerest.bean.Route;
 import org.ho.yaml.Yaml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import spark.route.HttpMethod;
 
 import java.util.ArrayList;

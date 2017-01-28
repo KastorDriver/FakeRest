@@ -1,14 +1,15 @@
 package com.fakerest;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ServerTest {
 
@@ -17,7 +18,8 @@ public class ServerTest {
     private static final String RESPONSE_BODY = "response text";
 
     @Test
-    public void testGetRequest() throws IOException {
+    @DisplayName("dasdsad")
+    void testGetRequest() throws IOException {
         Server.main(null);
         ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:4567" + PATH, String.class);
 
