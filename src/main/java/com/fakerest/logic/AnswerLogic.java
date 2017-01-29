@@ -2,6 +2,7 @@ package com.fakerest.logic;
 
 import com.fakerest.bean.Answer;
 import com.fakerest.bean.Cookie;
+import com.fakerest.bean.Route;
 import spark.Request;
 import spark.Response;
 
@@ -10,7 +11,13 @@ import java.util.Map;
 
 public class AnswerLogic {
 
-    public static Object handle(Answer answer, Request request, Response response) throws Exception {
+    public static Object handle(Route route, Request request, Response response) throws Exception {
+        
+
+        return processAnswer(route.getDefaultAnswer(), response);
+    }
+
+    private static Object processAnswer(Answer answer, Response response) {
         processStatus(response, answer.getStatus());
         processHeaders(response, answer.getHeaders());
         processCookies(response, answer.getCookies());

@@ -1,5 +1,7 @@
 package com.fakerest;
 
+import com.fakerest.bean.Answer;
+import com.fakerest.bean.Condition;
 import com.fakerest.bean.Cookie;
 import com.fakerest.bean.Route;
 import org.ho.yaml.Yaml;
@@ -7,6 +9,7 @@ import org.junit.Test;
 import spark.route.HttpMethod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class YamlTest {
@@ -30,9 +33,13 @@ public class YamlTest {
             add("cookie2");
         }});
 
+        Condition condition = new Condition();
+        condition.setAnswer(new Answer());
+        condition.setCondition("new condition");
+        route.setConditions(Arrays.asList(condition));
+
         String dump = Yaml.dump(route, true);
         System.out.println(dump);
-        Route route2 = Yaml.loadType(dump, Route.class);
     }
 
     private Cookie prepareCookie(String path, String name, String value, int maxAge, boolean secure) {

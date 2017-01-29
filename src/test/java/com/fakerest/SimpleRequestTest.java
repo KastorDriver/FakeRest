@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Server.class)
-public class ServerTest {
+public class SimpleRequestTest {
 
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";

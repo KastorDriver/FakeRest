@@ -4,10 +4,13 @@ import com.fakerest.logic.AnswerLogic;
 import spark.Request;
 import spark.Response;
 
-public class Route implements spark.Route{
+import java.util.List;
+
+public class Route implements spark.Route {
     private String method;
     private String url;
     private Answer defaultAnswer = new Answer();
+    private List<Condition> conditions;
 
     public String getMethod() {
         return method;
@@ -33,8 +36,16 @@ public class Route implements spark.Route{
         this.defaultAnswer = defaultAnswer;
     }
 
+    public List<Condition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<Condition> conditions) {
+        this.conditions = conditions;
+    }
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return AnswerLogic.handle(getDefaultAnswer(), request, response);
+        return AnswerLogic.handle(this, request, response);
     }
 }

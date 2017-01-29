@@ -19,3 +19,9 @@ defaultAnswer: !com.fakerest.bean.Answer
       name: cookie2
       value: value2
       secure: true
+conditions:
+  - !com.fakerest.bean.Condition
+    condition: ip == "127.0.0.1"
+    answer:
+      status: 200
+      body: condition response text
