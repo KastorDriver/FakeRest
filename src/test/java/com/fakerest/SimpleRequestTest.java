@@ -18,6 +18,7 @@ import static org.junit.Assert.assertTrue;
 @PrepareForTest(Server.class)
 public class SimpleRequestTest {
 
+    private static final String LOAD_ROUTES_FUNC_NAME = "loadRoutesFilesIntoString";
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";
     private static final String RESPONSE_TEXT = "response text";
@@ -38,7 +39,7 @@ public class SimpleRequestTest {
                 "  status: " + STATUS_CODE + "\n" +
                 "  body: " + RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, "loadRoutesFilesIntoString")).toReturn(route);
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
         Server.main(null);
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
@@ -58,7 +59,7 @@ public class SimpleRequestTest {
                 "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                 "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, "loadRoutesFilesIntoString")).toReturn(route);
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
         Server.main(null);
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -77,7 +78,7 @@ public class SimpleRequestTest {
                 "defaultAnswer: !com.fakerest.bean.Answer\n" +
                 "  removeCookies: [" + COOKIE + "]\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, "loadRoutesFilesIntoString")).toReturn(route);
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
         Server.main(null);
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -105,7 +106,7 @@ public class SimpleRequestTest {
                         "      maxAge: 3600\n" +
                         "      secure: true\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, "loadRoutesFilesIntoString")).toReturn(route);
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
         Server.main(null);
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);

@@ -4,13 +4,14 @@ import com.fakerest.logic.AnswerLogic;
 import spark.Request;
 import spark.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Route implements spark.Route {
     private String method;
     private String url;
     private Answer defaultAnswer = new Answer();
-    private List<Condition> conditions;
+    private List<Condition> conditions = new ArrayList<>();
 
     public String getMethod() {
         return method;

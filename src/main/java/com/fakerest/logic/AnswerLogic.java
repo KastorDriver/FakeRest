@@ -1,6 +1,7 @@
 package com.fakerest.logic;
 
 import com.fakerest.bean.Answer;
+import com.fakerest.bean.Condition;
 import com.fakerest.bean.Cookie;
 import com.fakerest.bean.Route;
 import spark.Request;
@@ -8,13 +9,20 @@ import spark.Response;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class AnswerLogic {
 
     public static Object handle(Route route, Request request, Response response) throws Exception {
-        
+        Optional<Condition> condition = route.getConditions().stream()
+                .filter(condt -> isConditioned(condt.getCondition()))
+                .findFirst();
 
-        return processAnswer(route.getDefaultAnswer(), response);
+        return processAnswer(condition.isPresent() ? condition.get().getAnswer() : route.getDefaultAnswer(), response);
+    }
+
+    private static boolean isConditioned(String condition) {
+        return true;
     }
 
     private static Object processAnswer(Answer answer, Response response) {
