@@ -18,7 +18,7 @@ public class AnswerLogic {
     public static Object handle(Route route, Request request, Response response) throws Exception {
         try {
             Optional<Condition> condition = route.getConditions().stream()
-                    .filter(condt -> ConditionLogic.isConditioned(condt.getCondition(), request))
+                    .filter(condt -> ConditionLogic.isSuitable(condt.getCondition(), request))
                     .findFirst();
 
             return processAnswer(condition.isPresent() ? condition.get().getAnswer() : route.getDefaultAnswer(), response);
