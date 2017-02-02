@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Server.class)
-public class ConditionRequestTest {
+public class ConditionRequestIT {
 
     private static final String LOAD_ROUTES_FUNC_NAME = "loadRoutesFilesIntoString";
     private static final String URL = "http://localhost:4567";

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Server.class)
-public class SimpleRequestTest {
+public class SimpleRequestIT {
 
     private static final String LOAD_ROUTES_FUNC_NAME = "loadRoutesFilesIntoString";
     private static final String URL = "http://localhost:4567";
