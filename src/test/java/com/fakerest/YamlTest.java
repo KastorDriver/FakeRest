@@ -43,12 +43,6 @@ public class YamlTest {
     }
 
     private Cookie prepareCookie(String path, String name, String value, int maxAge, boolean secure) {
-        Cookie cookie = new Cookie();
-        cookie.setPath(path);
-        cookie.setName(name);
-        cookie.setValue(value);
-        cookie.setMaxAge(maxAge);
-        cookie.setSecure(secure);
-        return cookie;
+        return Cookie.builder().path(path).name(name).value(value).maxAge(maxAge).secure(secure).build();
     }
 }

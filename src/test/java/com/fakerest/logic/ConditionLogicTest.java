@@ -50,4 +50,11 @@ public class ConditionLogicTest {
         Assert.assertTrue(ConditionLogic.isSuitable(String.format(" @contentLength == %s", contentLength), requestMock));
         Assert.assertFalse(ConditionLogic.isSuitable(String.format(" @contentLength == %s", wrongContentLength), requestMock));
     }
+
+    @Test
+    public void cookieConditionIsSuitable() {
+//        final Cookie cookie = new Cookie();
+//        Mockito.when(requestMock.contentLength()).thenReturn(contentLength);
+//        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@contentLength == %s", contentLength), requestMock));
+    }
 }
