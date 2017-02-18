@@ -64,7 +64,7 @@ public class ConditionLogic {
             final String fullElementName = firstElementPart.replace("(", "\\(") + headerName + lastElementPart.replace(")", "\\)");
 
             final String replacedElementName = "_" + RequestElement.header.name() + headerName;
-            final String elementValue = request.cookie(headerName);
+            final String elementValue = request.headers(headerName);
             binding.setVariable(replacedElementName, elementValue);
             return condition.replaceAll(fullElementName, replacedElementName);
         });
