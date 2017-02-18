@@ -10,7 +10,7 @@ public class ConditionLogic {
         Binding binding = new Binding();
 
         for (RequestElement requestElement : RequestElement.values()) {
-            if (requestElement.containedInCondition(condition)) {
+            while (requestElement.containedInCondition(condition)) {
                 condition = requestElement.getProcessCondition().apply(condition, request, binding);
             }
         }
@@ -41,6 +41,19 @@ public class ConditionLogic {
             final int elementValue = request.contentLength();
             binding.setVariable(replacedElementName, elementValue);
             return condition.replaceAll(elementName, replacedElementName);
+        }),
+        cookie((condition, request, binding) -> {
+            final String firstElementPart = "@" + RequestElement.cookie.name() + "(";
+            final String lastElementPart = ")";
+            int startIndex = condition.indexOf(firstElementPart);
+            int endIndex = condition.indexOf(lastElementPart, startIndex);
+            final String cookieName = condition.substring(startIndex + firstElementPart.length(), endIndex);
+            final String fullElementName = firstElementPart.replace("(", "\\(") + cookieName + lastElementPart.replace(")", "\\)");
+
+            final String replacedElementName = "_" + RequestElement.cookie.name() + cookieName;
+            final String elementValue = request.cookie(cookieName);
+            binding.setVariable(replacedElementName, elementValue);
+            return condition.replaceAll(fullElementName, replacedElementName);
         });
 
         private RequestElementProcessor processCondition;

@@ -53,8 +53,20 @@ public class ConditionLogicTest {
 
     @Test
     public void cookieConditionIsSuitable() {
-//        final Cookie cookie = new Cookie();
-//        Mockito.when(requestMock.contentLength()).thenReturn(contentLength);
-//        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@contentLength == %s", contentLength), requestMock));
+        Mockito.when(requestMock.cookie("newCookie")).thenReturn("cookieValue");
+        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@cookie(newCookie) == \"%s\"", "cookieValue"), requestMock));
+        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@cookie(newCookie)== \"%s\"", "cookieValue"), requestMock));
+        Assert.assertTrue(ConditionLogic.isSuitable(String.format(" @cookie(newCookie) == \"%s\"", "cookieValue"), requestMock));
+        Assert.assertFalse(ConditionLogic.isSuitable(String.format("@cookie(newCookie) == \"%s\"", "wrongValue"), requestMock));
+    }
+
+    @Test
+    public void cookieConditionIsSuitableForManyCookies() {
+        Mockito.when(requestMock.cookie("newCookie")).thenReturn("cookieValue");
+        Mockito.when(requestMock.cookie("anotherCookie")).thenReturn("anotherValue");
+
+        Assert.assertTrue(ConditionLogic.isSuitable(
+                String.format("@cookie(newCookie) == \"%s\" && @cookie(anotherCookie) == \"%s\"", "cookieValue", "anotherValue"),
+                requestMock));
     }
 }

@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <totalLineRate.unit.tests.coverage>75</totalLineRate.unit.tests.coverage>
+        <totalLineRate.unit.tests.coverage>55</totalLineRate.unit.tests.coverage>
         <skip.integration.tests>true</skip.integration.tests>
         <compile.source>1.8</compile.source>
         <mockito.version>1.10.19</mockito.version>
