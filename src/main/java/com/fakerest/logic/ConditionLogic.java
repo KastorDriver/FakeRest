@@ -54,6 +54,19 @@ public class ConditionLogic {
             final String elementValue = request.cookie(cookieName);
             binding.setVariable(replacedElementName, elementValue);
             return condition.replaceAll(fullElementName, replacedElementName);
+        }),
+        header((condition, request, binding) -> {
+            final String firstElementPart = "@" + RequestElement.header.name() + "(";
+            final String lastElementPart = ")";
+            int startIndex = condition.indexOf(firstElementPart);
+            int endIndex = condition.indexOf(lastElementPart, startIndex);
+            final String headerName = condition.substring(startIndex + firstElementPart.length(), endIndex);
+            final String fullElementName = firstElementPart.replace("(", "\\(") + headerName + lastElementPart.replace(")", "\\)");
+
+            final String replacedElementName = "_" + RequestElement.header.name() + headerName;
+            final String elementValue = request.cookie(headerName);
+            binding.setVariable(replacedElementName, elementValue);
+            return condition.replaceAll(fullElementName, replacedElementName);
         });
 
         private RequestElementProcessor processCondition;

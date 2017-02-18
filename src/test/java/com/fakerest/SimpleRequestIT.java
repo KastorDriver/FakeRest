@@ -116,4 +116,33 @@ public class SimpleRequestIT {
         assertTrue(setCookie.contains("Expire"));
         assertTrue(setCookie.contains("Secure"));
     }
+
+    @Test
+    public void correctSetHeadersForSimpleGetRequest() throws Exception {
+        final String COOKIE = "cookieForAdd";
+        final String COOKIE_VALUE = "someValue";
+        final String COOKIE_PATH = "somePath";
+
+        String route = "--- !com.fakerest.bean.Route\n" +
+                "method: get\n" +
+                "url: " + PATH + "\n" +
+                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "  cookies:\n" +
+                "    - !com.fakerest.bean.Cookie\n" +
+                "      path: " + COOKIE_PATH + "\n" +
+                "      name: " + COOKIE + "\n" +
+                "      value: " + COOKIE_VALUE + "\n" +
+                "      maxAge: 3600\n" +
+                "      secure: true\n";
+
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
+        Server.main(null);
+
+        ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
+        HttpHeaders headers = response.getHeaders();
+        String setCookie = headers.get("Set-Cookie").toString();
+        assertTrue(setCookie.contains(String.format("%s=%s;Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
+        assertTrue(setCookie.contains("Expire"));
+        assertTrue(setCookie.contains("Secure"));
+    }
 }

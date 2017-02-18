@@ -69,4 +69,13 @@ public class ConditionLogicTest {
                 String.format("@cookie(newCookie) == \"%s\" && @cookie(anotherCookie) == \"%s\"", "cookieValue", "anotherValue"),
                 requestMock));
     }
+
+    @Test
+    public void headerConditionIsSuitable() {
+        Mockito.when(requestMock.headers("Accept")).thenReturn("application/json");
+        Mockito.when(requestMock.headers("AnotherHeader")).thenReturn("anotherValue");
+
+        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@header(Accept) == \"%s\"", "application/json"), requestMock));
+        Assert.assertTrue(ConditionLogic.isSuitable(String.format("@header(AnotherHeader) == \"%s\"", "anotherValue"), requestMock));
+    }
 }

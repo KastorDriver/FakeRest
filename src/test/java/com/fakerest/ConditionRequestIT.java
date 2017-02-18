@@ -133,4 +133,34 @@ public class ConditionRequestIT {
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
         assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
     }
+
+    @Test
+    public void correctAnswerFromHeaderCondition() throws Exception {
+        final String CONDITION_RESPONSE_TEXT = "condition response text";
+        final int CONDITION_STATUS_CODE = 201;
+
+        String route = "--- !com.fakerest.bean.Route\n" +
+                "method: get\n" +
+                "url: " + PATH + "\n" +
+                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "  status: 200\n" +
+                "  body: response text\n" +
+                "conditions:\n" +
+                "  - !com.fakerest.bean.Condition\n" +
+                "    condition: @header(Accept) == \"application/json\"\n" +
+                "    answer:\n" +
+                "      status: " + CONDITION_STATUS_CODE + "\n" +
+                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+
+        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
+        Server.main(null);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", "application/json");
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.GET, httpEntity, String.class);
+
+        assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
+        assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
+    }
 }
