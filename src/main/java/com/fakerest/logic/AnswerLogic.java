@@ -4,8 +4,6 @@ import com.fakerest.bean.Answer;
 import com.fakerest.bean.Condition;
 import com.fakerest.bean.Cookie;
 import com.fakerest.bean.Route;
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
 import spark.Request;
 import spark.Response;
 
@@ -26,13 +24,6 @@ public class AnswerLogic {
             System.out.println(ex);
             throw ex;
         }
-    }
-
-    public static void main(String[] args) {
-        Binding binding = new Binding();
-        binding.setVariable("ip", "127.0.0.1");
-        GroovyShell groovyShell = new GroovyShell(binding);
-        System.out.println(groovyShell.evaluate("ip == '127.0.0.1'"));
     }
 
     private static Object processAnswer(Answer answer, Response response) {

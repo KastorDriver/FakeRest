@@ -2,10 +2,6 @@ package com.fakerest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,18 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Server.class)
-public class ConditionRequestIT {
+public class FakeRestConditionTest {
 
-    private static final String LOAD_ROUTES_FUNC_NAME = "loadRoutesFilesIntoString";
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";
+    private FakeRest fakeRest;
 
     @Before
     public void before() {
         PATH = PATH + System.currentTimeMillis();
+        fakeRest = spy(FakeRest.class);
     }
 
     @Test
@@ -45,8 +43,8 @@ public class ConditionRequestIT {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
         assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
@@ -70,8 +68,8 @@ public class ConditionRequestIT {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
         assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
@@ -96,8 +94,8 @@ public class ConditionRequestIT {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().postForEntity(URL + PATH, REQUEST_BODY, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
         assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
@@ -121,8 +119,8 @@ public class ConditionRequestIT {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cookie", "someCookie=cookieValue");
@@ -152,8 +150,8 @@ public class ConditionRequestIT {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", "application/json");

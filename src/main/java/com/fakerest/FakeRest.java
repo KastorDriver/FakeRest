@@ -14,24 +14,24 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
+public class FakeRest {
     private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
 
-    public static void main(String[] args) throws IOException {
-        loadRoutesFromFiles().forEach(Server::initRoute);
+    public void start() throws IOException {
+        loadRoutesFromFiles().forEach(route -> initRoute(route));
     }
 
-    public static List<Route> loadRoutesFromFiles() throws IOException {
+    public List<Route> loadRoutesFromFiles() throws IOException {
         List<Route> routes = new ArrayList<>();
-        Yaml.loadStreamOfType(loadRoutesFilesIntoString(), Route.class).forEach(route -> routes.add(route));
+        Yaml.loadStreamOfType(loadRoutesFilesIntoString(ROUTES_CONFIG_FILE_NAME), Route.class).forEach(route -> routes.add(route));
         return routes;
     }
 
-    private static String loadRoutesFilesIntoString() throws IOException {
-        return new String(Files.readAllBytes(Paths.get(ROUTES_CONFIG_FILE_NAME)));
+    String loadRoutesFilesIntoString(String path) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(path)));
     }
 
-    private static void initRoute(Route route) {
+    private void initRoute(Route route) {
         if (HttpMethod.unsupported.equals(HttpMethod.get(route.getMethod()))) {
             throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
         }

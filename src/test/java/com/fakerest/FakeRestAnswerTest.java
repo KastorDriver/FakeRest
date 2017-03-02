@@ -2,10 +2,6 @@ package com.fakerest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +9,19 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Server.class)
-public class SimpleRequestIT {
+public class FakeRestAnswerTest {
 
-    private static final String LOAD_ROUTES_FUNC_NAME = "loadRoutesFilesIntoString";
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";
     private static final String RESPONSE_TEXT = "response text";
+    private FakeRest fakeRest;
 
     @Before
     public void before() {
         PATH = PATH + System.currentTimeMillis();
+        fakeRest = spy(FakeRest.class);
     }
 
     @Test
@@ -39,8 +35,8 @@ public class SimpleRequestIT {
                 "  status: " + STATUS_CODE + "\n" +
                 "  body: " + RESPONSE_TEXT + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
         assertEquals(RESPONSE_TEXT, response.getBody());
@@ -59,8 +55,8 @@ public class SimpleRequestIT {
                 "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                 "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
@@ -78,8 +74,8 @@ public class SimpleRequestIT {
                 "defaultAnswer: !com.fakerest.bean.Answer\n" +
                 "  removeCookies: [" + COOKIE + "]\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
@@ -106,8 +102,8 @@ public class SimpleRequestIT {
                         "      maxAge: 3600\n" +
                         "      secure: true\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
@@ -135,8 +131,8 @@ public class SimpleRequestIT {
                 "      maxAge: 3600\n" +
                 "      secure: true\n";
 
-        PowerMockito.stub(PowerMockito.method(Server.class, LOAD_ROUTES_FUNC_NAME)).toReturn(route);
-        Server.main(null);
+        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
