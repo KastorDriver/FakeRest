@@ -15,11 +15,12 @@ public class AnswerLogic {
 
     public static Object handle(Route route, Request request, Response response) throws Exception {
         try {
-            Optional<Condition> condition = route.getConditions().stream()
-                    .filter(condt -> ConditionLogic.isSuitable(condt.getCondition(), request))
+            Optional<Condition> suitableCondition = route.getConditions().stream()
+                    .filter(condition -> condition.isSuitable(request))
                     .findFirst();
 
-            return processAnswer(condition.isPresent() ? condition.get().getAnswer() : route.getDefaultAnswer(), response);
+            return processAnswer(suitableCondition.isPresent() ? suitableCondition.get().getAnswer()
+                                                               : route.getDefaultAnswer(), response);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
