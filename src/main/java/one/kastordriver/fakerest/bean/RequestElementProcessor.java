@@ -1,4 +1,4 @@
-package com.fakerest.bean;
+package one.kastordriver.fakerest.bean;
 
 import groovy.lang.Binding;
 import spark.Request;

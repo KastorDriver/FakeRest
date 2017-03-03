@@ -1,9 +1,10 @@
-package com.fakerest;
+package one.kastordriver.fakerest.logic;
 
-import com.fakerest.bean.Route;
-import com.fakerest.exception.InitializeRouteException;
-import com.fakerest.exception.UnsupportedHttpMethodException;
+import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.exception.InitializeRouteException;
+import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.ho.yaml.Yaml;
+import org.springframework.stereotype.Component;
 import spark.Spark;
 import spark.route.HttpMethod;
 
@@ -14,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class FakeRest {
     private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
 

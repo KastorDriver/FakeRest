@@ -1,4 +1,4 @@
-package com.fakerest;
+package one.kastordriver.fakerest.logic;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +30,14 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !com.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @ip == \"127.0.0.1\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -55,14 +55,14 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !com.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @port == 4567\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -81,14 +81,14 @@ public class FakeRestConditionTest {
         final int CONDITION_STATUS_CODE = 201;
         final String REQUEST_BODY = "requestBody";
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: post\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !com.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -106,14 +106,14 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !com.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -137,14 +137,14 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !com.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @header(Accept) == \"application/json\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +

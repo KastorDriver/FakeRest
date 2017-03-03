@@ -1,4 +1,4 @@
-package com.fakerest;
+package one.kastordriver.fakerest.logic;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +28,11 @@ public class FakeRestAnswerTest {
     public void correctStatusAndResponseBodyForSimpleGetRequest() throws Exception {
         final int STATUS_CODE = 200;
 
-        String route = "--- !com.fakerest.bean.Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
-                "  status: " + STATUS_CODE + "\n" +
-                "  body: " + RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "defaultAnswer:\n" +
+                       "  status: " + STATUS_CODE + "\n" +
+                       "  body: " + RESPONSE_TEXT + "\n";
 
         doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -47,13 +46,12 @@ public class FakeRestAnswerTest {
         final String ACCEPT = "Accept";
         final String CONTENT_TYPE = "Content-Type";
 
-        String route = "--- !com.fakerest.bean.Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
-                "  headers:\n" +
-                "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
-                "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "defaultAnswer:\n" +
+                       "  headers:\n" +
+                       "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
+                       "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
         doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -68,11 +66,10 @@ public class FakeRestAnswerTest {
     public void correctRemoveCookieForSimpleGetRequest() throws Exception {
         final String COOKIE = "cookieForRemove";
 
-        String route = "--- !com.fakerest.bean.Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
-                "  removeCookies: [" + COOKIE + "]\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "defaultAnswer:\n" +
+                       "  removeCookies: [" + COOKIE + "]\n";
 
         doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -90,17 +87,16 @@ public class FakeRestAnswerTest {
         final String COOKIE_VALUE = "someValue";
         final String COOKIE_PATH = "somePath";
 
-        String route = "--- !com.fakerest.bean.Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
-                "  cookies:\n" +
-                        "    - !com.fakerest.bean.Cookie\n" +
-                        "      path: " + COOKIE_PATH + "\n" +
-                        "      name: " + COOKIE + "\n" +
-                        "      value: " + COOKIE_VALUE + "\n" +
-                        "      maxAge: 3600\n" +
-                        "      secure: true\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "defaultAnswer:\n" +
+                       "  cookies:\n" +
+                       "    - !one.kastordriver.fakerest.bean.Cookie\n" +
+                       "      path: " + COOKIE_PATH + "\n" +
+                       "      name: " + COOKIE + "\n" +
+                       "      value: " + COOKIE_VALUE + "\n" +
+                       "      maxAge: 3600\n" +
+                       "      secure: true\n";
 
         doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -119,12 +115,12 @@ public class FakeRestAnswerTest {
         final String COOKIE_VALUE = "someValue";
         final String COOKIE_PATH = "somePath";
 
-        String route = "--- !com.fakerest.bean.Route\n" +
+        String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !com.fakerest.bean.Answer\n" +
+                "defaultAnswer:\n" +
                 "  cookies:\n" +
-                "    - !com.fakerest.bean.Cookie\n" +
+                "    - !one.kastordriver.fakerest.bean.Cookie\n" +
                 "      path: " + COOKIE_PATH + "\n" +
                 "      name: " + COOKIE + "\n" +
                 "      value: " + COOKIE_VALUE + "\n" +

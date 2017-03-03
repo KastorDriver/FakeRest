@@ -1,9 +1,9 @@
-package com.fakerest.logic;
+package one.kastordriver.fakerest.logic;
 
-import com.fakerest.bean.Answer;
-import com.fakerest.bean.Condition;
-import com.fakerest.bean.Cookie;
-import com.fakerest.bean.Route;
+import one.kastordriver.fakerest.bean.Answer;
+import one.kastordriver.fakerest.bean.Condition;
+import one.kastordriver.fakerest.bean.Cookie;
+import one.kastordriver.fakerest.bean.Route;
 import spark.Request;
 import spark.Response;
 

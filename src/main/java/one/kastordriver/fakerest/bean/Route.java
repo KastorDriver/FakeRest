@@ -1,8 +1,8 @@
-package com.fakerest.bean;
+package one.kastordriver.fakerest.bean;
 
-import com.fakerest.logic.AnswerLogic;
 import lombok.Getter;
 import lombok.Setter;
+import one.kastordriver.fakerest.logic.AnswerLogic;
 import spark.Request;
 import spark.Response;
 

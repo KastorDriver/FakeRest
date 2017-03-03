@@ -1,7 +1,7 @@
---- !com.fakerest.bean.Route
+--- !Route
 method: get
 url: /path1
-defaultAnswer: !com.fakerest.bean.Answer
+defaultAnswer: !Answer
   status: 200
   body: response text
   headers:
@@ -9,18 +9,18 @@ defaultAnswer: !com.fakerest.bean.Answer
     Content-Type: text/html
   removeCookies: [cookieForRemove1, cookieForRemove2]
   cookies:
-    - !com.fakerest.bean.Cookie
+    - !Cookie
       path: path1
       name: cookie1
       value: value1
       maxAge: -1
       secure: false
-    - !com.fakerest.bean.Cookie
+    - !Cookie
       name: cookie2
       value: value2
       secure: true
 conditions:
-  - !com.fakerest.bean.Condition
+  - !Condition
     condition: ip == "127.0.0.1"
     answer:
       status: 200

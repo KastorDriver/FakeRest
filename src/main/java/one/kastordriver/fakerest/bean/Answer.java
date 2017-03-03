@@ -1,4 +1,4 @@
-package com.fakerest.bean;
+package one.kastordriver.fakerest.bean;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,9 @@ import java.util.Map;
 @Getter
 @Setter
 public class Answer {
-    private String body = "";
+    private static final String EMPTY_ANSWER_BODY = "";
+
+    private String body = EMPTY_ANSWER_BODY;
     private Integer status;
     private Map<String, String> headers;
     private List<Cookie> cookies;

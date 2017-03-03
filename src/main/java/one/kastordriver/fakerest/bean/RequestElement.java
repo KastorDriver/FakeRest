@@ -1,4 +1,4 @@
-package com.fakerest.bean;
+package one.kastordriver.fakerest.bean;
 
 /**
  * Created by Kastor on 02.03.2017.
