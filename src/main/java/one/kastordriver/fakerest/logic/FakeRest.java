@@ -4,6 +4,7 @@ import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.InitializeRouteException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.ho.yaml.Yaml;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import spark.Spark;
 import spark.route.HttpMethod;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class FakeRest {
+public class FakeRest implements InitializingBean {
     private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
 
-    public void start() throws IOException {
+    void start() throws IOException {
         loadRoutesFromFiles().forEach(route -> initRoute(route));
     }
 
@@ -44,5 +45,10 @@ public class FakeRest {
         } catch (Exception ex) {
             throw new InitializeRouteException("init route error", ex);
         }
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        start();
     }
 }
