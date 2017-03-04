@@ -26,8 +26,8 @@ public class Route implements spark.Route {
                     .filter(condition -> condition.isSuitable(request))
                     .findFirst();
 
-            return processAnswer(suitableCondition.isPresent() ? suitableCondition.get().getAnswer()
-                    : this.getDefaultAnswer(), response);
+            Answer answer = suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : this.getDefaultAnswer();
+            return processAnswer(answer, response);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
@@ -44,29 +44,21 @@ public class Route implements spark.Route {
     }
 
     private void processStatus(Response response, Integer status) {
-        if (status != null) {
-            response.status(status);
-        }
+        response.status(status);
     }
 
     private void processHeaders(Response response, Map<String, String> headers) {
-        if (headers != null) {
-            headers.forEach((key, value) -> response.header(key, value));
-        }
+        headers.forEach((key, value) -> response.header(key, value));
     }
 
     private void processCookies(Response response, List<Cookie> cookies) {
-        if (cookies != null) {
-            cookies.forEach(cookie -> {
-                response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
-                        cookie.getMaxAge(), cookie.isSecure());
-            });
-        }
+        cookies.forEach(cookie -> {
+            response.cookie(cookie.getPath(), cookie.getName(), cookie.getValue(),
+                    cookie.getMaxAge(), cookie.isSecure());
+        });
     }
 
     private void processRemoveCookies(Response response, List<String> cookiesForRemove) {
-        if (cookiesForRemove != null) {
-            cookiesForRemove.forEach(cookieForRemove -> response.removeCookie(cookieForRemove));
-        }
+        cookiesForRemove.forEach(cookieForRemove -> response.removeCookie(cookieForRemove));
     }
 }
