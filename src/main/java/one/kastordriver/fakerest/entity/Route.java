@@ -1,4 +1,4 @@
-package one.kastordriver.fakerest.bean;
+package one.kastordriver.fakerest.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,16 +22,22 @@ public class Route implements spark.Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         try {
-            Optional<Condition> suitableCondition = this.getConditions().stream()
-                    .filter(condition -> condition.isSuitable(request))
-                    .findFirst();
-
-            Answer answer = suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : this.getDefaultAnswer();
-            return processAnswer(answer, response);
+            Optional<Condition> suitableCondition = findFirstAppropriateCondition(request);
+            return processAnswer(fetchAnswer(suitableCondition), response);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
         }
+    }
+
+    private Optional<Condition> findFirstAppropriateCondition(Request request) {
+        return this.getConditions().stream()
+            .filter(condition -> condition.isSuitable(request))
+            .findFirst();
+    }
+
+    private Answer fetchAnswer(Optional<Condition> suitableCondition) {
+        return suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : this.getDefaultAnswer();
     }
 
     private Object processAnswer(Answer answer, Response response) {

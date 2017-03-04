@@ -1,6 +1,6 @@
 package one.kastordriver.fakerest;
 
-import one.kastordriver.fakerest.bean.Condition;
+import one.kastordriver.fakerest.entity.Condition;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

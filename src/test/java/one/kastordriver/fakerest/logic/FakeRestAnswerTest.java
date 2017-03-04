@@ -91,7 +91,7 @@ public class FakeRestAnswerTest {
                        "url: " + PATH + "\n" +
                        "defaultAnswer:\n" +
                        "  cookies:\n" +
-                       "    - !one.kastordriver.fakerest.bean.Cookie\n" +
+                       "    - !one.kastordriver.fakerest.entity.Cookie\n" +
                        "      path: " + COOKIE_PATH + "\n" +
                        "      name: " + COOKIE + "\n" +
                        "      value: " + COOKIE_VALUE + "\n" +
@@ -120,7 +120,7 @@ public class FakeRestAnswerTest {
                 "url: " + PATH + "\n" +
                 "defaultAnswer:\n" +
                 "  cookies:\n" +
-                "    - !one.kastordriver.fakerest.bean.Cookie\n" +
+                "    - !one.kastordriver.fakerest.entity.Cookie\n" +
                 "      path: " + COOKIE_PATH + "\n" +
                 "      name: " + COOKIE + "\n" +
                 "      value: " + COOKIE_VALUE + "\n" +

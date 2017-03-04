@@ -1,4 +1,4 @@
-package one.kastordriver.fakerest.bean;
+package one.kastordriver.fakerest.entity;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;

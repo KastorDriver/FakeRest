@@ -1,6 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.entity.Route;
 import one.kastordriver.fakerest.exception.InitializeRouteException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.ho.yaml.Yaml;

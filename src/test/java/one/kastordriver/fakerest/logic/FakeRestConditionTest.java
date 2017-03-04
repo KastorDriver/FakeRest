@@ -37,7 +37,7 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.entity.Condition\n" +
                 "    condition: @ip == \"127.0.0.1\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -62,7 +62,7 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.entity.Condition\n" +
                 "    condition: @port == 4567\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -88,7 +88,7 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.entity.Condition\n" +
                 "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -113,7 +113,7 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.entity.Condition\n" +
                 "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
@@ -144,7 +144,7 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "  - !one.kastordriver.fakerest.entity.Condition\n" +
                 "    condition: @header(Accept) == \"application/json\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
