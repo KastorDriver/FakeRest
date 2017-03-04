@@ -21,7 +21,7 @@ public class Condition {
     public boolean isSuitable(Request request) {
         Binding binding = new Binding();
         GroovyShell groovyShell = new GroovyShell(binding);
-        Object result = groovyShell.evaluate(prepareConditionToEvaluate(condition, binding, request));
+        Object result = groovyShell.evaluate(prepareConditionToEvaluate(this.condition, binding, request));
         return result instanceof Boolean ? (Boolean)result : false;
     }
 
