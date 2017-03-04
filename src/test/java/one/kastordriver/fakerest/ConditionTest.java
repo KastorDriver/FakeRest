@@ -17,6 +17,17 @@ public class ConditionTest {
     }
 
     @Test
+    public void manyRequestsForTheSameConditionMustWorkFine() throws Exception {
+        final String ip = "127.0.0.1";
+
+        Mockito.when(requestMock.ip()).thenReturn(ip);
+
+        Condition condition = Condition.builder().condition(String.format("@ip == \"%s\"", ip)).build();
+        Assert.assertTrue(condition.isSuitable(requestMock));
+        Assert.assertTrue(condition.isSuitable(requestMock));
+    }
+
+    @Test
     public void ipConditionIsSuitable() {
         final String ip = "127.0.0.1";
         final String wrongIp = "192.168.0.1";

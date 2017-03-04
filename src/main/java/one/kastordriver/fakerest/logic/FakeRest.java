@@ -24,14 +24,14 @@ public class FakeRest implements InitializingBean {
         loadRoutesFromFiles().forEach(route -> initRoute(route));
     }
 
-    public List<Route> loadRoutesFromFiles() throws IOException {
+    private List<Route> loadRoutesFromFiles() throws IOException {
         List<Route> routes = new ArrayList<>();
         Yaml.loadStreamOfType(loadRoutesFilesIntoString(ROUTES_CONFIG_FILE_NAME), Route.class).forEach(route -> routes.add(route));
         return routes;
     }
 
     String loadRoutesFilesIntoString(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)));
+        return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
     }
 
     private void initRoute(Route route) {
