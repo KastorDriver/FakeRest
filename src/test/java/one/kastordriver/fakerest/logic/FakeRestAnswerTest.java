@@ -1,6 +1,7 @@
 package one.kastordriver.fakerest.logic;
 
 import one.kastordriver.fakerest.config.AppConfig;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,11 @@ public class FakeRestAnswerTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        PATH = PATH + System.currentTimeMillis();
+    }
+
+    @After
+    public void after() throws Exception {
+        fakeRest.destroy();
     }
 
     @Test
