@@ -1,23 +1,26 @@
 package one.kastordriver.fakerest;
 
 import one.kastordriver.fakerest.bean.Condition;
+import one.kastordriver.fakerest.config.AppConfig;
 import one.kastordriver.fakerest.logic.ConditionProcessor;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import spark.Request;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
 public class ConditionProcessorTest {
 
     private Request requestMock;
-    private static ConditionProcessor conditionProcessor;
 
-    @BeforeClass
-    public static void beforeClass() {
-        conditionProcessor = new ConditionProcessor();
-    }
+    @Autowired
+    private ConditionProcessor conditionProcessor;
 
     @Before
     public void before() {
