@@ -1,43 +1,42 @@
-package one.kastordriver.fakerest.entity;
+package one.kastordriver.fakerest.logic;
 
-import lombok.Getter;
-import lombok.Setter;
+import one.kastordriver.fakerest.bean.Answer;
+import one.kastordriver.fakerest.bean.Condition;
+import one.kastordriver.fakerest.bean.Cookie;
+import one.kastordriver.fakerest.bean.Route;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Getter
-@Setter
-public class Route implements spark.Route {
+@Component
+public class RouteProcessor {
 
-    private String method;
-    private String url;
-    private Answer defaultAnswer = new Answer();
-    private List<Condition> conditions = new ArrayList<>();
+    @Autowired
+    private ConditionProcessor conditionProcessor;
 
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object process(Route route, Request request, Response response) throws Exception {
         try {
-            Optional<Condition> suitableCondition = findFirstAppropriateCondition(request);
-            return processAnswer(fetchAnswer(suitableCondition), response);
+            Optional<Condition> suitableCondition = findFirstAppropriateCondition(route, request);
+            return processAnswer(fetchAnswer(route, suitableCondition), response);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
         }
     }
 
-    private Optional<Condition> findFirstAppropriateCondition(Request request) {
-        return this.getConditions().stream()
-            .filter(condition -> condition.isSuitable(request))
-            .findFirst();
+    private Optional<Condition> findFirstAppropriateCondition(Route route, Request request) {
+        return route.getConditions().stream()
+                .filter(condition -> conditionProcessor.isConditionSuitForRequest(condition, request))
+                .findFirst();
     }
 
-    private Answer fetchAnswer(Optional<Condition> suitableCondition) {
-        return suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : this.getDefaultAnswer();
+    private Answer fetchAnswer(Route route, Optional<Condition> suitableCondition) {
+        return suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : route.getDefaultAnswer();
     }
 
     private Object processAnswer(Answer answer, Response response) {

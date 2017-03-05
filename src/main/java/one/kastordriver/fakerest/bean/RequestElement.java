@@ -1,8 +1,5 @@
-package one.kastordriver.fakerest.entity;
+package one.kastordriver.fakerest.bean;
 
-/**
- * Created by Kastor on 02.03.2017.
- */
 public enum RequestElement {
     ip((condition, request, binding) -> {
         final String elementName = "@" + RequestElement.ip.name();

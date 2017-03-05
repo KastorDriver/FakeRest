@@ -1,27 +1,19 @@
-package one.kastordriver.fakerest.entity;
+package one.kastordriver.fakerest.logic;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Tolerate;
+import one.kastordriver.fakerest.bean.Condition;
+import one.kastordriver.fakerest.bean.RequestElement;
+import org.springframework.stereotype.Component;
 import spark.Request;
 
-@Builder
-@Getter
-@Setter
-public class Condition {
-    private String condition;
-    private Answer answer;
+@Component
+public class ConditionProcessor {
 
-    @Tolerate
-    public Condition() {}
-
-    public boolean isSuitable(Request request) {
+    public boolean isConditionSuitForRequest(Condition condition, Request request) {
         Binding binding = new Binding();
         GroovyShell groovyShell = new GroovyShell(binding);
-        Object result = groovyShell.evaluate(prepareConditionToEvaluate(this.condition, binding, request));
+        Object result = groovyShell.evaluate(prepareConditionToEvaluate(condition.getCondition(), binding, request));
         return result instanceof Boolean ? (Boolean)result : false;
     }
 

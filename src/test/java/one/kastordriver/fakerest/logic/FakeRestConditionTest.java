@@ -1,28 +1,43 @@
 package one.kastordriver.fakerest.logic;
 
+import one.kastordriver.fakerest.config.AppConfig;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
 public class FakeRestConditionTest {
 
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";
+
+    @Spy
+    private Settings fakeSettings;
+
+    @InjectMocks
+    @Autowired
     private FakeRest fakeRest;
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         PATH = PATH + System.currentTimeMillis();
-        fakeRest = spy(FakeRest.class);
     }
 
     @Test
@@ -37,13 +52,13 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.entity.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @ip == \"127.0.0.1\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -62,13 +77,13 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.entity.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @port == 4567\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -88,13 +103,13 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.entity.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().postForEntity(URL + PATH, REQUEST_BODY, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -113,13 +128,13 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.entity.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();
@@ -144,13 +159,13 @@ public class FakeRestConditionTest {
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
-                "  - !one.kastordriver.fakerest.entity.Condition\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
                 "    condition: @header(Accept) == \"application/json\"\n" +
                 "    answer:\n" +
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();

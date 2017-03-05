@@ -1,54 +1,48 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.entity.Route;
-import one.kastordriver.fakerest.exception.InitializeRouteException;
+import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
-import org.ho.yaml.Yaml;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Spark;
 import spark.route.HttpMethod;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
-public class FakeRest implements InitializingBean {
-    private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
+public class FakeRest implements DisposableBean {
 
-    void start() throws IOException {
-        loadRoutesFromFiles().forEach(route -> initRoute(route));
+    @Autowired
+    private Settings settings;
+
+    @Autowired
+    private RouteProcessor routeProcessor;
+
+    @Override
+    public void destroy() throws Exception {
+        Spark.stop();
     }
 
-    private List<Route> loadRoutesFromFiles() throws IOException {
-        List<Route> routes = new ArrayList<>();
-        Yaml.loadStreamOfType(loadRoutesFilesIntoString(ROUTES_CONFIG_FILE_NAME), Route.class).forEach(route -> routes.add(route));
-        return routes;
-    }
-
-    String loadRoutesFilesIntoString(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
+    public void start() throws IOException {
+        settings.loadRoutesFromFiles().forEach(route -> initRoute(route));
     }
 
     private void initRoute(Route route) {
-        if (HttpMethod.unsupported.equals(HttpMethod.get(route.getMethod()))) {
+        HttpMethod httpMethod = HttpMethod.get(route.getMethod());
+
+        if (HttpMethod.unsupported.equals(httpMethod)) {
             throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
         }
 
-        try {
-            Method method = Spark.class.getMethod(route.getMethod(), String.class, spark.Route.class);
-            method.invoke(null, route.getUrl(), route);
-        } catch (Exception ex) {
-            throw new InitializeRouteException("init route error", ex);
+        //TODO refactor
+        switch (httpMethod) {
+            case get:
+                Spark.get(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
+                break;
+            case post:
+                Spark.post(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
+                break;
         }
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        start();
     }
 }

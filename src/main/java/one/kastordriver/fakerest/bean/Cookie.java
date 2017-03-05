@@ -1,4 +1,4 @@
-package one.kastordriver.fakerest.entity;
+package one.kastordriver.fakerest.bean;
 
 import lombok.Builder;
 import lombok.Getter;

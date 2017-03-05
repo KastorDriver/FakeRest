@@ -1,27 +1,44 @@
 package one.kastordriver.fakerest.logic;
 
+import one.kastordriver.fakerest.config.AppConfig;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
 public class FakeRestAnswerTest {
 
     private static final String URL = "http://localhost:4567";
     private static String PATH = "/some-path";
     private static final String RESPONSE_TEXT = "response text";
+
+    @Spy
+    private Settings fakeSettings;
+
+    @InjectMocks
+    @Autowired
     private FakeRest fakeRest;
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         PATH = PATH + System.currentTimeMillis();
-        fakeRest = spy(FakeRest.class);
     }
 
     @Test
@@ -34,8 +51,9 @@ public class FakeRestAnswerTest {
                        "  status: " + STATUS_CODE + "\n" +
                        "  body: " + RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
+
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
         assertEquals(RESPONSE_TEXT, response.getBody());
@@ -53,7 +71,7 @@ public class FakeRestAnswerTest {
                        "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                        "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -71,7 +89,7 @@ public class FakeRestAnswerTest {
                        "defaultAnswer:\n" +
                        "  removeCookies: [" + COOKIE + "]\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -91,14 +109,14 @@ public class FakeRestAnswerTest {
                        "url: " + PATH + "\n" +
                        "defaultAnswer:\n" +
                        "  cookies:\n" +
-                       "    - !one.kastordriver.fakerest.entity.Cookie\n" +
+                       "    - !one.kastordriver.fakerest.bean.Cookie\n" +
                        "      path: " + COOKIE_PATH + "\n" +
                        "      name: " + COOKIE + "\n" +
                        "      value: " + COOKIE_VALUE + "\n" +
                        "      maxAge: 3600\n" +
                        "      secure: true\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -120,14 +138,14 @@ public class FakeRestAnswerTest {
                 "url: " + PATH + "\n" +
                 "defaultAnswer:\n" +
                 "  cookies:\n" +
-                "    - !one.kastordriver.fakerest.entity.Cookie\n" +
+                "    - !one.kastordriver.fakerest.bean.Cookie\n" +
                 "      path: " + COOKIE_PATH + "\n" +
                 "      name: " + COOKIE + "\n" +
                 "      value: " + COOKIE_VALUE + "\n" +
                 "      maxAge: 3600\n" +
                 "      secure: true\n";
 
-        doReturn(route).when(fakeRest).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
