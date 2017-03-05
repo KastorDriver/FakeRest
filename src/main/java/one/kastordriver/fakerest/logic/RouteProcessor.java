@@ -31,7 +31,7 @@ public class RouteProcessor {
 
     private Optional<Condition> findFirstAppropriateCondition(Route route, Request request) {
         return route.getConditions().stream()
-                .filter(condition -> conditionProcessor.isConditionSuitForRequest(condition, request))
+                .filter(condition -> conditionProcessor.isConditionSuitForRequest(condition.getCondition(), request))
                 .findFirst();
     }
 

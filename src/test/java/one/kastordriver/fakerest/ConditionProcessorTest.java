@@ -30,7 +30,7 @@ public class ConditionProcessorTest {
 
         Mockito.when(requestMock.ip()).thenReturn(ip);
 
-        Condition condition = Condition.builder().condition(String.format("@ip == \"%s\"", ip)).build();
+        String condition = Condition.builder().condition(String.format("@ip == \"%s\"", ip)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
@@ -42,16 +42,16 @@ public class ConditionProcessorTest {
 
         Mockito.when(requestMock.ip()).thenReturn(ip);
 
-        Condition condition = Condition.builder().condition(String.format("@ip == \"%s\"", ip)).build();
+        String condition = Condition.builder().condition(String.format("@ip == \"%s\"", ip)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@ip== \"%s\"", ip)).build();
+        condition = Condition.builder().condition(String.format("@ip== \"%s\"", ip)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @ip == \"%s\"", ip)).build();
+        condition = Condition.builder().condition(String.format(" @ip == \"%s\"", ip)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @ip == \"%s\"", wrongIp)).build();
+        condition = Condition.builder().condition(String.format(" @ip == \"%s\"", wrongIp)).build().getCondition();
         Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
 
@@ -62,16 +62,16 @@ public class ConditionProcessorTest {
 
         Mockito.when(requestMock.port()).thenReturn(port);
 
-        Condition condition = Condition.builder().condition(String.format("@port == %s", port)).build();
+        String condition = Condition.builder().condition(String.format("@port == %s", port)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@port== %s", port)).build();
+        condition = Condition.builder().condition(String.format("@port== %s", port)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @port == %s", port)).build();
+        condition = Condition.builder().condition(String.format(" @port == %s", port)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@port == %s", wrongPort)).build();
+        condition = Condition.builder().condition(String.format("@port == %s", wrongPort)).build().getCondition();
         Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
 
@@ -82,16 +82,16 @@ public class ConditionProcessorTest {
 
         Mockito.when(requestMock.contentLength()).thenReturn(contentLength);
 
-        Condition condition = Condition.builder().condition(String.format("@contentLength == %s", contentLength)).build();
+        String condition = Condition.builder().condition(String.format("@contentLength == %s", contentLength)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@contentLength== %s", contentLength)).build();
+        condition = Condition.builder().condition(String.format("@contentLength== %s", contentLength)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @contentLength == %s", contentLength)).build();
+        condition = Condition.builder().condition(String.format(" @contentLength == %s", contentLength)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @contentLength == %s", wrongContentLength)).build();
+        condition = Condition.builder().condition(String.format(" @contentLength == %s", wrongContentLength)).build().getCondition();
         Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
 
@@ -101,16 +101,16 @@ public class ConditionProcessorTest {
         final String wrongCookieValue = "wrongCookieValue";
         Mockito.when(requestMock.cookie("newCookie")).thenReturn(cookieValue);
 
-        Condition condition = Condition.builder().condition(String.format("@cookie(newCookie) == \"%s\"", cookieValue)).build();
+        String condition = Condition.builder().condition(String.format("@cookie(newCookie) == \"%s\"", cookieValue)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@cookie(newCookie)== \"%s\"", cookieValue)).build();
+        condition = Condition.builder().condition(String.format("@cookie(newCookie)== \"%s\"", cookieValue)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format(" @cookie(newCookie) == \"%s\"", cookieValue)).build();
+        condition = Condition.builder().condition(String.format(" @cookie(newCookie) == \"%s\"", cookieValue)).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@cookie(newCookie) == \"%s\"", wrongCookieValue)).build();
+        condition = Condition.builder().condition(String.format("@cookie(newCookie) == \"%s\"", wrongCookieValue)).build().getCondition();
         Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
 
@@ -120,9 +120,9 @@ public class ConditionProcessorTest {
         Mockito.when(requestMock.cookie("anotherCookie")).thenReturn("anotherValue");
 
 
-        Condition condition = Condition.builder().condition(
+        String condition = Condition.builder().condition(
                 String.format("@cookie(newCookie) == \"%s\" && @cookie(anotherCookie) == \"%s\"", "cookieValue", "anotherValue")
-        ).build();
+        ).build().getCondition();
 
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
@@ -132,10 +132,10 @@ public class ConditionProcessorTest {
         Mockito.when(requestMock.headers("Accept")).thenReturn("application/json");
         Mockito.when(requestMock.headers("AnotherHeader")).thenReturn("anotherValue");
 
-        Condition condition = Condition.builder().condition(String.format("@header(Accept) == \"%s\"", "application/json")).build();
+        String condition = Condition.builder().condition(String.format("@header(Accept) == \"%s\"", "application/json")).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
 
-        condition = Condition.builder().condition(String.format("@header(AnotherHeader) == \"%s\"", "anotherValue")).build();
+        condition = Condition.builder().condition(String.format("@header(AnotherHeader) == \"%s\"", "anotherValue")).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
 }

@@ -5,5 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = "one.kastordriver.fakerest")
-public class AppConfig {
-}
+public class AppConfig {}
