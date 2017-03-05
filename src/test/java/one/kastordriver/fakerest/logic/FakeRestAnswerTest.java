@@ -30,7 +30,7 @@ public class FakeRestAnswerTest {
     private static final String RESPONSE_TEXT = "response text";
 
     @Spy
-    private Settings fakeSettings;
+    private Settings settings;
 
     @InjectMocks
     @Autowired
@@ -56,7 +56,7 @@ public class FakeRestAnswerTest {
                        "  status: " + STATUS_CODE + "\n" +
                        "  body: " + RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -76,7 +76,7 @@ public class FakeRestAnswerTest {
                        "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                        "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -94,7 +94,7 @@ public class FakeRestAnswerTest {
                        "defaultAnswer:\n" +
                        "  removeCookies: [" + COOKIE + "]\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -121,7 +121,7 @@ public class FakeRestAnswerTest {
                        "      maxAge: 3600\n" +
                        "      secure: true\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -150,7 +150,7 @@ public class FakeRestAnswerTest {
                 "      maxAge: 3600\n" +
                 "      secure: true\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);

@@ -29,7 +29,7 @@ public class FakeRestConditionTest {
     private static String PATH = "/some-path";
 
     @Spy
-    private Settings fakeSettings;
+    private Settings settings;
 
     @InjectMocks
     @Autowired
@@ -63,7 +63,7 @@ public class FakeRestConditionTest {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -88,7 +88,7 @@ public class FakeRestConditionTest {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -114,7 +114,7 @@ public class FakeRestConditionTest {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
         ResponseEntity<String> response = new RestTemplate().postForEntity(URL + PATH, REQUEST_BODY, String.class);
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
@@ -139,7 +139,7 @@ public class FakeRestConditionTest {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();
@@ -170,7 +170,7 @@ public class FakeRestConditionTest {
                 "      status: " + CONDITION_STATUS_CODE + "\n" +
                 "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(fakeSettings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpHeaders headers = new HttpHeaders();
