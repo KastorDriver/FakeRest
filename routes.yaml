@@ -1,27 +1,5 @@
---- !Route
 method: get
 url: /path1
-defaultAnswer: !Answer
+defaultAnswer:
   status: 200
   body: response text
-  headers:
-    header22: value22
-    Content-Type: text/html
-  removeCookies: [cookieForRemove1, cookieForRemove2]
-  cookies:
-    - !Cookie
-      path: path1
-      name: cookie1
-      value: value1
-      maxAge: -1
-      secure: false
-    - !Cookie
-      name: cookie2
-      value: value2
-      secure: true
-conditions:
-  - !Condition
-    condition: ip == "127.0.0.1"
-    answer:
-      status: 200
-      body: condition response text

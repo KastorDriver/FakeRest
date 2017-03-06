@@ -4,6 +4,8 @@ import one.kastordriver.fakerest.bean.Answer;
 import one.kastordriver.fakerest.bean.Condition;
 import one.kastordriver.fakerest.bean.Cookie;
 import one.kastordriver.fakerest.bean.Route;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 @Component
 public class RouteProcessor {
+    private final Logger LOGGER = LoggerFactory.getLogger(RouteProcessor.class);
 
     @Autowired
     private ConditionProcessor conditionProcessor;
@@ -24,7 +27,7 @@ public class RouteProcessor {
             Optional<Condition> suitableCondition = findFirstAppropriateCondition(route, request);
             return processAnswer(fetchAnswer(route, suitableCondition), response);
         } catch (Exception ex) {
-            System.out.println(ex);
+            LOGGER.error("route process error", ex);
             throw ex;
         }
     }

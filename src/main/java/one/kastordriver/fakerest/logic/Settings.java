@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 public class Settings {
 
+
     private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
 
     public List<Route> loadRoutesFromFiles() throws IOException {

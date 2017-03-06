@@ -2,6 +2,8 @@ package one.kastordriver.fakerest.logic;
 
 import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 @Component
 public class FakeRest implements DisposableBean {
+    private final Logger LOGGER = LoggerFactory.getLogger(FakeRest.class);
 
     @Autowired
     private Settings settings;
@@ -25,7 +28,12 @@ public class FakeRest implements DisposableBean {
     }
 
     public void start() throws IOException {
-        settings.loadRoutesFromFiles().forEach(route -> initRoute(route));
+        try {
+            settings.loadRoutesFromFiles().forEach(route -> initRoute(route));
+        } catch (Exception ex) {
+            LOGGER.error("route initialization error", ex);
+            throw ex;
+        }
     }
 
     private void initRoute(Route route) {
