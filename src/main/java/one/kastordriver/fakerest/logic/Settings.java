@@ -2,6 +2,8 @@ package one.kastordriver.fakerest.logic;
 
 import one.kastordriver.fakerest.bean.Route;
 import org.ho.yaml.Yaml;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Settings {
+public class Settings implements InitializingBean {
 
+    @Value("${port:4567}")
+    private int port;
 
     private static final String ROUTES_CONFIG_FILE_NAME = "routes.yaml";
 
@@ -24,5 +28,10 @@ public class Settings {
 
     String loadRoutesFilesIntoString(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("port: " + port);
     }
 }
