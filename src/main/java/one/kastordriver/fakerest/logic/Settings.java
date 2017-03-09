@@ -2,7 +2,6 @@ package one.kastordriver.fakerest.logic;
 
 import one.kastordriver.fakerest.bean.Route;
 import org.ho.yaml.Yaml;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Settings implements InitializingBean {
+public class Settings {
 
     @Value("${port:4567}")
     private int port;
@@ -28,10 +27,5 @@ public class Settings implements InitializingBean {
 
     String loadRoutesFilesIntoString(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("port: " + port);
     }
 }

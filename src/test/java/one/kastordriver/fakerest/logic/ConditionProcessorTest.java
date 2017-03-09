@@ -140,4 +140,28 @@ public class ConditionProcessorTest {
         condition = Condition.builder().condition(String.format("@header(AnotherHeader) == \"%s\"", "anotherValue")).build().getCondition();
         Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
     }
+
+    @Test
+    public void pathParamsConditionIsSuitable() {
+        Mockito.when(requestMock.params("par1")).thenReturn("val1");
+        Mockito.when(requestMock.params("par2")).thenReturn("val2");
+
+        String condition = Condition.builder().condition(String.format("@pathParam(par1) == \"%s\"", "val1")).build().getCondition();
+        Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
+
+        condition = Condition.builder().condition(String.format("@pathParam(par2) == \"%s\"", "par1")).build().getCondition();
+        Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
+    }
+
+    @Test
+    public void queryParamConditionIsSuitable() {
+        Mockito.when(requestMock.queryParams("par1")).thenReturn("val1");
+        Mockito.when(requestMock.queryParams("par2")).thenReturn("val2");
+
+        String condition = Condition.builder().condition(String.format("@queryParam(par1) == \"%s\"", "val1")).build().getCondition();
+        Assert.assertTrue(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
+
+        condition = Condition.builder().condition(String.format("@queryParam(par2) == \"%s\"", "par1")).build().getCondition();
+        Assert.assertFalse(conditionProcessor.isConditionSuitForRequest(condition, requestMock));
+    }
 }
