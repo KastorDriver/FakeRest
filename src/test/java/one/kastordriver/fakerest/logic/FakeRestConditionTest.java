@@ -46,7 +46,7 @@ public class FakeRestConditionTest {
     }
 
     @Test
-    public void correctAnswerFromIpCondition() throws Exception {
+    public void correctAnswerForIpCondition() throws Exception {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
@@ -71,7 +71,7 @@ public class FakeRestConditionTest {
     }
 
     @Test
-    public void correctAnswerFromPortCondition() throws Exception {
+    public void correctAnswerForPortCondition() throws Exception {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
@@ -96,7 +96,7 @@ public class FakeRestConditionTest {
     }
 
     @Test
-    public void correctAnswerFromContentLengthCondition() throws Exception {
+    public void correctAnswerForContentLengthCondition() throws Exception {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
         final String REQUEST_BODY = "requestBody";
@@ -122,7 +122,7 @@ public class FakeRestConditionTest {
     }
 
     @Test
-    public void correctAnswerFromCookieCondition() throws Exception {
+    public void correctAnswerForCookieCondition() throws Exception {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
@@ -153,7 +153,7 @@ public class FakeRestConditionTest {
     }
 
     @Test
-    public void correctAnswerFromHeaderCondition() throws Exception {
+    public void correctAnswerForHeaderCondition() throws Exception {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
@@ -177,6 +177,60 @@ public class FakeRestConditionTest {
         headers.add("Accept", "application/json");
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
         ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.GET, httpEntity, String.class);
+
+        assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
+        assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
+    }
+
+    @Test
+    public void correctAnswerForQueryParamCondition() throws Exception {
+        final String CONDITION_RESPONSE_TEXT = "condition response text";
+        final int CONDITION_STATUS_CODE = 201;
+
+        String route = "--- !Route\n" +
+                "method: get\n" +
+                "url: " + PATH + "\n" +
+                "defaultAnswer: !Answer\n" +
+                "  status: 200\n" +
+                "  body: response text\n" +
+                "conditions:\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "    condition: @queryParam(par1) == \"val1\" && @queryParam(par2) == \"val2\"\n" +
+                "    answer:\n" +
+                "      status: " + CONDITION_STATUS_CODE + "\n" +
+                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH + "?par1=val1&par2=val2", String.class);
+
+        assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
+        assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
+    }
+
+    @Test
+    public void correctAnswerForPathParamCondition() throws Exception {
+        final String CONDITION_RESPONSE_TEXT = "condition response text";
+        final int CONDITION_STATUS_CODE = 201;
+
+        String route = "--- !Route\n" +
+                "method: get\n" +
+                "url: " + PATH + "/:pathParam1/:secondPathParam" + "\n" +
+                "defaultAnswer: !Answer\n" +
+                "  status: 200\n" +
+                "  body: response text\n" +
+                "conditions:\n" +
+                "  - !one.kastordriver.fakerest.bean.Condition\n" +
+                "    condition: @pathParam(pathParam1) == \"pathVal1\" && @pathParam(secondPathParam) == \"pathVal2\"" + "\n" +
+                "    answer:\n" +
+                "      status: " + CONDITION_STATUS_CODE + "\n" +
+                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH + "/pathVal1/pathVal2", String.class);
 
         assertEquals(CONDITION_STATUS_CODE, response.getStatusCodeValue());
         assertEquals(CONDITION_RESPONSE_TEXT, response.getBody());
