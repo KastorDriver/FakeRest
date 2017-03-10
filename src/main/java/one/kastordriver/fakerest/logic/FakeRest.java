@@ -11,6 +11,7 @@ import spark.Spark;
 import spark.route.HttpMethod;
 
 import java.io.IOException;
+import java.util.function.BiConsumer;
 
 @Component
 public class FakeRest implements DisposableBean {
@@ -43,14 +44,17 @@ public class FakeRest implements DisposableBean {
             throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
         }
 
-        //TODO refactor
         switch (httpMethod) {
             case get:
-                Spark.get(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
+                processRoute(route, Spark::get);
                 break;
             case post:
-                Spark.post(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
+                processRoute(route, Spark::post);
                 break;
         }
+    }
+
+    private void processRoute(Route route, BiConsumer<String, spark.Route> consumer) {
+        consumer.accept(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
     }
 }
