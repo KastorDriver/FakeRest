@@ -7,8 +7,7 @@ import spark.Request;
 @Component
 public class ContentLengthRequestElement extends RequestElement {
 
-    private static final String ELEMENT_NAME = "@contentLength";
-    private static final String REPLACED_ELEMENT_NAME = "_contentLength";
+    private static final String ELEMENT_NAME = "contentLength";
 
     @Override
     public String getElementName() {
@@ -17,8 +16,6 @@ public class ContentLengthRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        final int elementValue = request.contentLength();
-        binding.setVariable(REPLACED_ELEMENT_NAME, elementValue);
-        return condition.replaceAll(ELEMENT_NAME, REPLACED_ELEMENT_NAME);
+        return processSingleRequestElement(condition, binding, request.contentLength());
     }
 }

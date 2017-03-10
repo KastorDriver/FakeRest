@@ -7,8 +7,7 @@ import spark.Request;
 @Component
 public class IpRequestElement extends RequestElement {
 
-    private static final String ELEMENT_NAME = "@ip";
-    private static final String REPLACED_ELEMENT_NAME = "_ip";
+    private static final String ELEMENT_NAME = "ip";
 
     @Override
     public String getElementName() {
@@ -17,8 +16,6 @@ public class IpRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        final String elementValue = request.ip();
-        binding.setVariable(REPLACED_ELEMENT_NAME, elementValue);
-        return condition.replaceAll(ELEMENT_NAME, REPLACED_ELEMENT_NAME);
+        return processSingleRequestElement(condition, binding, request.ip());
     }
 }

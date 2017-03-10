@@ -7,8 +7,7 @@ import spark.Request;
 @Component
 public class PortRequestElement extends RequestElement {
 
-    private static final String ELEMENT_NAME = "@port";
-    private static final String REPLACED_ELEMENT_NAME = "_port";
+    private static final String ELEMENT_NAME = "port";
 
     @Override
     public String getElementName() {
@@ -17,8 +16,6 @@ public class PortRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        final int elementValue = request.port();
-        binding.setVariable(REPLACED_ELEMENT_NAME, elementValue);
-        return condition.replaceAll(ELEMENT_NAME, REPLACED_ELEMENT_NAME);
+        return processSingleRequestElement(condition, binding, request.port());
     }
 }
