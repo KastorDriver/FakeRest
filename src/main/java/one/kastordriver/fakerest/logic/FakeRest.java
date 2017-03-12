@@ -11,6 +11,7 @@ import spark.Spark;
 import spark.route.HttpMethod;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Component
@@ -22,6 +23,9 @@ public class FakeRest implements DisposableBean {
 
     @Autowired
     private RouteProcessor routeProcessor;
+
+    @Autowired
+    private Map<HttpMethod, BiConsumer<String, spark.Route>> httpMethodsMapping;
 
     @Override
     public void destroy() throws Exception {
@@ -39,38 +43,14 @@ public class FakeRest implements DisposableBean {
 
     private void initRoute(Route route) {
         HttpMethod httpMethod = HttpMethod.get(route.getMethod());
-
-        switch (httpMethod) {
-            case get:
-                processRoute(route, Spark::get);
-                break;
-            case post:
-                processRoute(route, Spark::post);
-                break;
-            case put:
-                processRoute(route, Spark::put);
-                break;
-            case patch:
-                processRoute(route, Spark::patch);
-                break;
-            case head:
-                processRoute(route, Spark::head);
-                break;
-//            case delete:
-//                processRoute(route, Spark::delete);
-//                break;
-            case trace:
-                processRoute(route, Spark::trace);
-                break;
-            case options:
-                processRoute(route, Spark::options);
-                break;
-            default:
-                throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
-        }
+        processRoute(route, httpMethodsMapping.get(httpMethod));
     }
 
     private void processRoute(Route route, BiConsumer<String, spark.Route> consumer) {
+        if (consumer == null) {
+            throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
+        }
+
         consumer.accept(route.getUrl(), (req, res) -> routeProcessor.process(route, req, res));
     }
 }
