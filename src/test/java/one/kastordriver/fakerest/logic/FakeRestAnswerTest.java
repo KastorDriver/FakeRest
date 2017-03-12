@@ -206,7 +206,6 @@ public class FakeRestAnswerTest {
 
     @Test
     public void correctStatusAndResponseBodyForSimpleHeadRequest() throws Exception {
-        final String ACCEPT = "Accept";
         final String CONTENT_TYPE = "Content-Type";
         final int STATUS_CODE = 200;
 
@@ -216,7 +215,7 @@ public class FakeRestAnswerTest {
                 "  status: " + STATUS_CODE + "\n" +
                 "  body: " + RESPONSE_TEXT + "\n" +
                 "  headers:\n" +
-                "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
+                "    header1: val1\n" +
                 "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
@@ -227,7 +226,7 @@ public class FakeRestAnswerTest {
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
 
         HttpHeaders headers = response.getHeaders();
-        assertEquals(MediaType.TEXT_PLAIN_VALUE, headers.getFirst(ACCEPT));
+        assertEquals("val1", headers.getFirst("header1"));
         assertEquals(MediaType.APPLICATION_JSON, headers.getContentType());
     }
 }
