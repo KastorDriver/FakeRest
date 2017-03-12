@@ -181,7 +181,7 @@ public class FakeRestAnswerTest {
     }
 
     @Test
-    public void correctStatusAndResponseBodyForSimplePathRequest() throws Exception {
+    public void correctStatusAndResponseBodyForSimplePatchRequest() throws Exception {
         final int STATUS_CODE = 200;
 
         String route = "method: patch\n" +
@@ -202,5 +202,32 @@ public class FakeRestAnswerTest {
         ResponseEntity<String> response = restTemplate.exchange(URL + PATH, HttpMethod.PATCH, requestHttpEntity, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
         assertEquals(RESPONSE_TEXT, response.getBody());
+    }
+
+    @Test
+    public void correctStatusAndResponseBodyForSimpleHeadRequest() throws Exception {
+        final String ACCEPT = "Accept";
+        final String CONTENT_TYPE = "Content-Type";
+        final int STATUS_CODE = 200;
+
+        String route = "method: head\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n" +
+                "  headers:\n" +
+                "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
+                "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.HEAD, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+
+        HttpHeaders headers = response.getHeaders();
+        assertEquals(MediaType.TEXT_PLAIN_VALUE, headers.getFirst(ACCEPT));
+        assertEquals(MediaType.APPLICATION_JSON, headers.getContentType());
     }
 }
