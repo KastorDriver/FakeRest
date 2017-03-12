@@ -230,28 +230,28 @@ public class FakeRestAnswerTest {
         assertEquals(MediaType.APPLICATION_JSON, headers.getContentType());
     }
 
-    @Test
-    public void correctStatusAndResponseBodyForSimpleDeleteRequest() throws Exception {
-        final int STATUS_CODE = 200;
-
-        String route = "method: delete\n" +
-                "url: " + PATH + "\n" +
-                "answer:\n" +
-                "  status: " + STATUS_CODE + "\n" +
-                "  body: " + RESPONSE_TEXT + "\n" +
-                "  headers:\n" +
-                "    header1: val1\n";
-
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
-        fakeRest.start();
-
-        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
-        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.DELETE, requestHttpEntity, String.class);
-        assertEquals(STATUS_CODE, response.getStatusCodeValue());
-
-        HttpHeaders headers = response.getHeaders();
-        assertEquals("val1", headers.getFirst("header1"));
-    }
+//    @Test
+//    public void correctStatusAndResponseBodyForSimpleDeleteRequest() throws Exception {
+//        final int STATUS_CODE = 200;
+//
+//        String route = "method: delete\n" +
+//                "url: " + PATH + "\n" +
+//                "answer:\n" +
+//                "  status: " + STATUS_CODE + "\n" +
+//                "  body: " + RESPONSE_TEXT + "\n" +
+//                "  headers:\n" +
+//                "    header1: val1\n";
+//
+//        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+//        fakeRest.start();
+//
+//        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+//        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.DELETE, requestHttpEntity, String.class);
+//        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+//
+//        HttpHeaders headers = response.getHeaders();
+//        assertEquals("val1", headers.getFirst("header1"));
+//    }
 
     @Test
     public void correctStatusAndResponseBodyForSimpleTraceRequest() throws Exception {
@@ -270,6 +270,29 @@ public class FakeRestAnswerTest {
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
         ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.TRACE, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+
+        HttpHeaders headers = response.getHeaders();
+        assertEquals("val1", headers.getFirst("header1"));
+    }
+
+    @Test
+    public void correctStatusAndResponseBodyForSimpleOptionsRequest() throws Exception {
+        final int STATUS_CODE = 200;
+
+        String route = "method: options\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n" +
+                "  headers:\n" +
+                "    header1: val1\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.OPTIONS, requestHttpEntity, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
 
         HttpHeaders headers = response.getHeaders();
