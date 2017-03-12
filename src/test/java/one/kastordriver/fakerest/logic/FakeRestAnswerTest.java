@@ -252,4 +252,27 @@ public class FakeRestAnswerTest {
         HttpHeaders headers = response.getHeaders();
         assertEquals("val1", headers.getFirst("header1"));
     }
+
+    @Test
+    public void correctStatusAndResponseBodyForSimpleTraceRequest() throws Exception {
+        final int STATUS_CODE = 200;
+
+        String route = "method: trace\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n" +
+                "  headers:\n" +
+                "    header1: val1\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.TRACE, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+
+        HttpHeaders headers = response.getHeaders();
+        assertEquals("val1", headers.getFirst("header1"));
+    }
 }
