@@ -9,9 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
@@ -161,7 +160,6 @@ public class FakeRestAnswerTest {
         assertTrue(setCookie.contains("Secure"));
     }
 
-//    @Ignore
     @Test
     public void correctStatusAndResponseBodyForSimplePutRequest() throws Exception {
         final int STATUS_CODE = 200;
@@ -175,8 +173,34 @@ public class FakeRestAnswerTest {
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
-        new RestTemplate().put(URL + PATH, null);
-//        assertEquals(STATUS_CODE, response.getStatusCodeValue());
-//        assertEquals(RESPONSE_TEXT, response.getBody());
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.PUT, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+        assertEquals(RESPONSE_TEXT, response.getBody());
+    }
+
+    @Test
+    public void correctStatusAndResponseBodyForSimplePathRequest() throws Exception {
+        final int STATUS_CODE = 200;
+
+        String route = "method: patch\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        restTemplate.setRequestFactory(requestFactory);
+
+        ResponseEntity<String> response = restTemplate.exchange(URL + PATH, HttpMethod.PATCH, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+        assertEquals(RESPONSE_TEXT, response.getBody());
     }
 }

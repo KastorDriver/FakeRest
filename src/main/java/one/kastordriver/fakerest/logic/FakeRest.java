@@ -40,10 +40,6 @@ public class FakeRest implements DisposableBean {
     private void initRoute(Route route) {
         HttpMethod httpMethod = HttpMethod.get(route.getMethod());
 
-        if (HttpMethod.unsupported.equals(httpMethod)) {
-            throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
-        }
-
         switch (httpMethod) {
             case get:
                 processRoute(route, Spark::get);
@@ -54,6 +50,11 @@ public class FakeRest implements DisposableBean {
             case put:
                 processRoute(route, Spark::put);
                 break;
+            case patch:
+                processRoute(route, Spark::patch);
+                break;
+            default:
+                throw new UnsupportedHttpMethodException("Unsupported http method " + route.getMethod());
         }
     }
 
