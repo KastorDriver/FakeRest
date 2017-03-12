@@ -1,0 +1,3 @@
+transfers:
+  cookie: one.kastordriver.fakerest.bean.Cookie
+  condition: one.kastordriver.fakerest.bean.Condition

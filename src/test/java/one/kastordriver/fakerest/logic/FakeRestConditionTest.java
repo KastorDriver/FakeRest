@@ -50,18 +50,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @ip == \"127.0.0.1\"\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @ip == \"127.0.0.1\"\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -75,18 +74,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @port == 4567\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @port == 4567\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -101,18 +99,17 @@ public class FakeRestConditionTest {
         final int CONDITION_STATUS_CODE = 201;
         final String REQUEST_BODY = "requestBody";
 
-        String route = "--- !Route\n" +
-                "method: post\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: post\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -126,18 +123,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -157,18 +153,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @header(Accept) == \"application/json\"\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @header(Accept) == \"application/json\"\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -187,18 +182,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @queryParam(par1) == \"val1\" && @queryParam(par2) == \"val2\"\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @queryParam(par1) == \"val1\" && @queryParam(par2) == \"val2\"\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
@@ -214,18 +208,17 @@ public class FakeRestConditionTest {
         final String CONDITION_RESPONSE_TEXT = "condition response text";
         final int CONDITION_STATUS_CODE = 201;
 
-        String route = "--- !Route\n" +
-                "method: get\n" +
-                "url: " + PATH + "/:pathParam1/:secondPathParam" + "\n" +
-                "answer: !Answer\n" +
-                "  status: 200\n" +
-                "  body: response text\n" +
-                "conditions:\n" +
-                "  - !one.kastordriver.fakerest.bean.Condition\n" +
-                "    condition: @pathParam(pathParam1) == \"pathVal1\" && @pathParam(secondPathParam) == \"pathVal2\"" + "\n" +
-                "    answer:\n" +
-                "      status: " + CONDITION_STATUS_CODE + "\n" +
-                "      body: " + CONDITION_RESPONSE_TEXT + "\n";
+        String route = "method: get\n" +
+                       "url: " + PATH + "/:pathParam1/:secondPathParam" + "\n" +
+                       "answer: !Answer\n" +
+                       "  status: 200\n" +
+                       "  body: response text\n" +
+                       "conditions:\n" +
+                       "  - !condition\n" +
+                       "    condition: @pathParam(pathParam1) == \"pathVal1\" && @pathParam(secondPathParam) == \"pathVal2\"" + "\n" +
+                       "    answer:\n" +
+                       "      status: " + CONDITION_STATUS_CODE + "\n" +
+                       "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
         fakeRest.start();

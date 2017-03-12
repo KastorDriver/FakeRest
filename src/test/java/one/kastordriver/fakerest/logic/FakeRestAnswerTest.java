@@ -113,7 +113,7 @@ public class FakeRestAnswerTest {
                        "url: " + PATH + "\n" +
                        "answer:\n" +
                        "  cookies:\n" +
-                       "    - !one.kastordriver.fakerest.bean.Cookie\n" +
+                       "    - !cookie\n" +
                        "      path: " + COOKIE_PATH + "\n" +
                        "      name: " + COOKIE + "\n" +
                        "      value: " + COOKIE_VALUE + "\n" +
@@ -137,12 +137,12 @@ public class FakeRestAnswerTest {
         final String COOKIE_VALUE = "someValue";
         final String COOKIE_PATH = "somePath";
 
-        String route = "--- !Route\n" +
+        String route = "---\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
                 "answer:\n" +
                 "  cookies:\n" +
-                "    - !one.kastordriver.fakerest.bean.Cookie\n" +
+                "    - !cookie\n" +
                 "      path: " + COOKIE_PATH + "\n" +
                 "      name: " + COOKIE + "\n" +
                 "      value: " + COOKIE_VALUE + "\n" +
