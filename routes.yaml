@@ -1,5 +1,5 @@
-method: get
+method: put
 url: /path1
-defaultAnswer:
+answer:
   status: 200
   body: response text

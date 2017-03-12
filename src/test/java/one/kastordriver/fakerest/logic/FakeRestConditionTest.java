@@ -53,7 +53,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -78,7 +78,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -104,7 +104,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: post\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -129,7 +129,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -160,7 +160,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -190,7 +190,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +
@@ -217,7 +217,7 @@ public class FakeRestConditionTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "/:pathParam1/:secondPathParam" + "\n" +
-                "defaultAnswer: !Answer\n" +
+                "answer: !Answer\n" +
                 "  status: 200\n" +
                 "  body: response text\n" +
                 "conditions:\n" +

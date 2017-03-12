@@ -51,6 +51,9 @@ public class FakeRest implements DisposableBean {
             case post:
                 processRoute(route, Spark::post);
                 break;
+            case put:
+                processRoute(route, Spark::put);
+                break;
         }
     }
 

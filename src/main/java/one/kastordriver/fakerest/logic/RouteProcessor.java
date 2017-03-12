@@ -39,7 +39,7 @@ public class RouteProcessor {
     }
 
     private Answer fetchAnswer(Route route, Optional<Condition> suitableCondition) {
-        return suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : route.getDefaultAnswer();
+        return suitableCondition.isPresent() ? suitableCondition.get().getAnswer() : route.getAnswer();
     }
 
     private Object processAnswer(Answer answer, Response response) {

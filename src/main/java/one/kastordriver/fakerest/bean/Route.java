@@ -11,6 +11,6 @@ import java.util.List;
 public class Route {
     private String method;
     private String url;
-    private Answer defaultAnswer = new Answer();
+    private Answer answer = new Answer();
     private List<Condition> conditions = new ArrayList<>();
 }

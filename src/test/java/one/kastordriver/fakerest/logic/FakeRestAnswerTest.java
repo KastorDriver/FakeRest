@@ -52,7 +52,7 @@ public class FakeRestAnswerTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "defaultAnswer:\n" +
+                       "answer:\n" +
                        "  status: " + STATUS_CODE + "\n" +
                        "  body: " + RESPONSE_TEXT + "\n";
 
@@ -71,7 +71,7 @@ public class FakeRestAnswerTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "defaultAnswer:\n" +
+                       "answer:\n" +
                        "  headers:\n" +
                        "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                        "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
@@ -91,7 +91,7 @@ public class FakeRestAnswerTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "defaultAnswer:\n" +
+                       "answer:\n" +
                        "  removeCookies: [" + COOKIE + "]\n";
 
         doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
@@ -112,7 +112,7 @@ public class FakeRestAnswerTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "defaultAnswer:\n" +
+                       "answer:\n" +
                        "  cookies:\n" +
                        "    - !one.kastordriver.fakerest.bean.Cookie\n" +
                        "      path: " + COOKIE_PATH + "\n" +
@@ -141,7 +141,7 @@ public class FakeRestAnswerTest {
         String route = "--- !Route\n" +
                 "method: get\n" +
                 "url: " + PATH + "\n" +
-                "defaultAnswer:\n" +
+                "answer:\n" +
                 "  cookies:\n" +
                 "    - !one.kastordriver.fakerest.bean.Cookie\n" +
                 "      path: " + COOKIE_PATH + "\n" +
@@ -159,5 +159,24 @@ public class FakeRestAnswerTest {
         assertTrue(setCookie.contains(String.format("%s=%s;Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
         assertTrue(setCookie.contains("Expire"));
         assertTrue(setCookie.contains("Secure"));
+    }
+
+//    @Ignore
+    @Test
+    public void correctStatusAndResponseBodyForSimplePutRequest() throws Exception {
+        final int STATUS_CODE = 200;
+
+        String route = "method: put\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        new RestTemplate().put(URL + PATH, null);
+//        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+//        assertEquals(RESPONSE_TEXT, response.getBody());
     }
 }
