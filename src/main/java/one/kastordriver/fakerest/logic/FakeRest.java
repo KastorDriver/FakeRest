@@ -34,7 +34,7 @@ public class FakeRest implements DisposableBean {
 
     public void start() throws IOException {
         try {
-            settings.loadRoutesFromFiles().forEach(route -> initRoute(route));
+            settings.loadRoutes().forEach(route -> initRoute(route));
         } catch (Exception ex) {
             LOGGER.error("route initialization error", ex);
             throw ex;
