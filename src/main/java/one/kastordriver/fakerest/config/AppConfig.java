@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 public class AppConfig {
 
     @Bean
-    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
         pspc.setLocalOverride(false);
         pspc.setIgnoreResourceNotFound(true);
