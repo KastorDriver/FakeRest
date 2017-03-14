@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -69,7 +70,12 @@ public class Settings {
     private List<Route> loadRoutesFromRouteDir() throws IOException {
         List<Route> routes = new ArrayList<>();
 
-        Yaml.loadStreamOfType(loadRoutesFilesIntoString(ROUTES_FILE_NAME), Route.class).forEach(route -> routes.add(route));
+        Iterator<Path> iterator = getRoutesFilesFromRoutesDir().iterator();
+
+        while (iterator.hasNext()) {
+            Yaml.loadStreamOfType(iterator.next().toFile(), Route.class).forEach(route -> routes.add(route));
+        }
+
         return routes;
     }
 
