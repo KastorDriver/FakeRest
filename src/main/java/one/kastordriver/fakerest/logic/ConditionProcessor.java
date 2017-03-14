@@ -3,6 +3,8 @@ package one.kastordriver.fakerest.logic;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import one.kastordriver.fakerest.logic.request.RequestElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Component
 public class ConditionProcessor {
+    private final Logger LOGGER = LoggerFactory.getLogger(ConditionProcessor.class);
 
     @Autowired
     private List<RequestElement> requestElements;
@@ -19,7 +22,13 @@ public class ConditionProcessor {
         Binding binding = new Binding();
         GroovyShell groovyShell = new GroovyShell(binding);
         Object result = groovyShell.evaluate(prepareConditionToEvaluate(condition, binding, request));
-        return result instanceof Boolean ? (Boolean)result : false;
+
+        if (result instanceof Boolean) {
+            return (Boolean)result;
+        } else {
+            LOGGER.error("Condition \"{}\" don't return boolean type", condition);
+            return false;
+        }
     }
 
     private String prepareConditionToEvaluate(String condition, Binding binding, Request request) {
