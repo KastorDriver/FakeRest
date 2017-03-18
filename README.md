@@ -1,1 +1,1 @@
-FakeRest it is a program that allow you fake third party REST services for testing your application that depends on them. It is very easy to configure and use, just visit * [Wiji page](https://github.com/KastorDriver/FakeRest/wiki) for more information.
+FakeRest it is a program that allow you fake third party REST services for testing your application that depends on them. It is very easy to configure and use, just visit [Wiki page](https://github.com/KastorDriver/FakeRest/wiki) for more information.
