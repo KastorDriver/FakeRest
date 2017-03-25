@@ -1,0 +1,5 @@
+method: put
+url: /path2
+answer:
+  status: 200
+  body: response text 222
