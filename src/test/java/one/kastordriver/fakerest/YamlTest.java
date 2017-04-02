@@ -5,6 +5,7 @@ import one.kastordriver.fakerest.bean.Condition;
 import one.kastordriver.fakerest.bean.Cookie;
 import one.kastordriver.fakerest.bean.Route;
 import org.ho.yaml.Yaml;
+import org.junit.Ignore;
 import org.junit.Test;
 import spark.route.HttpMethod;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+@Ignore
 public class YamlTest {
 
     @Test
