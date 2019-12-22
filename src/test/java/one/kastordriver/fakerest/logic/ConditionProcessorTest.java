@@ -4,7 +4,6 @@ import one.kastordriver.fakerest.bean.Condition;
 import one.kastordriver.fakerest.config.AppConfig;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -13,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import spark.Request;
 
-//TODO fix tests
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 public class ConditionProcessorTest {

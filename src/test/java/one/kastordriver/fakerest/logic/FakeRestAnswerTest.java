@@ -22,7 +22,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 
 //TODO fix tests
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 public class FakeRestAnswerTest {
