@@ -34,7 +34,7 @@ public class AppConfig {
         mapping.put(HttpMethod.put, Spark::put);
         mapping.put(HttpMethod.patch, Spark::patch);
         mapping.put(HttpMethod.head, Spark::head);
-//        mapping.put(HttpMethod.delete, Spark::delete);
+        mapping.put(HttpMethod.delete, Spark::delete);
         mapping.put(HttpMethod.trace, Spark::trace);
         mapping.put(HttpMethod.options, Spark::options);
         return mapping;

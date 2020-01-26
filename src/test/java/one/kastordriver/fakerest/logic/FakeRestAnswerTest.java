@@ -12,6 +12,7 @@ import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
@@ -22,9 +23,9 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 
 //TODO fix tests
-//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class FakeRestAnswerTest {
 
     private static final String URL = "http://localhost:4567";
@@ -102,8 +103,7 @@ public class FakeRestAnswerTest {
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
         String setCookie = headers.getFirst("Set-Cookie");
-        assertTrue(setCookie.contains(COOKIE+"=\"\""));
-        assertTrue(setCookie.contains("Max-Age=0"));
+        assertTrue(setCookie.contains(COOKIE+"=; Expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0"));
     }
 
     @Test
@@ -129,11 +129,12 @@ public class FakeRestAnswerTest {
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
         String setCookie = headers.get("Set-Cookie").toString();
-        assertTrue(setCookie.contains(String.format("%s=%s;Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
+        assertTrue(setCookie.contains(String.format("%s=%s; Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
         assertTrue(setCookie.contains("Expire"));
         assertTrue(setCookie.contains("Secure"));
     }
 
+    //TODO set headers, not cookies
     @Test
     public void correctSetHeadersForSimpleGetRequest() throws Exception {
         final String COOKIE = "cookieForAdd";
@@ -158,7 +159,7 @@ public class FakeRestAnswerTest {
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
         HttpHeaders headers = response.getHeaders();
         String setCookie = headers.get("Set-Cookie").toString();
-        assertTrue(setCookie.contains(String.format("%s=%s;Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
+        assertTrue(setCookie.contains(String.format("%s=%s; Path=%s", COOKIE, COOKIE_VALUE, COOKIE_PATH)));
         assertTrue(setCookie.contains("Expire"));
         assertTrue(setCookie.contains("Secure"));
     }
@@ -178,6 +179,7 @@ public class FakeRestAnswerTest {
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
 
+        //WTF is the error?
         ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.PUT, requestHttpEntity, String.class);
         assertEquals(STATUS_CODE, response.getStatusCodeValue());
         assertEquals(RESPONSE_TEXT, response.getBody());
@@ -233,28 +235,28 @@ public class FakeRestAnswerTest {
         assertEquals(MediaType.APPLICATION_JSON, headers.getContentType());
     }
 
-//    @Test
-//    public void correctStatusAndResponseBodyForSimpleDeleteRequest() throws Exception {
-//        final int STATUS_CODE = 200;
-//
-//        String route = "method: delete\n" +
-//                "url: " + PATH + "\n" +
-//                "answer:\n" +
-//                "  status: " + STATUS_CODE + "\n" +
-//                "  body: " + RESPONSE_TEXT + "\n" +
-//                "  headers:\n" +
-//                "    header1: val1\n";
-//
-//        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
-//        fakeRest.start();
-//
-//        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
-//        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.DELETE, requestHttpEntity, String.class);
-//        assertEquals(STATUS_CODE, response.getStatusCodeValue());
-//
-//        HttpHeaders headers = response.getHeaders();
-//        assertEquals("val1", headers.getFirst("header1"));
-//    }
+    @Test
+    public void correctStatusAndResponseBodyForSimpleDeleteRequest() throws Exception {
+        final int STATUS_CODE = 200;
+
+        String route = "method: delete\n" +
+                "url: " + PATH + "\n" +
+                "answer:\n" +
+                "  status: " + STATUS_CODE + "\n" +
+                "  body: " + RESPONSE_TEXT + "\n" +
+                "  headers:\n" +
+                "    header1: val1\n";
+
+        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        fakeRest.start();
+
+        HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
+        ResponseEntity<String> response = new RestTemplate().exchange(URL + PATH, HttpMethod.DELETE, requestHttpEntity, String.class);
+        assertEquals(STATUS_CODE, response.getStatusCodeValue());
+
+        HttpHeaders headers = response.getHeaders();
+        assertEquals("val1", headers.getFirst("header1"));
+    }
 
     @Test
     public void correctStatusAndResponseBodyForSimpleTraceRequest() throws Exception {
