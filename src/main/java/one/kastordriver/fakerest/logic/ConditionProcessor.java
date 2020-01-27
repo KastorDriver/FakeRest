@@ -26,7 +26,7 @@ public class ConditionProcessor {
         if (result instanceof Boolean) {
             return (Boolean)result;
         } else {
-            LOGGER.error("Condition \"{}\" don't return boolean type", condition);
+            LOGGER.error("Condition \"{}\" doesn't return boolean type", condition);
             return false;
         }
     }
