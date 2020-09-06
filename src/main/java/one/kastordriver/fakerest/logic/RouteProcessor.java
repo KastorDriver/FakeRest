@@ -1,5 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
+import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.bean.Answer;
 import one.kastordriver.fakerest.bean.Condition;
 import one.kastordriver.fakerest.bean.Cookie;
@@ -15,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RouteProcessor {
-    private final Logger LOGGER = LoggerFactory.getLogger(RouteProcessor.class);
 
     @Autowired
     private ConditionProcessor conditionProcessor;
@@ -27,7 +28,7 @@ public class RouteProcessor {
             Optional<Condition> suitableCondition = findFirstAppropriateCondition(route, request);
             return processAnswer(fetchAnswer(route, suitableCondition), response);
         } catch (Exception ex) {
-            LOGGER.error("route process error", ex);
+            log.error("route process error", ex);
             throw ex;
         }
     }

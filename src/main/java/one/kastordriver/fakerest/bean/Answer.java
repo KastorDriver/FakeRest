@@ -1,5 +1,6 @@
 package one.kastordriver.fakerest.bean;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
+@Data
 public class Answer {
     private static final String EMPTY_ANSWER_BODY = "";
 

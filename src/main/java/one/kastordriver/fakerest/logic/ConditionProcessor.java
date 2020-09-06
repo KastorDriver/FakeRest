@@ -2,6 +2,7 @@ package one.kastordriver.fakerest.logic;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.logic.request.RequestElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +12,9 @@ import spark.Request;
 
 import java.util.List;
 
+@Slf4j
 @Component
 public class ConditionProcessor {
-    private final Logger LOGGER = LoggerFactory.getLogger(ConditionProcessor.class);
 
     @Autowired
     private List<RequestElement> requestElements;
@@ -26,7 +27,7 @@ public class ConditionProcessor {
         if (result instanceof Boolean) {
             return (Boolean)result;
         } else {
-            LOGGER.error("Condition \"{}\" doesn't return boolean type", condition);
+            log.error("Condition \"{}\" doesn't return boolean type", condition);
             return false;
         }
     }

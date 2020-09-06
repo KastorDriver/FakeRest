@@ -1,13 +1,13 @@
 package one.kastordriver.fakerest.bean;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class Route {
     private String method;
     private String url;
