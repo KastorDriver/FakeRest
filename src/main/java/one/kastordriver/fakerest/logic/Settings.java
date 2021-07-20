@@ -1,7 +1,7 @@
 package one.kastordriver.fakerest.logic;
 
 import one.kastordriver.fakerest.bean.Route;
-import one.kastordriver.fakerest.exception.NoRouteFilesExistsException;
+import one.kastordriver.fakerest.exception.RouteFileNotFoundException;
 import org.ho.yaml.Yaml;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ public class Settings {
         boolean isRoutesDirExists = isRoutesDirExists();
 
         if (!isRouteFileExists && !isRoutesDirExists) {
-            throw new NoRouteFilesExistsException(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
+            throw new RouteFileNotFoundException(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
                     ROUTES_FILE_NAME, ROUTES_DIR_NAME));
         }
 

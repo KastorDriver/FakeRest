@@ -37,7 +37,7 @@ public class FakeRest {
 
     public void start() throws IOException {
         try {
-            settings.loadRoutes().forEach(route -> initRoute(route));
+            settings.loadRoutes().forEach(this::initRoute);
         } catch (Exception ex) {
             log.error("route initialization error", ex);
             throw ex;
