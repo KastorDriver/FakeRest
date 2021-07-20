@@ -3,7 +3,6 @@ package one.kastordriver.fakerest.logic;
 import one.kastordriver.fakerest.config.AppConfig;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,7 +32,7 @@ public class FakeRestAnswerTest {
     private static final String RESPONSE_TEXT = "response text";
 
     @Spy
-    private Settings settings;
+    private RoutesReader routesReader;
 
     @InjectMocks
     @Autowired
@@ -59,7 +58,7 @@ public class FakeRestAnswerTest {
                        "  status: " + STATUS_CODE + "\n" +
                        "  body: " + RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -79,7 +78,7 @@ public class FakeRestAnswerTest {
                        "    " + ACCEPT + ": " + MediaType.TEXT_PLAIN_VALUE + "\n" +
                        "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -97,7 +96,7 @@ public class FakeRestAnswerTest {
                        "answer:\n" +
                        "  removeCookies: [" + COOKIE + "]\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -123,7 +122,7 @@ public class FakeRestAnswerTest {
                        "      maxAge: 3600\n" +
                        "      secure: true\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -153,7 +152,7 @@ public class FakeRestAnswerTest {
                 "      maxAge: 3600\n" +
                 "      secure: true\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         ResponseEntity<String> response = new RestTemplate().getForEntity(URL + PATH, String.class);
@@ -196,7 +195,7 @@ public class FakeRestAnswerTest {
                 "  status: " + STATUS_CODE + "\n" +
                 "  body: " + RESPONSE_TEXT + "\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
@@ -224,7 +223,7 @@ public class FakeRestAnswerTest {
                 "    header1: val1\n" +
                 "    " + CONTENT_TYPE + ": " + MediaType.APPLICATION_JSON_VALUE + "\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
@@ -248,7 +247,7 @@ public class FakeRestAnswerTest {
                 "  headers:\n" +
                 "    header1: val1\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
@@ -271,7 +270,7 @@ public class FakeRestAnswerTest {
                 "  headers:\n" +
                 "    header1: val1\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
@@ -294,7 +293,7 @@ public class FakeRestAnswerTest {
                 "  headers:\n" +
                 "    header1: val1\n";
 
-        doReturn(route).when(settings).loadRoutesFilesIntoString(anyString());
+        doReturn(route).when(routesReader).loadRoutesFilesIntoString(anyString());
         fakeRest.start();
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>("request body");
