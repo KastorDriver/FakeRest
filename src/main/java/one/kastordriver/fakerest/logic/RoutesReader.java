@@ -53,21 +53,21 @@ public class RoutesReader {
     }
 
     private boolean isRouteFileExists() {
-        return Files.exists(routesFilePath) && Files.isRegularFile(routesFilePath);
+        return Files.isRegularFile(routesFilePath);
     }
 
     private boolean isRoutesDirExists() throws IOException {
-        return Files.exists(routesDirPath) && Files.isDirectory(routesDirPath) && hasRoutesDirRoutesFiles();
+        return Files.isDirectory(routesDirPath) && hasRoutesDirRoutesFiles();
     }
 
     private List<Route> loadRoutesFromRoutesFile() throws IOException {
         List<Route> routes = new ArrayList<>();
-        Yaml.loadStreamOfType(loadRoutesFilesIntoString(ROUTES_FILE_NAME), Route.class).forEach(route -> routes.add(route));
+        Yaml.loadStreamOfType(loadRoutesFilesIntoString(routesFilePath), Route.class).forEach(route -> routes.add(route));
         return routes;
     }
 
-    String loadRoutesFilesIntoString(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
+    String loadRoutesFilesIntoString(Path path) throws IOException {
+        return new String(Files.readAllBytes(path), "UTF-8");
     }
 
     private List<Route> loadRoutesFromRouteDir() throws IOException {
