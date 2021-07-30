@@ -1,13 +1,13 @@
 package one.kastordriver.fakerest.logic;
 
-import com.google.common.jimfs.Configuration;
-import com.google.common.jimfs.Jimfs;
 import one.kastordriver.fakerest.exception.RoutesNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
-import java.nio.file.FileSystem;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,27 +18,29 @@ public class RoutesReaderTest {
     private static final String ROUTES_FILE_NAME = "routes.yml";
     private static final String ROUTES_DIR_NAME = "routes";
 
-    private FileSystem fileSystem;
+    private static final String NON_EXISTENT_ROUTES_FILE_NAME = "nonExistentRoutes.yml";
+    private static final String NONEXISTENT_ROUTES_DIR_NAME = "nonExistentRoutes";
+
+    private Path routesFile;
+    private Path routesDir;
 
     @BeforeEach
-    void setUp() {
-        fileSystem = Jimfs.newFileSystem(Configuration.unix());
+    void setUp() throws IOException {
+        routesFile = new ClassPathResource(ROUTES_FILE_NAME).getFile().toPath();
+        routesDir = Paths.get("src", "test", "resources", ROUTES_DIR_NAME);
     }
 
     @Test
     void whenRoutesFileAndRoutesDirDoNotExistThenThrowRoutesNotFoundExceptions() {
-        Path routesFilePath = fileSystem.getPath(ROUTES_FILE_NAME);
-        Path routesDirPath = fileSystem.getPath(ROUTES_DIR_NAME);
-
-        RoutesReader routesReader = new RoutesReader(routesFilePath, routesDirPath);
+        RoutesReader routesReader = new RoutesReader(Paths.get(NON_EXISTENT_ROUTES_FILE_NAME), Paths.get(NONEXISTENT_ROUTES_DIR_NAME));
 
         RoutesNotFoundException ex = assertThrows(RoutesNotFoundException.class, () -> routesReader.loadRoutes());
         assertThat(ex.getMessage(), equalTo(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
-                ROUTES_FILE_NAME, ROUTES_DIR_NAME)));
+                NON_EXISTENT_ROUTES_FILE_NAME, NONEXISTENT_ROUTES_DIR_NAME)));
     }
 
     @Test
-    void name() {
+    void shouldReadAllRoutesFromRoutesFile() throws IOException {
 
     }
 }

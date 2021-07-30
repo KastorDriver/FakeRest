@@ -50,6 +50,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.dataformat</groupId>-->
+            <!--<artifactId>jackson-dataformat-yaml</artifactId>-->
+            <!--<version>2.12.4</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.jyaml</groupId>
             <artifactId>jyaml</artifactId>
@@ -59,11 +64,6 @@
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>2.5.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.jimfs</groupId>
-            <artifactId>jimfs</artifactId>
-            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
