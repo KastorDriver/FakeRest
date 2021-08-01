@@ -1,0 +1,11 @@
+---
+method: get
+url: /simple-path
+answer:
+  body: Hello world!
+
+---
+method: post
+url: /another-path
+answer:
+  body: Another response
