@@ -1,17 +1,18 @@
 package one.kastordriver.fakerest.bean;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Route {
 
     private String method;
     private String url;
-    private Answer answer = new Answer();
+    private Answer answer;
     private List<Condition> conditions = new ArrayList<>();
 }

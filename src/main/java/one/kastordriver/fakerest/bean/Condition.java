@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
 
-@Builder
 @Data
+@Builder
 public class Condition {
     private String condition;
     private Answer answer;
