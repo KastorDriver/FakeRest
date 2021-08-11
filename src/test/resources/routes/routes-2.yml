@@ -1,0 +1,6 @@
+---
+method: head
+url: /third-path
+answer:
+  status: 200
+  body: Third response!
