@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -29,15 +30,21 @@ public class RoutesReaderTest {
     private Path routesFile;
     private Path routesDir;
 
+    private Path nonExistentRoutesFile;
+    private Path nonExistentRoutesDir;
+
     @BeforeEach
     void setUp() throws IOException {
         routesFile = new ClassPathResource(ROUTES_FILE_NAME).getFile().toPath();
         routesDir = Paths.get("src", "test", "resources", ROUTES_DIR_NAME);
+
+        nonExistentRoutesFile = Paths.get(NON_EXISTENT_ROUTES_FILE_NAME);
+        nonExistentRoutesDir = Paths.get(NONEXISTENT_ROUTES_DIR_NAME);
     }
 
     @Test
     void whenRoutesFileAndRoutesDirDoNotExistThenThrowRoutesNotFoundExceptions() {
-        RoutesReader routesReader = new RoutesReader(Paths.get(NON_EXISTENT_ROUTES_FILE_NAME), Paths.get(NONEXISTENT_ROUTES_DIR_NAME));
+        RoutesReader routesReader = new RoutesReader(nonExistentRoutesFile, nonExistentRoutesDir);
 
         RoutesNotFoundException ex = assertThrows(RoutesNotFoundException.class, () -> routesReader.loadRoutes());
         assertThat(ex.getMessage(), equalTo(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
@@ -46,19 +53,56 @@ public class RoutesReaderTest {
 
     @Test
     void shouldReadAllRoutesFromRoutesFile() throws IOException {
-        RoutesReader routesReader = new RoutesReader(routesFile, routesDir);
+        RoutesReader routesReader = new RoutesReader(routesFile, nonExistentRoutesDir);
         List<Route> routes = routesReader.loadRoutes();
-        contains(routes,
+        assertThat(routes, containsInAnyOrder(
                 Route.builder()
                         .method("get")
                         .url("/simple-path")
-                        .answer(Answer.builder().body("Hello world!").build())
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Hello world!")
+                                .build())
                         .build(),
                 Route.builder()
                         .method("post")
                         .url("/another-path")
-                        .answer(Answer.builder().body("Another response").build())
-                        .build()
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Another response")
+                                .build())
+                        .build())
+        );
+    }
+
+    @Test
+    void shouldReadAllRoutesFromRoutesDirectory() throws IOException {
+        RoutesReader routesReader = new RoutesReader(nonExistentRoutesFile, routesDir);
+        List<Route> routes = routesReader.loadRoutes();
+        assertThat(routes, containsInAnyOrder(Route.builder()
+                        .method("get")
+                        .url("/simple-path")
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Hello world!")
+                                .build())
+                        .build(),
+                Route.builder()
+                        .method("post")
+                        .url("/another-path")
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Another response")
+                                .build())
+                        .build(),
+                Route.builder()
+                        .method("head")
+                        .url("/third-path")
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Third response!")
+                                .build())
+                        .build())
         );
     }
 }

@@ -14,5 +14,5 @@ public class Route {
     private String method;
     private String url;
     private Answer answer;
-    private List<Condition> conditions = new ArrayList<>();
+    private List<Condition> conditions;
 }
