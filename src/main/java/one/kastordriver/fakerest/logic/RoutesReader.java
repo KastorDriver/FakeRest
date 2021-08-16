@@ -29,8 +29,7 @@ public class RoutesReader {
         this.routesDirPath = routesDirPath;
     }
 
-    //TODO rename to readRoutes ?
-    public List<Route> loadRoutes() throws IOException {
+    public List<Route> readRoutes() throws IOException {
         boolean isRouteFileExists = isRouteFileExists();
         boolean isRoutesDirExists = isRoutesDirExists();
 

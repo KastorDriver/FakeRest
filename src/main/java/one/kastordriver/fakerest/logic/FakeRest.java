@@ -33,7 +33,7 @@ public class FakeRest {
 
     public void start() throws IOException {
         try {
-            routesReader.loadRoutes().forEach(this::initRoute);
+            routesReader.readRoutes().forEach(this::initRoute);
         } catch (Exception ex) {
             log.error("route initialization error", ex);
             throw ex;

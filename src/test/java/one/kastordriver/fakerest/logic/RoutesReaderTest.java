@@ -3,7 +3,6 @@ package one.kastordriver.fakerest.logic;
 import one.kastordriver.fakerest.bean.Answer;
 import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.RoutesNotFoundException;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -46,7 +45,7 @@ public class RoutesReaderTest {
     void whenRoutesFileAndRoutesDirDoNotExistThenThrowRoutesNotFoundExceptions() {
         RoutesReader routesReader = new RoutesReader(nonExistentRoutesFile, nonExistentRoutesDir);
 
-        RoutesNotFoundException ex = assertThrows(RoutesNotFoundException.class, () -> routesReader.loadRoutes());
+        RoutesNotFoundException ex = assertThrows(RoutesNotFoundException.class, () -> routesReader.readRoutes());
         assertThat(ex.getMessage(), equalTo(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
                 NON_EXISTENT_ROUTES_FILE_NAME, NONEXISTENT_ROUTES_DIR_NAME)));
     }
@@ -54,7 +53,7 @@ public class RoutesReaderTest {
     @Test
     void shouldReadAllRoutesFromRoutesFile() throws IOException {
         RoutesReader routesReader = new RoutesReader(routesFile, nonExistentRoutesDir);
-        List<Route> routes = routesReader.loadRoutes();
+        List<Route> routes = routesReader.readRoutes();
         assertThat(routes, containsInAnyOrder(
                 Route.builder()
                         .method("get")
@@ -78,7 +77,7 @@ public class RoutesReaderTest {
     @Test
     void shouldReadAllRoutesFromRoutesDirectory() throws IOException {
         RoutesReader routesReader = new RoutesReader(nonExistentRoutesFile, routesDir);
-        List<Route> routes = routesReader.loadRoutes();
+        List<Route> routes = routesReader.readRoutes();
         assertThat(routes, containsInAnyOrder(Route.builder()
                         .method("get")
                         .url("/simple-path")
