@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
 @Component
 public class RoutesReader {
 
-    private static final String ROUTE_FILE_MASK = "*.yml";
+    private static final String YAML_FILE_MASK = "*.yml";
 
     private Path routesFilePath;
     private Path routesDirPath;
@@ -30,49 +29,45 @@ public class RoutesReader {
     }
 
     public List<Route> readRoutes() throws IOException {
-        boolean isRouteFileExists = isRouteFileExists();
-        boolean isRoutesDirExists = isRoutesDirExists();
+        boolean isRouteFileExists = isRouteFileExists(routesFilePath);
+        boolean isRoutesDirExists = isRoutesDirExists(routesDirPath);
 
         if (!isRouteFileExists && !isRoutesDirExists) {
-            throw new RoutesNotFoundException(String.format("There isn't \"%s\" file and \"%s\" directory doesn't exists or empty!",
+            throw new RoutesNotFoundException(String.format("There isn't the \"%s\" file and the \"%s\" directory doesn't exists or empty!",
                     routesFilePath, routesDirPath));
         }
 
         List<Route> routes = new ArrayList<>();
 
         if (isRouteFileExists) {
-            routes.addAll(loadRoutesFromRoutesFile());
+            routes.addAll(loadRoutesFromRoutesFile(routesFilePath));
         }
 
         if (isRoutesDirExists) {
-            routes.addAll(loadRoutesFromRouteDir());
+            routes.addAll(loadRoutesFromRoutesDir(routesDirPath));
         }
 
         return routes;
     }
 
-    private boolean isRouteFileExists() {
+    private boolean isRouteFileExists(Path routesFilePath) {
         return Files.isRegularFile(routesFilePath);
     }
 
-    private boolean isRoutesDirExists() throws IOException {
-        return Files.isDirectory(routesDirPath) && hasRoutesDirRoutesFiles();
+    private boolean isRoutesDirExists(Path routesDirPath) throws IOException {
+        return Files.isDirectory(routesDirPath) && hasRoutesDirRoutesFiles(routesDirPath);
     }
 
-    private List<Route> loadRoutesFromRoutesFile() throws IOException {
+    private List<Route> loadRoutesFromRoutesFile(Path routesFilePath) throws IOException {
         List<Route> routes = new ArrayList<>();
-        Yaml.loadStreamOfType(loadRoutesFilesIntoString(routesFilePath), Route.class).forEach(route -> routes.add(route));
+        Yaml.loadStreamOfType(routesFilePath.toFile(), Route.class).forEach(route -> routes.add(route));
         return routes;
     }
 
-    String loadRoutesFilesIntoString(Path path) throws IOException {
-        return new String(Files.readAllBytes(path), "UTF-8");
-    }
-
-    private List<Route> loadRoutesFromRouteDir() throws IOException {
+    private List<Route> loadRoutesFromRoutesDir(Path routesDirPath) throws IOException {
         List<Route> routes = new ArrayList<>();
 
-        Iterator<Path> iterator = getRoutesFilesFromRoutesDir().iterator();
+        Iterator<Path> iterator = getRoutesFilesFromRoutesDir(routesDirPath).iterator();
 
         while (iterator.hasNext()) {
             Yaml.loadStreamOfType(iterator.next().toFile(), Route.class).forEach(route -> routes.add(route));
@@ -81,11 +76,11 @@ public class RoutesReader {
         return routes;
     }
 
-    private boolean hasRoutesDirRoutesFiles() throws IOException {
-        return getRoutesFilesFromRoutesDir().iterator().hasNext();
+    private boolean hasRoutesDirRoutesFiles(Path routesDirPath) throws IOException {
+        return getRoutesFilesFromRoutesDir(routesDirPath).iterator().hasNext();
     }
 
-    private DirectoryStream<Path> getRoutesFilesFromRoutesDir() throws IOException {
-        return Files.newDirectoryStream(routesDirPath, ROUTE_FILE_MASK);
+    private DirectoryStream<Path> getRoutesFilesFromRoutesDir(Path routesDirPath) throws IOException {
+        return Files.newDirectoryStream(routesDirPath, YAML_FILE_MASK);
     }
 }
