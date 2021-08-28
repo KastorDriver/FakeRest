@@ -14,11 +14,11 @@ public abstract class RequestElement {
 
     protected abstract String getElementName();
 
-    private String getOriginElementName() {
+    protected String getOriginElementName() {
         return ORIGIN_ELEMENT_NAME_PREFIX + getElementName();
     }
 
-    private String getReplacedElementName() {
+    protected String getReplacedElementName() {
         return REPLACED_ELEMENT_NAME_PREFIX + getElementName();
     };
 
@@ -26,25 +26,4 @@ public abstract class RequestElement {
         return condition.indexOf(getOriginElementName()) != -1;
     }
 
-    //TODO the method should be overloaded!
-    public String processSingleRequestElement(String condition, Binding binding, Object elementValue) {
-        final String replacedElementName = getReplacedElementName();
-        final String originElementName = getOriginElementName();
-        binding.setVariable(replacedElementName, elementValue);
-        return condition.replaceAll(originElementName, replacedElementName);
-    }
-
-    //TODO the method should be overloaded!
-    public String processComplexRequestElement(String condition, Binding binding, Function<String, Object> extractRequestParamValue) {
-        final String firstElementPart = getOriginElementName() + "(";
-        final String lastElementPart = ")";
-        int startIndex = condition.indexOf(firstElementPart);
-        int endIndex = condition.indexOf(lastElementPart, startIndex);
-        final String requestParamName = condition.substring(startIndex + firstElementPart.length(), endIndex);
-        final String fullElementName = firstElementPart.replace("(", "\\(") + requestParamName + lastElementPart.replace(")", "\\)");
-        final String replacedElementName = getReplacedElementName() + "(" + requestParamName + ")";
-
-        binding.setVariable(replacedElementName, extractRequestParamValue.apply(requestParamName));
-        return condition.replaceAll(fullElementName, replacedElementName);
-    }
 }

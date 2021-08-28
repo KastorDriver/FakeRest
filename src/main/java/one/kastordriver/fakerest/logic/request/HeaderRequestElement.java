@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class HeaderRequestElement extends RequestElement {
+public class HeaderRequestElement extends SingleArgRequestElement {
 
     private static final String ELEMENT_NAME = "header";
 
@@ -16,6 +16,6 @@ public class HeaderRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processComplexRequestElement(condition, binding, request::headers);
+        return processCondition(condition, binding, request::headers);
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class ContentLengthRequestElement extends RequestElement {
+public class ContentLengthRequestElement extends NoArgsRequestElement {
 
     private static final String ELEMENT_NAME = "contentLength";
 
@@ -16,6 +16,6 @@ public class ContentLengthRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processSingleRequestElement(condition, binding, request.contentLength());
+        return processCondition(condition, binding, request.contentLength());
     }
 }

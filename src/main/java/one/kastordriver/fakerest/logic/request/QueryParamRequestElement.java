@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class QueryParamRequestElement extends RequestElement {
+public class QueryParamRequestElement extends SingleArgRequestElement {
 
     private static final String ELEMENT_NAME = "queryParam";
 
@@ -16,7 +16,7 @@ public class QueryParamRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processComplexRequestElement(condition, binding, request::queryParams);
+        return processCondition(condition, binding, request::queryParams);
 
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class PathParamRequestElement extends RequestElement {
+public class PathParamRequestElement extends SingleArgRequestElement {
 
     private static final String ELEMENT_NAME = "pathParam";
 
@@ -16,6 +16,6 @@ public class PathParamRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processComplexRequestElement(condition, binding, request::params);
+        return processCondition(condition, binding, request::params);
     }
 }

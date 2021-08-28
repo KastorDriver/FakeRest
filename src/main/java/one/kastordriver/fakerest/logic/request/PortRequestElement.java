@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class PortRequestElement extends RequestElement {
+public class PortRequestElement extends NoArgsRequestElement {
 
     private static final String ELEMENT_NAME = "port";
 
@@ -16,6 +16,6 @@ public class PortRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processSingleRequestElement(condition, binding, request.port());
+        return processCondition(condition, binding, request.port());
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import spark.Request;
 
 @Component
-public class CookieRequestElement extends RequestElement {
+public class CookieRequestElement extends SingleArgRequestElement {
 
     private static final String ELEMENT_NAME = "cookie";
 
@@ -16,6 +16,6 @@ public class CookieRequestElement extends RequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processComplexRequestElement(condition, binding, request::cookie);
+        return processCondition(condition, binding, request::cookie);
     }
 }
