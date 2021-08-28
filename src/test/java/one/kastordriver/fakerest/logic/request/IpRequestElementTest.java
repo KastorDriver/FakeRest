@@ -1,7 +1,6 @@
-package one.kastordriver.fakerest.logic;
+package one.kastordriver.fakerest.logic.request;
 
 import groovy.lang.Binding;
-import one.kastordriver.fakerest.logic.request.IpRequestElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +15,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class IpRequestElementTest {
 
+    private static final String IP = "192.168.0.1";
+
     @Mock
     private Request request;
 
@@ -25,7 +26,7 @@ public class IpRequestElementTest {
     void setUp() {
         ipRequestElement = new IpRequestElement();
 
-        when(request.ip()).thenReturn("192.168.0.1");
+        when(request.ip()).thenReturn(IP);
     }
 
     @Test
@@ -43,6 +44,6 @@ public class IpRequestElementTest {
 
         ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);
 
-        assertThat(binding.getProperty("_ip"), equalTo("192.168.0.1"));
+        assertThat(binding.getProperty("_ip"), equalTo(IP));
     }
 }
