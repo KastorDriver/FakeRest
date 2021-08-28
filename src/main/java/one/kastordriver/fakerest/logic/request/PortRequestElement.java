@@ -16,6 +16,6 @@ public class PortRequestElement extends NoArgsRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request.port());
+        return processNoArgsRequestCondition(condition, binding, request.port());
     }
 }

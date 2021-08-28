@@ -16,6 +16,6 @@ public class HeaderRequestElement extends SingleArgRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request::headers);
+        return processSingleArgRequestCondition(condition, binding, request::headers);
     }
 }

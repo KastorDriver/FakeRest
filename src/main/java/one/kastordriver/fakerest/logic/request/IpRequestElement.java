@@ -1,7 +1,6 @@
 package one.kastordriver.fakerest.logic.request;
 
 import groovy.lang.Binding;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import spark.Request;
 
@@ -17,6 +16,6 @@ public class IpRequestElement extends NoArgsRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request.ip());
+        return processNoArgsRequestCondition(condition, binding, request.ip());
     }
 }

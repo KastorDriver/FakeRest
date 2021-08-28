@@ -4,7 +4,7 @@ import groovy.lang.Binding;
 
 public abstract class NoArgsRequestElement extends RequestElement {
 
-    public String processCondition(String condition, Binding binding, Object elementValue) {
+    protected String processNoArgsRequestCondition(String condition, Binding binding, Object elementValue) {
         final String replacedElementName = getReplacedElementName();
         final String originElementName = getOriginElementName();
         binding.setVariable(replacedElementName, elementValue);

@@ -16,7 +16,7 @@ public class QueryParamRequestElement extends SingleArgRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request::queryParams);
+        return processSingleArgRequestCondition(condition, binding, request::queryParams);
 
     }
 }

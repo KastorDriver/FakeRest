@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 public abstract class SingleArgRequestElement extends RequestElement {
 
-    public String processCondition(String condition, Binding binding, Function<String, Object> extractRequestParamValue) {
+    protected String processSingleArgRequestCondition(String condition, Binding binding, Function<String, Object> extractRequestParamValue) {
         final String firstElementPart = getOriginElementName() + "(";
         final String lastElementPart = ")";
         int startIndex = condition.indexOf(firstElementPart);

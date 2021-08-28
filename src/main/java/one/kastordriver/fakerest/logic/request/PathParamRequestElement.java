@@ -16,6 +16,6 @@ public class PathParamRequestElement extends SingleArgRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request::params);
+        return processSingleArgRequestCondition(condition, binding, request::params);
     }
 }

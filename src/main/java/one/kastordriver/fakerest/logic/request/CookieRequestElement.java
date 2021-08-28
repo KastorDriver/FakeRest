@@ -16,6 +16,6 @@ public class CookieRequestElement extends SingleArgRequestElement {
 
     @Override
     public String processCondition(String condition, Request request, Binding binding) {
-        return processCondition(condition, binding, request::cookie);
+        return processSingleArgRequestCondition(condition, binding, request::cookie);
     }
 }
