@@ -3,6 +3,7 @@ package one.kastordriver.fakerest.logic;
 import one.kastordriver.fakerest.bean.Answer;
 import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
+import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,16 +56,6 @@ public class FakeRestTest {
     }
 
     @Test
-    void whenFailedToInitializeRouteThenThrowRouteInitializationException() throws IOException {
-        when(routesReader.readRoutes()).thenThrow(new RuntimeException("Unexpected exception"));
-
-        RouteInitializationException ex = assertThrows(RouteInitializationException.class, () -> fakeRest.start());
-
-        assertThat(ex.getMessage(), equalTo("routes initialization error"));
-        assertThat(ex.getCause().getMessage(), equalTo("Unexpected exception"));
-    }
-
-    @Test
     void shouldInitializeAllRoutes() throws IOException {
         when(routesReader.readRoutes()).thenReturn(Arrays.asList(
                 Route.builder()
@@ -85,11 +76,39 @@ public class FakeRestTest {
                         .build())
         );
 
-        MockedStatic<Spark> mockedSpark = mockStatic(Spark.class);
+        try (MockedStatic<Spark> mockedSpark = mockStatic(Spark.class);) {
+            fakeRest.start();
 
-        fakeRest.start();
+            mockedSpark.verify(() -> Spark.get(eq("/simple-path"), any(spark.Route.class)), times(1));
+            mockedSpark.verify(() -> Spark.post(eq("/another-path"), any(spark.Route.class)), times(1));
+        }
+    }
 
-        mockedSpark.verify(() -> Spark.get(eq("/simple-path"), any(spark.Route.class)), times(1));
-        mockedSpark.verify(() -> Spark.post(eq("/another-path"), any(spark.Route.class)), times(1));
+    @Test
+    void whenFailedToInitializeRouteThenThrowRouteInitializationException() throws IOException {
+        when(routesReader.readRoutes()).thenThrow(new RuntimeException("Unexpected exception"));
+
+        RouteInitializationException ex = assertThrows(RouteInitializationException.class, () -> fakeRest.start());
+
+        assertThat(ex.getMessage(), equalTo("routes initialization error"));
+        assertThat(ex.getCause().getMessage(), equalTo("Unexpected exception"));
+    }
+
+    @Test
+    void whenRouteHasUnsupportedHttpMethodThenThrowUnsupportedHttpMethodException() throws IOException {
+        when(routesReader.readRoutes()).thenReturn(Arrays.asList(
+                Route.builder()
+                        .method("patch")
+                        .url("/some-path")
+                        .answer(Answer.builder()
+                                .status(200)
+                                .body("Some response")
+                                .build())
+                        .build())
+        );
+
+        RouteInitializationException ex = assertThrows(RouteInitializationException.class, fakeRest::start);
+        UnsupportedHttpMethodException cause = (UnsupportedHttpMethodException) ex.getCause();
+        assertThat(cause.getMessage(), equalTo("Unsupported http method patch"));
     }
 }
