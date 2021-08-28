@@ -1,6 +1,5 @@
 package one.kastordriver.fakerest.logic;
 
-import lombok.Value;
 import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.RoutesNotFoundException;
 import org.ho.yaml.Yaml;
@@ -14,14 +13,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Value
 @Component
 public class RoutesReader {
 
     private static final String YAML_FILE_MASK = "*.yml";
 
-    private Path routesFilePath;
-    private Path routesDirPath;
+    private final Path routesFilePath;
+    private final Path routesDirPath;
 
     public RoutesReader(Path routesFilePath, Path routesDirPath) {
         this.routesFilePath = routesFilePath;

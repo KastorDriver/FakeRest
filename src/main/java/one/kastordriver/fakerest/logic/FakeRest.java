@@ -1,7 +1,9 @@
 package one.kastordriver.fakerest.logic;
 
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,16 +16,14 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Slf4j
+@Value
 @Service
 public class FakeRest {
 
-    @Autowired
     private RoutesReader routesReader;
 
-    @Autowired
     private RouteProcessor routeProcessor;
 
-    @Autowired
     private Map<HttpMethod, BiConsumer<String, spark.Route>> httpMethodsMapping;
 
     @PreDestroy
@@ -31,12 +31,13 @@ public class FakeRest {
         Spark.stop();
     }
 
-    public void start() throws IOException {
+    public void start() {
         try {
             routesReader.readRoutes().forEach(this::initRoute);
         } catch (Exception ex) {
-            log.error("route initialization error", ex);
-            throw ex;
+            RouteInitializationException rex = new RouteInitializationException("routes initialization error", ex);
+            log.error("routes initialization error", rex);
+            throw rex;
         }
     }
 
