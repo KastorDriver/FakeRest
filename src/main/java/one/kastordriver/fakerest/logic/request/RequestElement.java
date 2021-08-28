@@ -11,7 +11,8 @@ public abstract class RequestElement {
     private static final Character REPLACED_ELEMENT_NAME_PREFIX = '_';
 
     public abstract String processCondition(String condition, Request request, Binding binding);
-    public abstract String getElementName();
+
+    protected abstract String getElementName();
 
     private String getOriginElementName() {
         return ORIGIN_ELEMENT_NAME_PREFIX + getElementName();
@@ -25,6 +26,7 @@ public abstract class RequestElement {
         return condition.indexOf(getOriginElementName()) != -1;
     }
 
+    //TODO the method should be overloaded!
     public String processSingleRequestElement(String condition, Binding binding, Object elementValue) {
         final String replacedElementName = getReplacedElementName();
         final String originElementName = getOriginElementName();
@@ -32,6 +34,7 @@ public abstract class RequestElement {
         return condition.replaceAll(originElementName, replacedElementName);
     }
 
+    //TODO the method should be overloaded!
     public String processComplexRequestElement(String condition, Binding binding, Function<String, Object> extractRequestParamValue) {
         final String firstElementPart = getOriginElementName() + "(";
         final String lastElementPart = ")";

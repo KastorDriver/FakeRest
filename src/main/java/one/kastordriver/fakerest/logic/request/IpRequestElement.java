@@ -10,7 +10,7 @@ public class IpRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "ip";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 
