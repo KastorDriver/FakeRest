@@ -30,7 +30,7 @@ public class PortRequestElementTest {
     }
 
     @Test
-    void shouldReplaceIpRequestElementPrefixToUnderscore() {
+    void shouldReplaceIpRequestElementPrefixWithUnderscore() {
         Binding binding = new Binding();
 
         String processedConditionExpression = portRequestElement.processCondition("@port == 5555", request, binding);

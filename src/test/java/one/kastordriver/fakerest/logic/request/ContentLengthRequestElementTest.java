@@ -30,7 +30,7 @@ public class ContentLengthRequestElementTest {
     }
 
     @Test
-    void shouldReplaceContentLengthRequestElementPrefixToUnderscore() {
+    void shouldReplaceContentLengthRequestElementPrefixWithUnderscore() {
         Binding binding = new Binding();
 
         String processedConditionExpression = contentLengthRequestElement.processCondition("@contentLength == 1024", request, binding);

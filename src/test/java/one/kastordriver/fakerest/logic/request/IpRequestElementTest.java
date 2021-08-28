@@ -30,7 +30,7 @@ public class IpRequestElementTest {
     }
 
     @Test
-    void shouldReplaceIpRequestElementPrefixToUnderscore() {
+    void shouldReplaceIpRequestElementPrefixWithUnderscore() {
         Binding binding = new Binding();
 
         String processedConditionExpression = ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);
