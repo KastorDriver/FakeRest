@@ -5,13 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.bean.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spark.Spark;
 import spark.route.HttpMethod;
 
 import javax.annotation.PreDestroy;
-import java.io.IOException;
 import java.util.Map;
 import java.util.function.BiConsumer;
 

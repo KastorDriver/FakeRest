@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import spark.Spark;
@@ -23,6 +25,10 @@ import java.util.function.BiConsumer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -79,6 +85,11 @@ public class FakeRestTest {
                         .build())
         );
 
+        MockedStatic<Spark> mockedSpark = mockStatic(Spark.class);
 
+        fakeRest.start();
+
+        mockedSpark.verify(() -> Spark.get(eq("/simple-path"), any(spark.Route.class)), times(1));
+        mockedSpark.verify(() -> Spark.post(eq("/another-path"), any(spark.Route.class)), times(1));
     }
 }
