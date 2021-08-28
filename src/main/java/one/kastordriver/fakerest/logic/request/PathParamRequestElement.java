@@ -10,7 +10,7 @@ public class PathParamRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "pathParam";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 

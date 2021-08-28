@@ -10,7 +10,7 @@ public class ContentLengthRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "contentLength";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 

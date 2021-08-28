@@ -10,7 +10,7 @@ public class CookieRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "cookie";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 

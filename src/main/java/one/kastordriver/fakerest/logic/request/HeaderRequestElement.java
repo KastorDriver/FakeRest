@@ -10,7 +10,7 @@ public class HeaderRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "header";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 

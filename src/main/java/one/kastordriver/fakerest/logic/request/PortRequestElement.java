@@ -10,7 +10,7 @@ public class PortRequestElement extends RequestElement {
     private static final String ELEMENT_NAME = "port";
 
     @Override
-    public String getElementName() {
+    protected String getElementName() {
         return ELEMENT_NAME;
     }
 
