@@ -40,7 +40,7 @@ public class CookieRequestElementTest {
     }
 
     @Test
-    void shouldBindActualIpToVariable() {
+    void shouldBindActualCookieValueToVariable() {
         Binding binding = new Binding();
 
         cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);

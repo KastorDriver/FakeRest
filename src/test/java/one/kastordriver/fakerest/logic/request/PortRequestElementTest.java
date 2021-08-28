@@ -39,7 +39,7 @@ public class PortRequestElementTest {
     }
 
     @Test
-    void shouldBindActualIpToVariable() {
+    void shouldBindActualPortToVariable() {
         Binding binding = new Binding();
 
         portRequestElement.processCondition("@port == 5555", request, binding);
