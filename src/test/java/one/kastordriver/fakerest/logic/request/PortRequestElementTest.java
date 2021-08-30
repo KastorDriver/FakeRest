@@ -20,17 +20,22 @@ public class PortRequestElementTest {
     @Mock
     private Request request;
 
-    private PortRequestElement portRequestElement;
+    private PortRequestElement portRequestElement = new PortRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        portRequestElement = new PortRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithPortRequestElement() {
+        assertThat(portRequestElement.isContainedInCondition("@port == 5555"), equalTo(true));
+    }
 
-        when(request.port()).thenReturn(PORT);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutPortRequestElement() {
+        assertThat(portRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplaceIpRequestElementPrefixWithUnderscore() {
+        when(request.port()).thenReturn(PORT);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = portRequestElement.processCondition("@port == 5555", request, binding);
@@ -40,6 +45,8 @@ public class PortRequestElementTest {
 
     @Test
     void shouldBindActualPortToVariable() {
+        when(request.port()).thenReturn(PORT);
+
         Binding binding = new Binding();
 
         portRequestElement.processCondition("@port == 5555", request, binding);

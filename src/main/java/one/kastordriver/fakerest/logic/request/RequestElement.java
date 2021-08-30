@@ -10,6 +10,11 @@ public abstract class RequestElement {
     private static final Character ORIGIN_ELEMENT_NAME_PREFIX = '@';
     private static final Character REPLACED_ELEMENT_NAME_PREFIX = '_';
 
+    public boolean isContainedInCondition(String condition) {
+        //TODO NPE?
+        return condition.indexOf(getOriginElementName()) != -1;
+    }
+
     public abstract String processCondition(String condition, Request request, Binding binding);
 
     protected abstract String getElementName();
@@ -20,10 +25,5 @@ public abstract class RequestElement {
 
     protected String getReplacedElementName() {
         return REPLACED_ELEMENT_NAME_PREFIX + getElementName();
-    };
-
-    public boolean containedInCondition(String condition) {
-        return condition.indexOf(getOriginElementName()) != -1;
     }
-
 }

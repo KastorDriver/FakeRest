@@ -21,17 +21,22 @@ public class CookieRequestElementTest {
     @Mock
     private Request request;
 
-    private CookieRequestElement cookieRequestElement;
+    private CookieRequestElement cookieRequestElement = new CookieRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        cookieRequestElement = new CookieRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithCookieRequestElement() {
+        assertThat(cookieRequestElement.isContainedInCondition("@cookie(nickname) == Martin"), equalTo(true));
+    }
 
-        when(request.cookie(COOKIE_NAME)).thenReturn(COOKIE_VALUE);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutCookieRequestElement() {
+        assertThat(cookieRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplaceCookieRequestElementPrefixWithUnderscore() {
+        when(request.cookie(COOKIE_NAME)).thenReturn(COOKIE_VALUE);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);
@@ -41,6 +46,8 @@ public class CookieRequestElementTest {
 
     @Test
     void shouldBindActualCookieValueToVariable() {
+        when(request.cookie(COOKIE_NAME)).thenReturn(COOKIE_VALUE);
+
         Binding binding = new Binding();
 
         cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);

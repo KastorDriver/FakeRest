@@ -21,17 +21,22 @@ public class QueryParamRequestElementTest {
     @Mock
     private Request request;
 
-    private QueryParamRequestElement queryParamRequestElement;
+    private QueryParamRequestElement queryParamRequestElement = new QueryParamRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        queryParamRequestElement = new QueryParamRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithPathParamRequestElement() {
+        assertThat(queryParamRequestElement.isContainedInCondition("@queryParam(nickname) == Martin"), equalTo(true));
+    }
 
-        when(request.queryParams(QUERY_PARAM_NAME)).thenReturn(QUERY_PARAM_VALUE);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutPathParamRequestElement() {
+        assertThat(queryParamRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplaceQueryParamRequestElementPrefixWithUnderscore() {
+        when(request.queryParams(QUERY_PARAM_NAME)).thenReturn(QUERY_PARAM_VALUE);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);
@@ -41,6 +46,8 @@ public class QueryParamRequestElementTest {
 
     @Test
     void shouldBindActualQueryParamValueToVariable() {
+        when(request.queryParams(QUERY_PARAM_NAME)).thenReturn(QUERY_PARAM_VALUE);
+
         Binding binding = new Binding();
 
         queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);

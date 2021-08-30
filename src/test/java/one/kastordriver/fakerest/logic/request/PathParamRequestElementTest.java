@@ -21,17 +21,22 @@ public class PathParamRequestElementTest {
     @Mock
     private Request request;
 
-    private PathParamRequestElement pathParamRequestElement;
+    private PathParamRequestElement pathParamRequestElement = new PathParamRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        pathParamRequestElement = new PathParamRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithPathParamRequestElement() {
+        assertThat(pathParamRequestElement.isContainedInCondition("@pathParam(nickname) == Martin"), equalTo(true));
+    }
 
-        when(request.params(PATH_PARAM_NAME)).thenReturn(PATH_PARAM_VALUE);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutPathParamRequestElement() {
+        assertThat(pathParamRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplacePathParamRequestElementPrefixWithUnderscore() {
+        when(request.params(PATH_PARAM_NAME)).thenReturn(PATH_PARAM_VALUE);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = pathParamRequestElement.processCondition("@pathParam(nickname) == Martin", request, binding);
@@ -41,6 +46,8 @@ public class PathParamRequestElementTest {
 
     @Test
     void shouldBindActualPathParamValueToVariable() {
+        when(request.params(PATH_PARAM_NAME)).thenReturn(PATH_PARAM_VALUE);
+
         Binding binding = new Binding();
 
         pathParamRequestElement.processCondition("@pathParam(nickname) == Martin", request, binding);

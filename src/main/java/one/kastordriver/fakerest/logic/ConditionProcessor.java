@@ -4,8 +4,6 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.logic.request.RequestElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -34,7 +32,7 @@ public class ConditionProcessor {
 
     private String prepareConditionToEvaluate(String condition, Binding binding, Request request) {
         for (RequestElement requestElement : requestElements) {
-            while (requestElement.containedInCondition(condition)) {
+            while (requestElement.isContainedInCondition(condition)) {
                 condition = requestElement.processCondition(condition, request, binding);
             }
         }

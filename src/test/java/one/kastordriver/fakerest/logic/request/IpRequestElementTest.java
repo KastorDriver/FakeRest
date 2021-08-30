@@ -20,17 +20,22 @@ public class IpRequestElementTest {
     @Mock
     private Request request;
 
-    private IpRequestElement ipRequestElement;
+    private IpRequestElement ipRequestElement = new IpRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        ipRequestElement = new IpRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithIpRequestElement() {
+        assertThat(ipRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(true));
+    }
 
-        when(request.ip()).thenReturn(IP);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutIpRequestElement() {
+        assertThat(ipRequestElement.isContainedInCondition("@header(nickname) == Martin"), equalTo(false));
     }
 
     @Test
     void shouldReplaceIpRequestElementPrefixWithUnderscore() {
+        when(request.ip()).thenReturn(IP);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);
@@ -40,6 +45,8 @@ public class IpRequestElementTest {
 
     @Test
     void shouldBindActualIpToVariable() {
+        when(request.ip()).thenReturn(IP);
+
         Binding binding = new Binding();
 
         ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);

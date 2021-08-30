@@ -21,17 +21,22 @@ public class HeaderRequestElementTest {
     @Mock
     private Request request;
 
-    private HeaderRequestElement headerRequestElement;
+    private HeaderRequestElement headerRequestElement = new HeaderRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        headerRequestElement = new HeaderRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithHeaderRequestElement() {
+        assertThat(headerRequestElement.isContainedInCondition("@header(nickname) == Martin"), equalTo(true));
+    }
 
-        when(request.headers(HEADER_NAME)).thenReturn(HEADER_VALUE);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutHeaderRequestElement() {
+        assertThat(headerRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplaceCookieRequestElementPrefixWithUnderscore() {
+        when(request.headers(HEADER_NAME)).thenReturn(HEADER_VALUE);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = headerRequestElement.processCondition("@header(nickname) == Martin", request, binding);
@@ -41,6 +46,8 @@ public class HeaderRequestElementTest {
 
     @Test
     void shouldBindActualHeaderValueToVariable() {
+        when(request.headers(HEADER_NAME)).thenReturn(HEADER_VALUE);
+
         Binding binding = new Binding();
 
         headerRequestElement.processCondition("@header(nickname) == Martin", request, binding);

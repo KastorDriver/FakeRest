@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import spark.Request;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,17 +22,22 @@ public class ContentLengthRequestElementTest {
     @Mock
     private Request request;
 
-    private ContentLengthRequestElement contentLengthRequestElement;
+    private ContentLengthRequestElement contentLengthRequestElement = new ContentLengthRequestElement();
 
-    @BeforeEach
-    void setUp() {
-        contentLengthRequestElement = new ContentLengthRequestElement();
+    @Test
+    void shouldBeSuitableForConditionWithContentLengthRequestElement() {
+        assertThat(contentLengthRequestElement.isContainedInCondition("@contentLength == 1024"), equalTo(true));
+    }
 
-        when(request.contentLength()).thenReturn(CONTENT_LENGTH);
+    @Test
+    void shouldNotBeSuitableForConditionWithoutContentLengthRequestElement() {
+        assertThat(contentLengthRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
     }
 
     @Test
     void shouldReplaceContentLengthRequestElementPrefixWithUnderscore() {
+        when(request.contentLength()).thenReturn(CONTENT_LENGTH);
+
         Binding binding = new Binding();
 
         String processedConditionExpression = contentLengthRequestElement.processCondition("@contentLength == 1024", request, binding);
@@ -40,6 +47,8 @@ public class ContentLengthRequestElementTest {
 
     @Test
     void shouldBindActualContentLengthToVariable() {
+        when(request.contentLength()).thenReturn(CONTENT_LENGTH);
+
         Binding binding = new Binding();
 
         contentLengthRequestElement.processCondition("@contentLength == 1024", request, binding);
