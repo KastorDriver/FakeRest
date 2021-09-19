@@ -16,10 +16,10 @@ public abstract class SingleArgRequestElement extends RequestElement {
         int endIndex = condition.indexOf(CLOSING_PARENTHESIS, startIndex);
 
         final String requestParamName = condition.substring(startIndex + firstElementPart.length(), endIndex);
-        final String fullElementName = firstElementPart.replace("(", "\\(") + requestParamName + CLOSING_PARENTHESIS.replace(")", "\\)");
-        final String replacedElementName = getUnderscoredElementName() + "(" + requestParamName + ")";
+        final String fullElementName = firstElementPart + requestParamName + CLOSING_PARENTHESIS;
+        final String underscoredElementName = getUnderscoredElementName() + OPEN_PARENTHESIS + requestParamName + CLOSING_PARENTHESIS;
 
-        binding.setVariable(replacedElementName, extractRequestParamValue.apply(requestParamName));
-        return condition.replaceAll(fullElementName, replacedElementName);
+        binding.setVariable(underscoredElementName, extractRequestParamValue.apply(requestParamName));
+        return condition.replace(fullElementName, underscoredElementName);
     }
 }

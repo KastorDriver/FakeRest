@@ -39,7 +39,7 @@ public class HeaderRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = headerRequestElement.processCondition("@header(nickname) == Martin", request, binding);
+        String processedConditionExpression = headerRequestElement.processCondition("@header(nickname) == Martin && @header(nickname) == Martin2", request, binding);
 
         assertThat(processedConditionExpression, equalTo("_header(nickname) == Martin"));
     }
