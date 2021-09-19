@@ -3,12 +3,10 @@ package one.kastordriver.fakerest.logic.request;
 import groovy.lang.Binding;
 import spark.Request;
 
-import java.util.function.Function;
-
 public abstract class RequestElement {
 
     private static final Character ORIGIN_ELEMENT_NAME_PREFIX = '@';
-    private static final Character REPLACED_ELEMENT_NAME_PREFIX = '_';
+    private static final Character UNDERSCORED_ELEMENT_NAME_PREFIX = '_';
 
     public boolean isContainedInCondition(String condition) {
         //TODO NPE?
@@ -23,7 +21,7 @@ public abstract class RequestElement {
         return ORIGIN_ELEMENT_NAME_PREFIX + getElementName();
     }
 
-    protected String getReplacedElementName() {
-        return REPLACED_ELEMENT_NAME_PREFIX + getElementName();
+    protected String getUnderscoredElementName() {
+        return UNDERSCORED_ELEMENT_NAME_PREFIX + getElementName();
     }
 }
