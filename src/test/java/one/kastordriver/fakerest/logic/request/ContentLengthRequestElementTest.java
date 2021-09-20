@@ -26,12 +26,13 @@ public class ContentLengthRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithContentLengthRequestElement() {
-        assertThat(contentLengthRequestElement.isContainedInCondition("@contentLength == 1024"), equalTo(true));
+        assertThat(contentLengthRequestElement.isContainedInCondition(
+                String.format("@contentLength == %s", CONTENT_LENGTH)), equalTo(true));
     }
 
     @Test
     void shouldNotBeSuitableForConditionWithoutContentLengthRequestElement() {
-        assertThat(contentLengthRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
+        assertThat(contentLengthRequestElement.isContainedInCondition("@ip == \"127.0.0.1\""), equalTo(false));
     }
 
     @Test
@@ -40,9 +41,10 @@ public class ContentLengthRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = contentLengthRequestElement.processCondition("@contentLength == 1024", request, binding);
+        String processedConditionExpression = contentLengthRequestElement.processCondition(
+                String.format("@contentLength == %s", CONTENT_LENGTH), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_contentLength == 1024"));
+        assertThat(processedConditionExpression, equalTo(String.format("_contentLength == %s", CONTENT_LENGTH)));
     }
 
     @Test
@@ -51,7 +53,7 @@ public class ContentLengthRequestElementTest {
 
         Binding binding = new Binding();
 
-        contentLengthRequestElement.processCondition("@contentLength == 1024", request, binding);
+        contentLengthRequestElement.processCondition(String.format("@contentLength == %s", CONTENT_LENGTH), request, binding);
 
         assertThat(binding.getProperty("_contentLength"), equalTo(CONTENT_LENGTH));
     }

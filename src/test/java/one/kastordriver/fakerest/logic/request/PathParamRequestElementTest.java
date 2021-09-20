@@ -25,7 +25,8 @@ public class PathParamRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithPathParamRequestElement() {
-        assertThat(pathParamRequestElement.isContainedInCondition("@pathParam(nickname) == Martin"), equalTo(true));
+        assertThat(pathParamRequestElement.isContainedInCondition(
+                String.format("@pathParam(%s) == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE)), equalTo(true));
     }
 
     @Test
@@ -39,9 +40,10 @@ public class PathParamRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = pathParamRequestElement.processCondition("@pathParam(nickname) == Martin", request, binding);
+        String processedConditionExpression = pathParamRequestElement.processCondition(
+                String.format("@pathParam(%s) == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_pathParamnickname == Martin"));
+        assertThat(processedConditionExpression, equalTo(String.format("_pathParam%s == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE)));
     }
 
     @Test
@@ -50,8 +52,9 @@ public class PathParamRequestElementTest {
 
         Binding binding = new Binding();
 
-        pathParamRequestElement.processCondition("@pathParam(nickname) == Martin", request, binding);
+        pathParamRequestElement.processCondition(
+                String.format("@pathParam(%s) == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE), request, binding);
 
-        assertThat(binding.getProperty("_pathParamnickname"), equalTo(PATH_PARAM_VALUE));
+        assertThat(binding.getProperty(String.format("_pathParam%s", PATH_PARAM_NAME)), equalTo(PATH_PARAM_VALUE));
     }
 }

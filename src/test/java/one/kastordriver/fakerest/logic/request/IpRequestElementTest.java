@@ -1,7 +1,6 @@
 package one.kastordriver.fakerest.logic.request;
 
 import groovy.lang.Binding;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -15,7 +14,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class IpRequestElementTest {
 
-    private static final String IP = "192.168.0.1";
+    private static final String LOCALHOST = "127.0.0.1";
 
     @Mock
     private Request request;
@@ -24,33 +23,33 @@ public class IpRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithIpRequestElement() {
-        assertThat(ipRequestElement.isContainedInCondition(String.format("@ip == \"%s\"", IP)), equalTo(true));
+        assertThat(ipRequestElement.isContainedInCondition(String.format("@ip == \"%s\"", LOCALHOST)), equalTo(true));
     }
 
     @Test
     void shouldNotBeSuitableForConditionWithoutIpRequestElement() {
-        assertThat(ipRequestElement.isContainedInCondition("@header(nickname) == Martin"), equalTo(false));
+        assertThat(ipRequestElement.isContainedInCondition("@header(nickname) == \"Martin\""), equalTo(false));
     }
 
     @Test
     void shouldReplaceIpRequestElementPrefixWithUnderscore() {
-        when(request.ip()).thenReturn(IP);
+        when(request.ip()).thenReturn(LOCALHOST);
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = ipRequestElement.processCondition(String.format("@ip == \"%s\"", IP), request, binding);
+        String processedConditionExpression = ipRequestElement.processCondition(String.format("@ip == \"%s\"", LOCALHOST), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_ip == \"%s\"", IP)));
+        assertThat(processedConditionExpression, equalTo(String.format("_ip == \"%s\"", LOCALHOST)));
     }
 
     @Test
     void shouldBindActualIpToVariable() {
-        when(request.ip()).thenReturn(IP);
+        when(request.ip()).thenReturn(LOCALHOST);
 
         Binding binding = new Binding();
 
-        ipRequestElement.processCondition(String.format("@ip == \"%s\"", IP), request, binding);
+        ipRequestElement.processCondition(String.format("@ip == \"%s\"", LOCALHOST), request, binding);
 
-        assertThat(binding.getProperty("_ip"), equalTo(IP));
+        assertThat(binding.getProperty("_ip"), equalTo(LOCALHOST));
     }
 }

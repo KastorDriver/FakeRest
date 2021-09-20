@@ -25,7 +25,8 @@ public class QueryParamRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithPathParamRequestElement() {
-        assertThat(queryParamRequestElement.isContainedInCondition("@queryParam(nickname) == Martin"), equalTo(true));
+        assertThat(queryParamRequestElement.isContainedInCondition(
+                String.format("@queryParam(%s) == \"%s\"", QUERY_PARAM_NAME, QUERY_PARAM_VALUE)), equalTo(true));
     }
 
     @Test
@@ -39,9 +40,10 @@ public class QueryParamRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);
+        String processedConditionExpression = queryParamRequestElement.processCondition(
+                String.format("@queryParam(%s) == \"%s\"", QUERY_PARAM_NAME, QUERY_PARAM_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_queryParamnickname == Martin"));
+        assertThat(processedConditionExpression, equalTo(String.format("_queryParam%s == \"%s\"", QUERY_PARAM_NAME, QUERY_PARAM_VALUE)));
     }
 
     @Test
@@ -50,8 +52,9 @@ public class QueryParamRequestElementTest {
 
         Binding binding = new Binding();
 
-        queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);
+        queryParamRequestElement.processCondition(
+                String.format("@queryParam(%s) == \"%s\"", QUERY_PARAM_NAME, QUERY_PARAM_VALUE), request, binding);
 
-        assertThat(binding.getProperty("_queryParamnickname"), equalTo(QUERY_PARAM_VALUE));
+        assertThat(binding.getProperty(String.format("_queryParam%s", QUERY_PARAM_NAME)), equalTo(QUERY_PARAM_VALUE));
     }
 }

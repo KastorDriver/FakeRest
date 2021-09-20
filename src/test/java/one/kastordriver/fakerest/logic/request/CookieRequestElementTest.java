@@ -25,12 +25,13 @@ public class CookieRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithCookieRequestElement() {
-        assertThat(cookieRequestElement.isContainedInCondition("@cookie(nickname) == Martin"), equalTo(true));
+        assertThat(cookieRequestElement.isContainedInCondition(
+                String.format("@cookie(%s) == \"%s\"", COOKIE_NAME, COOKIE_VALUE)), equalTo(true));
     }
 
     @Test
     void shouldNotBeSuitableForConditionWithoutCookieRequestElement() {
-        assertThat(cookieRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(false));
+        assertThat(cookieRequestElement.isContainedInCondition("@ip == \"127.0.0.1\""), equalTo(false));
     }
 
     @Test
@@ -39,9 +40,10 @@ public class CookieRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);
+        String processedConditionExpression = cookieRequestElement.processCondition(
+                String.format("@cookie(%s) == \"%s\"", COOKIE_NAME, COOKIE_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_cookienickname == Martin"));
+        assertThat(processedConditionExpression, equalTo(String.format("_cookie%s == \"%s\"", COOKIE_NAME, COOKIE_VALUE)));
     }
 
     @Test
@@ -50,8 +52,8 @@ public class CookieRequestElementTest {
 
         Binding binding = new Binding();
 
-        cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);
+        cookieRequestElement.processCondition(String.format("@cookie(%s) == \"%s\"", COOKIE_NAME, COOKIE_VALUE), request, binding);
 
-        assertThat(binding.getProperty("_cookienickname"), equalTo(COOKIE_VALUE));
+        assertThat(binding.getProperty(String.format("_cookie%s", COOKIE_NAME)), equalTo(COOKIE_VALUE));
     }
 }

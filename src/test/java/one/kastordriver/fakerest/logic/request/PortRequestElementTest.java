@@ -24,7 +24,7 @@ public class PortRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithPortRequestElement() {
-        assertThat(portRequestElement.isContainedInCondition("@port == 5555"), equalTo(true));
+        assertThat(portRequestElement.isContainedInCondition(String.format("@port == %s", PORT)), equalTo(true));
     }
 
     @Test
@@ -38,9 +38,10 @@ public class PortRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = portRequestElement.processCondition("@port == 5555", request, binding);
+        String processedConditionExpression = portRequestElement.processCondition(
+                String.format("@port == %s", PORT), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_port == 5555"));
+        assertThat(processedConditionExpression, equalTo(String.format("_port == %s", PORT)));
     }
 
     @Test
@@ -49,7 +50,7 @@ public class PortRequestElementTest {
 
         Binding binding = new Binding();
 
-        portRequestElement.processCondition("@port == 5555", request, binding);
+        portRequestElement.processCondition(String.format("@port == %s", PORT), request, binding);
 
         assertThat(binding.getProperty("_port"), equalTo(PORT));
     }
