@@ -1,6 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RoutesNotFoundException;
 import org.ho.yaml.Yaml;
 import org.springframework.stereotype.Component;

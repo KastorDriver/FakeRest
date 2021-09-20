@@ -2,7 +2,7 @@ package one.kastordriver.fakerest.logic;
 
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
 import org.springframework.stereotype.Service;

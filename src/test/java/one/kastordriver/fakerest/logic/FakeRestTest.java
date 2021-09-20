@@ -1,18 +1,14 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.bean.Answer;
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import spark.Spark;
 import spark.route.HttpMethod;

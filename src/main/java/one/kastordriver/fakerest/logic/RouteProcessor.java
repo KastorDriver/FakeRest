@@ -1,10 +1,9 @@
 package one.kastordriver.fakerest.logic;
 
 import lombok.extern.slf4j.Slf4j;
-import one.kastordriver.fakerest.bean.Answer;
-import one.kastordriver.fakerest.bean.Condition;
-import one.kastordriver.fakerest.bean.Cookie;
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.Cookie;
+import one.kastordriver.fakerest.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -12,7 +11,6 @@ import spark.Response;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Component

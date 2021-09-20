@@ -1,8 +1,8 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.bean.Answer;
-import one.kastordriver.fakerest.bean.Condition;
-import one.kastordriver.fakerest.bean.Route;
+import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.Condition;
+import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.logic.request.HeaderRequestElement;
 import one.kastordriver.fakerest.logic.request.IpRequestElement;
 import org.junit.jupiter.api.Test;
