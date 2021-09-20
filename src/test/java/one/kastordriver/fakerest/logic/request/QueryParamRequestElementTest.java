@@ -41,7 +41,7 @@ public class QueryParamRequestElementTest {
 
         String processedConditionExpression = queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_queryParam(nickname) == Martin"));
+        assertThat(processedConditionExpression, equalTo("_queryParamnickname == Martin"));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class QueryParamRequestElementTest {
 
         queryParamRequestElement.processCondition("@queryParam(nickname) == Martin", request, binding);
 
-        assertThat(binding.getProperty("_queryParam(nickname)"), equalTo(QUERY_PARAM_VALUE));
+        assertThat(binding.getProperty("_queryParamnickname"), equalTo(QUERY_PARAM_VALUE));
     }
 }

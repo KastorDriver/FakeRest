@@ -17,6 +17,7 @@ public abstract class RequestElement {
 
     protected abstract String getElementName();
 
+    //TODO consider '$' instead of '@' to eliminate 'origin' and 'undersored' element names
     protected String getOriginElementName() {
         return ORIGIN_ELEMENT_NAME_PREFIX + getElementName();
     }

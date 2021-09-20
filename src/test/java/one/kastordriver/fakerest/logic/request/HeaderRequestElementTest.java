@@ -25,6 +25,7 @@ public class HeaderRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithHeaderRequestElement() {
+        //TODO quote all string values in conditions
         assertThat(headerRequestElement.isContainedInCondition("@header(nickname) == Martin"), equalTo(true));
     }
 
@@ -39,9 +40,9 @@ public class HeaderRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = headerRequestElement.processCondition("@header(nickname) == Martin && @header(nickname) == Martin2", request, binding);
+        String processedConditionExpression = headerRequestElement.processCondition("@header(nickname) == Martin", request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_header(nickname) == Martin"));
+        assertThat(processedConditionExpression, equalTo("_headernickname == Martin"));
     }
 
     @Test
@@ -52,6 +53,6 @@ public class HeaderRequestElementTest {
 
         headerRequestElement.processCondition("@header(nickname) == Martin", request, binding);
 
-        assertThat(binding.getProperty("_header(nickname)"), equalTo(HEADER_VALUE));
+        assertThat(binding.getProperty("_headernickname"), equalTo(HEADER_VALUE));
     }
 }

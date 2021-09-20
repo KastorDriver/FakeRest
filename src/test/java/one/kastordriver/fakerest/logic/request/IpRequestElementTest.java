@@ -24,7 +24,7 @@ public class IpRequestElementTest {
 
     @Test
     void shouldBeSuitableForConditionWithIpRequestElement() {
-        assertThat(ipRequestElement.isContainedInCondition("@ip == 192.168.0.1"), equalTo(true));
+        assertThat(ipRequestElement.isContainedInCondition(String.format("@ip == \"%s\"", IP)), equalTo(true));
     }
 
     @Test
@@ -38,9 +38,9 @@ public class IpRequestElementTest {
 
         Binding binding = new Binding();
 
-        String processedConditionExpression = ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);
+        String processedConditionExpression = ipRequestElement.processCondition(String.format("@ip == \"%s\"", IP), request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_ip == 192.168.0.1"));
+        assertThat(processedConditionExpression, equalTo(String.format("_ip == \"%s\"", IP)));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class IpRequestElementTest {
 
         Binding binding = new Binding();
 
-        ipRequestElement.processCondition("@ip == 192.168.0.1", request, binding);
+        ipRequestElement.processCondition(String.format("@ip == \"%s\"", IP), request, binding);
 
         assertThat(binding.getProperty("_ip"), equalTo(IP));
     }

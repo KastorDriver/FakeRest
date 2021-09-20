@@ -5,8 +5,6 @@ import one.kastordriver.fakerest.bean.Answer;
 import one.kastordriver.fakerest.bean.Condition;
 import one.kastordriver.fakerest.bean.Cookie;
 import one.kastordriver.fakerest.bean.Route;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -21,26 +19,15 @@ import java.util.Optional;
 public class RouteProcessor {
 
     @Autowired
-    private ConditionProcessor conditionProcessor;
+    private AnswerMatcher answerMatcher;
 
-    public Object process(Route route, Request request, Response response) throws Exception {
+    public Object process(Route route, Request request, Response response) {
         try {
-            Optional<Condition> suitableCondition = findFirstAppropriateCondition(route, request);
-            return processAnswer(fetchAnswer(route, suitableCondition), response);
+            return processAnswer(answerMatcher.findAppropriateAnswer(route, request), response);
         } catch (Exception ex) {
             log.error("route process error", ex);
             throw ex;
         }
-    }
-
-    private Optional<Condition> findFirstAppropriateCondition(Route route, Request request) {
-        return route.getConditions().stream()
-                .filter(condition -> conditionProcessor.isConditionSuitForRequest(condition.getCondition(), request))
-                .findFirst();
-    }
-
-    private Answer fetchAnswer(Route route, Optional<Condition> suitableCondition) {
-        return suitableCondition.map(Condition::getAnswer).orElse(route.getAnswer());
     }
 
     private Object processAnswer(Answer answer, Response response) {

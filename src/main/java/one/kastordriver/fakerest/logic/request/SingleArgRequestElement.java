@@ -17,7 +17,7 @@ public abstract class SingleArgRequestElement extends RequestElement {
 
         final String requestParamName = condition.substring(startIndex + firstElementPart.length(), endIndex);
         final String fullElementName = firstElementPart + requestParamName + CLOSING_PARENTHESIS;
-        final String underscoredElementName = getUnderscoredElementName() + OPEN_PARENTHESIS + requestParamName + CLOSING_PARENTHESIS;
+        final String underscoredElementName = getUnderscoredElementName() + requestParamName;
 
         binding.setVariable(underscoredElementName, extractRequestParamValue.apply(requestParamName));
         return condition.replace(fullElementName, underscoredElementName);

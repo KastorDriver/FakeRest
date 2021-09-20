@@ -41,7 +41,7 @@ public class CookieRequestElementTest {
 
         String processedConditionExpression = cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);
 
-        assertThat(processedConditionExpression, equalTo("_cookie(nickname) == Martin"));
+        assertThat(processedConditionExpression, equalTo("_cookienickname == Martin"));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class CookieRequestElementTest {
 
         cookieRequestElement.processCondition("@cookie(nickname) == Martin", request, binding);
 
-        assertThat(binding.getProperty("_cookie(nickname)"), equalTo(COOKIE_VALUE));
+        assertThat(binding.getProperty("_cookienickname"), equalTo(COOKIE_VALUE));
     }
 }
