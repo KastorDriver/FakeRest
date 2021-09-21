@@ -14,7 +14,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Answer {
+public class RouteResponse {
 
     private static final String EMPTY_ANSWER_BODY = "";
 

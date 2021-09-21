@@ -1,6 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.RouteResponse;
 import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RoutesNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -60,7 +59,7 @@ public class RoutesReaderTest {
                         .method("get")
                         .url("/simple-path")
                         .conditions(emptyList())
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Hello world!")
                                 .headers(emptyMap())
@@ -72,7 +71,7 @@ public class RoutesReaderTest {
                         .method("post")
                         .url("/another-path")
                         .conditions(emptyList())
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Another response")
                                 .headers(emptyMap())
@@ -91,7 +90,7 @@ public class RoutesReaderTest {
                         .method("get")
                         .url("/simple-path")
                         .conditions(emptyList())
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Hello world!")
                                 .headers(emptyMap())
@@ -103,7 +102,7 @@ public class RoutesReaderTest {
                         .method("post")
                         .url("/another-path")
                         .conditions(emptyList())
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Another response")
                                 .headers(emptyMap())
@@ -115,7 +114,7 @@ public class RoutesReaderTest {
                         .method("head")
                         .url("/third-path")
                         .conditions(emptyList())
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Third response!")
                                 .headers(emptyMap())

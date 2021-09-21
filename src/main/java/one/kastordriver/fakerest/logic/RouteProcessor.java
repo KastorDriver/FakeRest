@@ -1,7 +1,7 @@
 package one.kastordriver.fakerest.logic;
 
 import lombok.extern.slf4j.Slf4j;
-import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.RouteResponse;
 import one.kastordriver.fakerest.model.Cookie;
 import one.kastordriver.fakerest.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +17,24 @@ import java.util.Map;
 public class RouteProcessor {
 
     @Autowired
-    private AnswerMatcher answerMatcher;
+    private RouteResponseMatcher routeResponseMatcher;
 
     public Object process(Route route, Request request, Response response) {
         try {
-            return processAnswer(answerMatcher.findAppropriateAnswer(route, request), response);
+            return processAnswer(routeResponseMatcher.findAppropriateAnswer(route, request), response);
         } catch (Exception ex) {
             log.error("route process error", ex);
             throw ex;
         }
     }
 
-    private Object processAnswer(Answer answer, Response response) {
-        processStatus(response, answer.getStatus());
-        processHeaders(response, answer.getHeaders());
-        processCookies(response, answer.getCookies());
-        processRemoveCookies(response, answer.getRemoveCookies());
+    private Object processAnswer(RouteResponse routeResponse, Response response) {
+        processStatus(response, routeResponse.getStatus());
+        processHeaders(response, routeResponse.getHeaders());
+        processCookies(response, routeResponse.getCookies());
+        processRemoveCookies(response, routeResponse.getRemoveCookies());
 
-        return answer.getBody();
+        return routeResponse.getBody();
     }
 
     private void processStatus(Response response, Integer status) {

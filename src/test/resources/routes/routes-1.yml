@@ -1,13 +1,13 @@
 ---
 method: get
 url: /simple-path
-answer:
+response:
   status: 200
   body: Hello world!
 
 ---
 method: post
 url: /another-path
-answer:
+response:
   status: 200
   body: Another response

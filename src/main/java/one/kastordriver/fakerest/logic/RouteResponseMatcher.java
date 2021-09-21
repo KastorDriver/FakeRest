@@ -4,7 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.RouteResponse;
 import one.kastordriver.fakerest.model.Condition;
 import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.logic.request.RequestElement;
@@ -17,20 +17,19 @@ import java.util.Optional;
 @Slf4j
 @Component
 @AllArgsConstructor
-//TODO rename Answer to Response or RouteResponse
-public class AnswerMatcher {
+public class RouteResponseMatcher {
 
     private final List<RequestElement> requestElements;
 
-    public Answer findAppropriateAnswer(Route route, Request request) {
+    public RouteResponse findAppropriateAnswer(Route route, Request request) {
         return findAnswerForFirstMatchedCondition(route, request)
-                .orElse(route.getAnswer());
+                .orElse(route.getResponse());
     }
 
-    private Optional<Answer> findAnswerForFirstMatchedCondition(Route route, Request request) {
+    private Optional<RouteResponse> findAnswerForFirstMatchedCondition(Route route, Request request) {
         return route.getConditions().stream()
                 .filter(condition -> isConditionSuitableForRequest(condition.getCondition(), request))
-                .map(Condition::getAnswer)
+                .map(Condition::getResponse)
                 .findFirst();
     }
 

@@ -1,6 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
-import one.kastordriver.fakerest.model.Answer;
+import one.kastordriver.fakerest.model.RouteResponse;
 import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
@@ -57,7 +57,7 @@ public class FakeRestTest {
                 Route.builder()
                         .method("get")
                         .url("/simple-path")
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Hello world!")
                                 .build())
@@ -65,7 +65,7 @@ public class FakeRestTest {
                 Route.builder()
                         .method("post")
                         .url("/another-path")
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Another response")
                                 .build())
@@ -96,7 +96,7 @@ public class FakeRestTest {
                 Route.builder()
                         .method("patch")
                         .url("/some-path")
-                        .answer(Answer.builder()
+                        .response(RouteResponse.builder()
                                 .status(200)
                                 .body("Some response")
                                 .build())

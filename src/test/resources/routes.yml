@@ -1,11 +1,11 @@
 ---
 method: get
 url: /simple-path
-answer:
+response:
   body: Hello world!
 
 ---
 method: post
 url: /another-path
-answer:
+response:
   body: Another response

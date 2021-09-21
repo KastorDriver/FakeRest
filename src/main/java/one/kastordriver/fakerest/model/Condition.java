@@ -9,5 +9,5 @@ import lombok.*;
 public class Condition {
 
     private String condition;
-    private Answer answer;
+    private RouteResponse response;
 }

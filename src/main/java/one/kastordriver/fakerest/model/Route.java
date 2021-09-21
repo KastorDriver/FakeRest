@@ -13,6 +13,6 @@ public class Route {
 
     private String method;
     private String url;
-    private Answer answer;
+    private RouteResponse response;
     private List<Condition> conditions = new ArrayList<>();
 }

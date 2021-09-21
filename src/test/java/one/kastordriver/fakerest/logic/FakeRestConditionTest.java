@@ -58,13 +58,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @ip == \"127.0.0.1\"\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -82,13 +82,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @port == 4567\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -107,13 +107,13 @@ public class FakeRestConditionTest {
 
         String route = "method: post\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @contentLength == " + REQUEST_BODY.length() + "\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -131,13 +131,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @cookie(someCookie) == \"cookieValue\" && @cookie(someCookie2) == \"cookieValue2\"\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -161,13 +161,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @header(Accept) == \"application/json\"\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -190,13 +190,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @queryParam(par1) == \"val1\" && @queryParam(par2) == \"val2\"\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
@@ -216,13 +216,13 @@ public class FakeRestConditionTest {
 
         String route = "method: get\n" +
                        "url: " + PATH + "/:pathParam1/:secondPathParam" + "\n" +
-                       "answer: !Answer\n" +
+                       "routeResponse: !RouteResponse\n" +
                        "  status: 200\n" +
                        "  body: response text\n" +
                        "conditions:\n" +
                        "  - !condition\n" +
                        "    condition: @pathParam(pathParam1) == \"pathVal1\" && @pathParam(secondPathParam) == \"pathVal2\"" + "\n" +
-                       "    answer:\n" +
+                       "    routeResponse:\n" +
                        "      status: " + CONDITION_STATUS_CODE + "\n" +
                        "      body: " + CONDITION_RESPONSE_TEXT + "\n";
 
