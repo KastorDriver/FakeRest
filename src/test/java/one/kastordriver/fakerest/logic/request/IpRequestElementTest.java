@@ -39,7 +39,7 @@ public class IpRequestElementTest {
 
         String processedConditionExpression = ipRequestElement.processCondition(String.format("@ip == \"%s\"", LOCALHOST), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_ip == \"%s\"", LOCALHOST)));
+        assertThat(processedConditionExpression, equalTo(String.format("$ip == \"%s\"", LOCALHOST)));
     }
 
     @Test
@@ -50,6 +50,6 @@ public class IpRequestElementTest {
 
         ipRequestElement.processCondition(String.format("@ip == \"%s\"", LOCALHOST), request, binding);
 
-        assertThat(binding.getProperty("_ip"), equalTo(LOCALHOST));
+        assertThat(binding.getProperty("$ip"), equalTo(LOCALHOST));
     }
 }

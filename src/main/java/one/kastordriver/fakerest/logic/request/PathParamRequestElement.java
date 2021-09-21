@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class PathParamRequestElement extends SingleArgRequestElement {
 
-    private static final String ELEMENT_NAME = "pathParam";
+    private static final String ELEMENT_NAME = "@pathParam";
 
     @Override
     protected String getElementName() {

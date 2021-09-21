@@ -43,7 +43,7 @@ public class CookieRequestElementTest {
         String processedConditionExpression = cookieRequestElement.processCondition(
                 String.format("@cookie(%s) == \"%s\"", COOKIE_NAME, COOKIE_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_cookie%s == \"%s\"", COOKIE_NAME, COOKIE_VALUE)));
+        assertThat(processedConditionExpression, equalTo(String.format("$cookie%s == \"%s\"", COOKIE_NAME, COOKIE_VALUE)));
     }
 
     @Test
@@ -54,6 +54,6 @@ public class CookieRequestElementTest {
 
         cookieRequestElement.processCondition(String.format("@cookie(%s) == \"%s\"", COOKIE_NAME, COOKIE_VALUE), request, binding);
 
-        assertThat(binding.getProperty(String.format("_cookie%s", COOKIE_NAME)), equalTo(COOKIE_VALUE));
+        assertThat(binding.getProperty(String.format("$cookie%s", COOKIE_NAME)), equalTo(COOKIE_VALUE));
     }
 }

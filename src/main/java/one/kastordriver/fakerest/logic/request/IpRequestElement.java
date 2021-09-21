@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class IpRequestElement extends NoArgsRequestElement {
 
-    private static final String ELEMENT_NAME = "ip";
+    private static final String ELEMENT_NAME = "@ip";
 
     @Override
     protected String getElementName() {

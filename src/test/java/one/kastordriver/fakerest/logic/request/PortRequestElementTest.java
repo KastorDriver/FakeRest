@@ -41,7 +41,7 @@ public class PortRequestElementTest {
         String processedConditionExpression = portRequestElement.processCondition(
                 String.format("@port == %s", PORT), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_port == %s", PORT)));
+        assertThat(processedConditionExpression, equalTo(String.format("$port == %s", PORT)));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class PortRequestElementTest {
 
         portRequestElement.processCondition(String.format("@port == %s", PORT), request, binding);
 
-        assertThat(binding.getProperty("_port"), equalTo(PORT));
+        assertThat(binding.getProperty("$port"), equalTo(PORT));
     }
 }

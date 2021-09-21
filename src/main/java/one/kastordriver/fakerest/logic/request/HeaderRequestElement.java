@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class HeaderRequestElement extends SingleArgRequestElement {
 
-    private static final String ELEMENT_NAME = "header";
+    private static final String ELEMENT_NAME = "@header";
 
     @Override
     protected String getElementName() {

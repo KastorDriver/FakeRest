@@ -44,7 +44,7 @@ public class ContentLengthRequestElementTest {
         String processedConditionExpression = contentLengthRequestElement.processCondition(
                 String.format("@contentLength == %s", CONTENT_LENGTH), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_contentLength == %s", CONTENT_LENGTH)));
+        assertThat(processedConditionExpression, equalTo(String.format("$contentLength == %s", CONTENT_LENGTH)));
     }
 
     @Test
@@ -55,6 +55,6 @@ public class ContentLengthRequestElementTest {
 
         contentLengthRequestElement.processCondition(String.format("@contentLength == %s", CONTENT_LENGTH), request, binding);
 
-        assertThat(binding.getProperty("_contentLength"), equalTo(CONTENT_LENGTH));
+        assertThat(binding.getProperty("$contentLength"), equalTo(CONTENT_LENGTH));
     }
 }

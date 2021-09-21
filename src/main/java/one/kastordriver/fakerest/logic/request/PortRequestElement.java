@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class PortRequestElement extends NoArgsRequestElement {
 
-    private static final String ELEMENT_NAME = "port";
+    private static final String ELEMENT_NAME = "@port";
 
     @Override
     protected String getElementName() {

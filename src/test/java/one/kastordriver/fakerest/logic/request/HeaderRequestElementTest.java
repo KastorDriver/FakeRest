@@ -43,7 +43,7 @@ public class HeaderRequestElementTest {
         String processedConditionExpression = headerRequestElement.processCondition(
                 String.format("@header(%s) == \"%s\"", HEADER_NAME, HEADER_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_header%s == \"%s\"", HEADER_NAME, HEADER_VALUE)));
+        assertThat(processedConditionExpression, equalTo(String.format("$header%s == \"%s\"", HEADER_NAME, HEADER_VALUE)));
     }
 
     @Test
@@ -54,6 +54,6 @@ public class HeaderRequestElementTest {
 
         headerRequestElement.processCondition(String.format("@header(%s) == \"%s\"", HEADER_NAME, HEADER_VALUE), request, binding);
 
-        assertThat(binding.getProperty(String.format("_header%s", HEADER_NAME)), equalTo(HEADER_VALUE));
+        assertThat(binding.getProperty(String.format("$header%s", HEADER_NAME)), equalTo(HEADER_VALUE));
     }
 }

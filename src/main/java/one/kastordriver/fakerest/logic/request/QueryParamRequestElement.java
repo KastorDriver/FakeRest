@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class QueryParamRequestElement extends SingleArgRequestElement {
 
-    private static final String ELEMENT_NAME = "queryParam";
+    private static final String ELEMENT_NAME = "@queryParam";
 
     @Override
     protected String getElementName() {

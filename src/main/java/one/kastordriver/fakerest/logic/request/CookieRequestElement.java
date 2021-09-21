@@ -7,7 +7,7 @@ import spark.Request;
 @Component
 public class CookieRequestElement extends SingleArgRequestElement {
 
-    private static final String ELEMENT_NAME = "cookie";
+    private static final String ELEMENT_NAME = "@cookie";
 
     @Override
     protected String getElementName() {

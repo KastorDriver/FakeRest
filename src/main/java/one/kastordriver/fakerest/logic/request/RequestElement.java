@@ -6,23 +6,22 @@ import spark.Request;
 public abstract class RequestElement {
 
     private static final Character ORIGIN_ELEMENT_NAME_PREFIX = '@';
-    private static final Character UNDERSCORED_ELEMENT_NAME_PREFIX = '_';
+    private static final Character DOLLAR_ELEMENT_NAME_PREFIX = '$';
+
+    private static final String PARENTHESIS_REGEX = "[()]";
+    private static final String EMPTY_STRING = "";
 
     public boolean isContainedInCondition(String condition) {
         //TODO NPE?
-        return condition.indexOf(getOriginElementName()) != -1;
+        return condition.indexOf(getElementName()) != -1;
     }
 
     public abstract String processCondition(String condition, Request request, Binding binding);
 
     protected abstract String getElementName();
 
-    //TODO consider '$' instead of '@' to eliminate 'origin' and 'undersored' element names
-    protected String getOriginElementName() {
-        return ORIGIN_ELEMENT_NAME_PREFIX + getElementName();
-    }
-
-    protected String getUnderscoredElementName() {
-        return UNDERSCORED_ELEMENT_NAME_PREFIX + getElementName();
+    protected String transformRequestElementToGroovyFriendlyVariablev(String requestElement) {
+        return requestElement.replace(ORIGIN_ELEMENT_NAME_PREFIX, DOLLAR_ELEMENT_NAME_PREFIX)
+                .replaceAll(PARENTHESIS_REGEX, EMPTY_STRING);
     }
 }

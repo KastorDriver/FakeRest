@@ -43,7 +43,7 @@ public class PathParamRequestElementTest {
         String processedConditionExpression = pathParamRequestElement.processCondition(
                 String.format("@pathParam(%s) == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE), request, binding);
 
-        assertThat(processedConditionExpression, equalTo(String.format("_pathParam%s == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE)));
+        assertThat(processedConditionExpression, equalTo(String.format("$pathParam%s == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE)));
     }
 
     @Test
@@ -55,6 +55,6 @@ public class PathParamRequestElementTest {
         pathParamRequestElement.processCondition(
                 String.format("@pathParam(%s) == \"%s\"", PATH_PARAM_NAME, PATH_PARAM_VALUE), request, binding);
 
-        assertThat(binding.getProperty(String.format("_pathParam%s", PATH_PARAM_NAME)), equalTo(PATH_PARAM_VALUE));
+        assertThat(binding.getProperty(String.format("$pathParam%s", PATH_PARAM_NAME)), equalTo(PATH_PARAM_VALUE));
     }
 }
