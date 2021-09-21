@@ -13,6 +13,7 @@ public class Cookie {
     private int maxAge = -1;
     private boolean secure;
 
+    //TODO do we need this?
     @Tolerate
     public Cookie() {}
 }

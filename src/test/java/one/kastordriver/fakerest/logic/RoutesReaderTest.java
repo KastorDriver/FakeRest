@@ -10,12 +10,13 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RoutesReaderTest {
@@ -58,17 +59,25 @@ public class RoutesReaderTest {
                 Route.builder()
                         .method("get")
                         .url("/simple-path")
+                        .conditions(emptyList())
                         .answer(Answer.builder()
                                 .status(200)
                                 .body("Hello world!")
+                                .headers(emptyMap())
+                                .cookies(emptyList())
+                                .removeCookies(emptyList())
                                 .build())
                         .build(),
                 Route.builder()
                         .method("post")
                         .url("/another-path")
+                        .conditions(emptyList())
                         .answer(Answer.builder()
                                 .status(200)
                                 .body("Another response")
+                                .headers(emptyMap())
+                                .cookies(emptyList())
+                                .removeCookies(emptyList())
                                 .build())
                         .build())
         );
@@ -81,25 +90,37 @@ public class RoutesReaderTest {
         assertThat(routes, containsInAnyOrder(Route.builder()
                         .method("get")
                         .url("/simple-path")
+                        .conditions(emptyList())
                         .answer(Answer.builder()
                                 .status(200)
                                 .body("Hello world!")
+                                .headers(emptyMap())
+                                .cookies(emptyList())
+                                .removeCookies(emptyList())
                                 .build())
                         .build(),
                 Route.builder()
                         .method("post")
                         .url("/another-path")
+                        .conditions(emptyList())
                         .answer(Answer.builder()
                                 .status(200)
                                 .body("Another response")
+                                .headers(emptyMap())
+                                .cookies(emptyList())
+                                .removeCookies(emptyList())
                                 .build())
                         .build(),
                 Route.builder()
                         .method("head")
                         .url("/third-path")
+                        .conditions(emptyList())
                         .answer(Answer.builder()
                                 .status(200)
                                 .body("Third response!")
+                                .headers(emptyMap())
+                                .cookies(emptyList())
+                                .removeCookies(emptyList())
                                 .build())
                         .build())
         );
