@@ -121,4 +121,17 @@ public class RouteProcessorTest {
         verify(response, times(1)).cookie(null, EMAIL, JOHN_WICK_EMAIL, -1, false);
         verify(response, times(1)).cookie(COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE);
     }
+
+    @Test
+    void shouldRemoveCookiesInResponse() {
+        List<String> cookiesForRemoval = asList(NICKNAME, EMAIL);
+
+        RouteResponse routeResponse = new RouteResponse();
+        routeResponse.setRemoveCookies(cookiesForRemoval);
+        when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
+
+        routeProcessor.process(route, request, response);
+        verify(response, times(1)).removeCookie(NICKNAME);
+        verify(response, times(1)).removeCookie(EMAIL);
+    }
 }
