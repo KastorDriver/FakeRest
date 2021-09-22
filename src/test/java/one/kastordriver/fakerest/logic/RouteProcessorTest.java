@@ -13,10 +13,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import spark.Request;
 import spark.Response;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,6 +33,9 @@ public class RouteProcessorTest {
     private static final String JOHN_WICK = "John Wick";
     private static final String EMAIL = "email";
     private static final String JOHN_WICK_EMAIL = "johnwick@gmail.com";
+    public static final String COOKIE_PATH = "/somePath";
+    public static final int COOKIE_MAX_AGE = 1024;
+    public static final boolean SECURE_COOKIE = true;
 
     @Mock
     private RouteResponseMatcher routeResponseMatcher;
@@ -98,20 +103,22 @@ public class RouteProcessorTest {
         verify(response, times(1)).header(EMAIL, JOHN_WICK_EMAIL);
     }
 
-//    @Test
-//    void shouldSetCookiesInResponse() {
-//        Cookie
-//
-//        List<String, String> cookies = new HashMap<>();
-//        cookies.put(NICKNAME, JOHN_WICK);
-//        cookies.put(EMAIL, JOHN_WICK_EMAIL);
-//
-//        RouteResponse routeResponse = new RouteResponse();
-//        routeResponse.setCookies(cookies);
-//        when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
-//
-//        routeProcessor.process(route, request, response);
-//        verify(response, times(1)).header(NICKNAME, JOHN_WICK);
-//        verify(response, times(1)).header(EMAIL, JOHN_WICK_EMAIL);
-//    }
+    @Test
+    void shouldSetCookiesInResponse() {
+        Cookie nicknameCookie= new Cookie(COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE);
+
+        Cookie emailCookie= new Cookie();
+        emailCookie.setName(EMAIL);
+        emailCookie.setValue(JOHN_WICK_EMAIL);
+
+        List<Cookie> cookies = asList(nicknameCookie, emailCookie);
+
+        RouteResponse routeResponse = new RouteResponse();
+        routeResponse.setCookies(cookies);
+        when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
+
+        routeProcessor.process(route, request, response);
+        verify(response, times(1)).cookie(null, EMAIL, JOHN_WICK_EMAIL, -1, false);
+        verify(response, times(1)).cookie(COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE);
+    }
 }

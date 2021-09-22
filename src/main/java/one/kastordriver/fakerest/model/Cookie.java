@@ -1,11 +1,15 @@
 package one.kastordriver.fakerest.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Tolerate;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cookie {
 
     private String path;
@@ -13,4 +17,6 @@ public class Cookie {
     private String value;
     private int maxAge = -1;
     private boolean secure;
+
+    //TODO add domain and httpOnly
 }
