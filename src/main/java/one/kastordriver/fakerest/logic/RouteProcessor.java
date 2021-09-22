@@ -1,10 +1,11 @@
 package one.kastordriver.fakerest.logic;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import one.kastordriver.fakerest.exception.RouteProcessingException;
 import one.kastordriver.fakerest.model.RouteResponse;
 import one.kastordriver.fakerest.model.Cookie;
 import one.kastordriver.fakerest.model.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
@@ -14,21 +15,21 @@ import java.util.Map;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class RouteProcessor {
 
-    @Autowired
-    private RouteResponseMatcher routeResponseMatcher;
+    private final RouteResponseMatcher routeResponseMatcher;
 
-    public Object process(Route route, Request request, Response response) {
+    public String process(Route route, Request request, Response response) {
         try {
-            return processAnswer(routeResponseMatcher.findAppropriateAnswer(route, request), response);
+            return processRouteResponse(response, routeResponseMatcher.findAppropriateRouteResponse(route, request));
         } catch (Exception ex) {
-            log.error("route process error", ex);
-            throw ex;
+            log.error("route processing error", ex);
+            throw new RouteProcessingException("route processing error", ex);
         }
     }
 
-    private Object processAnswer(RouteResponse routeResponse, Response response) {
+    private String processRouteResponse(Response response, RouteResponse routeResponse) {
         processStatus(response, routeResponse.getStatus());
         processHeaders(response, routeResponse.getHeaders());
         processCookies(response, routeResponse.getCookies());

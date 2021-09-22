@@ -29,7 +29,7 @@ public class RouteResponseMatcherTest {
     private Request request;
 
     @Test
-    void ifRouteDoesNotHaveConditionsThenReturnDefaultAnswer() {
+    void ifRouteDoesNotHaveConditionsThenReturnDefaultRouteResponse() {
         routeResponseMatcher = new RouteResponseMatcher(asList());
 
         RouteResponse defaultRouteResponse = RouteResponse.builder()
@@ -41,11 +41,11 @@ public class RouteResponseMatcherTest {
                 .conditions(emptyList())
                 .build();
 
-        assertThat(routeResponseMatcher.findAppropriateAnswer(route, request), equalTo(defaultRouteResponse));
+        assertThat(routeResponseMatcher.findAppropriateRouteResponse(route, request), equalTo(defaultRouteResponse));
     }
 
     @Test
-    void shouldReturnAnswerForMatchedCondition() {
+    void shouldReturnRouteResponseForMatchedCondition() {
         routeResponseMatcher = new RouteResponseMatcher(asList(new IpRequestElement()));
 
         when(request.ip()).thenReturn(LOCALHOST);
@@ -63,11 +63,11 @@ public class RouteResponseMatcherTest {
                 .conditions(asList(new Condition(String.format("@ip == \"%s\"", LOCALHOST), conditionRouteResponse)))
                 .build();
 
-        assertThat(routeResponseMatcher.findAppropriateAnswer(route, request), equalTo(conditionRouteResponse));
+        assertThat(routeResponseMatcher.findAppropriateRouteResponse(route, request), equalTo(conditionRouteResponse));
     }
 
     @Test
-    void ifMoreThanOneConditionsAreMatchedThenReturnAnswerForTheFirstMatchedCondition() {
+    void ifMoreThanOneConditionsAreMatchedThenReturnRouteResponseForTheFirstMatchedCondition() {
         routeResponseMatcher = new RouteResponseMatcher(asList(new IpRequestElement(), new HeaderRequestElement()));
 
         when(request.headers("name")).thenReturn(JOHN_WICK);
@@ -91,11 +91,11 @@ public class RouteResponseMatcherTest {
                         new Condition(String.format("@ip == \"%s\"", LOCALHOST), ipConditionRouteResponse)))
                 .build();
 
-        assertThat(routeResponseMatcher.findAppropriateAnswer(route, request), equalTo(headerConditionRouteResponse));
+        assertThat(routeResponseMatcher.findAppropriateRouteResponse(route, request), equalTo(headerConditionRouteResponse));
     }
 
     @Test
-    void ifNoneOfConditionsAreMatchedThenReturnDefaultAnswer() {
+    void ifNoneOfConditionsAreMatchedThenReturnDefaultRouteResponse() {
         routeResponseMatcher = new RouteResponseMatcher(asList(new IpRequestElement(), new HeaderRequestElement()));
 
         when(request.headers("name")).thenReturn("unexpected value");
@@ -120,6 +120,6 @@ public class RouteResponseMatcherTest {
                         new Condition(String.format("@ip == \"%s\"", LOCALHOST), ipConditionRouteResponse)))
                 .build();
 
-        assertThat(routeResponseMatcher.findAppropriateAnswer(route, request), equalTo(defaultRouteResponse));
+        assertThat(routeResponseMatcher.findAppropriateRouteResponse(route, request), equalTo(defaultRouteResponse));
     }
 }

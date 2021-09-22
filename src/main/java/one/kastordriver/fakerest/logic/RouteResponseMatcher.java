@@ -21,7 +21,7 @@ public class RouteResponseMatcher {
 
     private final List<RequestElement> requestElements;
 
-    public RouteResponse findAppropriateAnswer(Route route, Request request) {
+    public RouteResponse findAppropriateRouteResponse(Route route, Request request) {
         return findAnswerForFirstMatchedCondition(route, request)
                 .orElse(route.getResponse());
     }

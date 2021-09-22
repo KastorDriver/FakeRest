@@ -16,9 +16,9 @@ import java.util.Map;
 @AllArgsConstructor
 public class RouteResponse {
 
-    private static final String EMPTY_ANSWER_BODY = "";
+    private static final String EMPTY_RESPONSE_BODY = "";
 
-    private String body = EMPTY_ANSWER_BODY;
+    private String body = EMPTY_RESPONSE_BODY;
     private Integer status = 200;
     private Map<String, String> headers = new HashMap<>();
     private List<Cookie> cookies = new ArrayList<>();

@@ -1,5 +1,6 @@
 package one.kastordriver.fakerest.logic;
 
+import lombok.AllArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import one.kastordriver.fakerest.model.Route;
@@ -14,15 +15,15 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Slf4j
-@Value
 @Service
+@AllArgsConstructor
 public class FakeRest {
 
-    private RoutesReader routesReader;
+    private final RoutesReader routesReader;
 
-    private RouteProcessor routeProcessor;
+    private final RouteProcessor routeProcessor;
 
-    private Map<HttpMethod, BiConsumer<String, spark.Route>> httpMethodsMapping;
+    private final Map<HttpMethod, BiConsumer<String, spark.Route>> httpMethodsMapping;
 
     @PreDestroy
     public void destroy() {
