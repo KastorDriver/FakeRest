@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import spark.Request;
 import spark.Response;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +32,12 @@ public class RouteProcessorTest {
     private static final String JOHN_WICK = "John Wick";
     private static final String EMAIL = "email";
     private static final String JOHN_WICK_EMAIL = "johnwick@gmail.com";
-    public static final String COOKIE_PATH = "/somePath";
-    public static final int COOKIE_MAX_AGE = 1024;
-    public static final boolean SECURE_COOKIE = true;
+
+    private static final String COOKIE_DOMAIN = "domain.com";
+    private static final String COOKIE_PATH = "/somePath";
+    private static final int COOKIE_MAX_AGE = 1024;
+    private static final boolean SECURE_COOKIE = true;
+    private static final boolean HTTP_ONLY_COOKIE = false;
 
     @Mock
     private RouteResponseMatcher routeResponseMatcher;
@@ -115,7 +117,7 @@ public class RouteProcessorTest {
 
     @Test
     void shouldSetCookiesInResponse() {
-        Cookie nicknameCookie= new Cookie(COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE);
+        Cookie nicknameCookie= new Cookie(COOKIE_DOMAIN, COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE, HTTP_ONLY_COOKIE);
 
         Cookie emailCookie= new Cookie();
         emailCookie.setName(EMAIL);
@@ -128,8 +130,8 @@ public class RouteProcessorTest {
         when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
 
         routeProcessor.process(route, request, response);
-        verify(response, times(1)).cookie(null, EMAIL, JOHN_WICK_EMAIL, -1, false);
-        verify(response, times(1)).cookie(COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE);
+        verify(response, times(1)).cookie(null, null, EMAIL, JOHN_WICK_EMAIL, -1, false, false);
+        verify(response, times(1)).cookie(COOKIE_DOMAIN, COOKIE_PATH, NICKNAME, JOHN_WICK, COOKIE_MAX_AGE, SECURE_COOKIE, HTTP_ONLY_COOKIE);
     }
 
     @Test

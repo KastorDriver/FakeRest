@@ -12,11 +12,11 @@ import lombok.experimental.Tolerate;
 @AllArgsConstructor
 public class Cookie {
 
+    private String domain;
     private String path;
     private String name;
     private String value;
     private int maxAge = -1;
     private boolean secure;
-
-    //TODO add domain and httpOnly
+    private boolean httpOnly;
 }
