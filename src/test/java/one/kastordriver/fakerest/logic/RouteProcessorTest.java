@@ -80,6 +80,16 @@ public class RouteProcessorTest {
     }
 
     @Test
+    void shouldSetResponseBody() {
+        RouteResponse routeResponse = new RouteResponse();
+        routeResponse.setBody(JOHN_WICK);
+        when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
+
+        String responseBody = routeProcessor.process(route, request, response);
+        assertThat(responseBody, equalTo(JOHN_WICK));
+    }
+
+    @Test
     void whenResponseStatusCodeIsNotSpecifiedThenSetOkStatusCodeByDefault() {
         RouteResponse routeResponse = new RouteResponse();
         when(routeResponseMatcher.findAppropriateRouteResponse(route, request)).thenReturn(routeResponse);
