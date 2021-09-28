@@ -1,5 +1,0 @@
-method: put
-url: /path1
-answer:
-  status: 200
-  body: response text
