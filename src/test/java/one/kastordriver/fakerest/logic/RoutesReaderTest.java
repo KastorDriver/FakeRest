@@ -46,7 +46,7 @@ public class RoutesReaderTest {
         RoutesReader routesReader = new RoutesReader(nonExistentRoutesFile, nonExistentRoutesDir);
 
         RoutesNotFoundException ex = assertThrows(RoutesNotFoundException.class, () -> routesReader.readRoutes());
-        assertThat(ex.getMessage(), equalTo(String.format("There isn't the \"%s\" file and the \"%s\" directory doesn't exists or empty!",
+        assertThat(ex.getMessage(), equalTo(String.format("The \"%s\" file and the \"%s\" directory don't exist!",
                 NON_EXISTENT_ROUTES_FILE_NAME, NONEXISTENT_ROUTES_DIR_NAME)));
     }
 

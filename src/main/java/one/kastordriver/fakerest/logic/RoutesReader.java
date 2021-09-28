@@ -31,7 +31,7 @@ public class RoutesReader {
         boolean isRoutesDirExists = isRoutesDirExists(routesDirPath);
 
         if (!isRouteFileExists && !isRoutesDirExists) {
-            throw new RoutesNotFoundException(String.format("There isn't the \"%s\" file and the \"%s\" directory doesn't exists or empty!",
+            throw new RoutesNotFoundException(String.format("The \"%s\" file and the \"%s\" directory don't exist!",
                     routesFilePath, routesDirPath));
         }
 
