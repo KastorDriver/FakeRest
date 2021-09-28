@@ -1,5 +1,6 @@
 package one.kastordriver.fakerest.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +10,18 @@ import spark.Route;
 import spark.Spark;
 import spark.route.HttpMethod;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 @Configuration
-@ComponentScan(basePackages = "one.kastordriver.fakerest")
 public class AppConfig {
+
+    private static final String ROUTES_FILE_DEFAULT_PATH = "routes.yml";
+    private static final String ROUTES_DIR_DEFAULT_PATH = "routes";
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -38,5 +44,15 @@ public class AppConfig {
         mapping.put(HttpMethod.trace, Spark::trace);
         mapping.put(HttpMethod.options, Spark::options);
         return mapping;
+    }
+
+    @Bean
+    public Path routesFilePath(@Value("${routesFilePath:" + ROUTES_FILE_DEFAULT_PATH + "}") Path routesFilePath) {
+        return routesFilePath;
+    }
+
+    @Bean
+    public Path routesDirPath(@Value("${routesDirPath:" + ROUTES_DIR_DEFAULT_PATH + "}") Path routesDirPath) {
+        return routesDirPath;
     }
 }

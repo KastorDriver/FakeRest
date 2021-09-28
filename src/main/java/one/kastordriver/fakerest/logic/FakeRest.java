@@ -1,11 +1,10 @@
 package one.kastordriver.fakerest.logic;
 
 import lombok.AllArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import one.kastordriver.fakerest.model.Route;
 import one.kastordriver.fakerest.exception.RouteInitializationException;
 import one.kastordriver.fakerest.exception.UnsupportedHttpMethodException;
+import one.kastordriver.fakerest.model.Route;
 import org.springframework.stereotype.Service;
 import spark.Spark;
 import spark.route.HttpMethod;
@@ -20,9 +19,7 @@ import java.util.function.BiConsumer;
 public class FakeRest {
 
     private final RoutesReader routesReader;
-
     private final RouteProcessor routeProcessor;
-
     private final Map<HttpMethod, BiConsumer<String, spark.Route>> httpMethodsMapping;
 
     @PreDestroy
