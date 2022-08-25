@@ -12,8 +12,11 @@ import java.util.Arrays;
 @SpringBootApplication
 public class App implements CommandLineRunner {
 
-    @Autowired
-    private FakeRest fakeRest;
+    private final FakeRest fakeRest;
+
+    public App(FakeRest fakeRest) {
+        this.fakeRest = fakeRest;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);

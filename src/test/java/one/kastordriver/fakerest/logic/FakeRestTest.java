@@ -72,7 +72,7 @@ public class FakeRestTest {
                         .build())
         );
 
-        try (MockedStatic<Spark> mockedSpark = mockStatic(Spark.class);) {
+        try (MockedStatic<Spark> mockedSpark = mockStatic(Spark.class)) {
             fakeRest.start();
 
             mockedSpark.verify(() -> Spark.get(eq("/simple-path"), any(spark.Route.class)), times(1));
